@@ -1,4 +1,4 @@
-Pair Sum
+Pair Sum return boolean
 Learning Objective
 Apply Pointers to reduce time complexity
 Interviewer Prompt
@@ -166,14 +166,36 @@ const twoSum = (nums, target) => {
 
 console.log(twoSum([1,2,3,4], 5))
 
-
-const twoSum = (nums, target) => {
-  let storage = {}
-  for (let [index, num] of nums.entries()) {
-    if(storage[num] !== undefined) {
-      return [storage[num], index];
-      storage[target-num] = index
+Solution 2. Hashmap Time: O(n) Space: O(n)
+var twoSum = function(nums, target) {
+  var map = {}
+  for (let i = 0; i < nums.length; i++) {
+    var value = nums[i]
+    var complementPair = target - value
+    if (map[complementPair] !== undefined) {
+      return [map[complementPair], i]
+    } else {
+      map[value] = i
     }
   }
+}
+
+Solution 3. using pointers Time: O(n) Space: O(1)
+const twoSum = (numbers, target) => {
+  let leftP = 0
+  let rightP = numbers.length - 1;
+  while (leftP < rightP) {
+    let currentSum = numbers[leftP] + numbers[rightP]
+    if (currentSum < target) {
+      leftP++
+    } else if (currentSum > target) {
+      rightP--
+    } else {
+      return [leftP + 1, rightP + 1]
+    }
+  }
+}
+
+
 
 
