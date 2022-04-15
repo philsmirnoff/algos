@@ -128,7 +128,7 @@ In the worst case, i runs for N steps.
 Space Complexity: O(N)
 In the worst case, a new key will be added to targetMap for all elements (N) in the array
 
-
+/////////////////////////////////////////////////////
 
 leetcode question two sum
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
@@ -153,6 +153,19 @@ Example 3:
 Input: nums = [3,3], target = 6
 Output: [0,1]
 
+solution 1. brute force Time: O(n^2) Space: O(1)
+const twoSum = (nums, target) => {
+  for (let i = 0; i < nums.length; i++) {
+    for (j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        return [i, j]
+      }
+    }
+  }
+}
+
+console.log(twoSum([1,2,3,4], 5))
+
 
 const twoSum = (nums, target) => {
   let storage = {}
@@ -162,3 +175,5 @@ const twoSum = (nums, target) => {
       storage[target-num] = index
     }
   }
+
+
