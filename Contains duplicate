@@ -43,4 +43,16 @@ var containsDuplicate = function(nums) {
       }
   }
     return false
+}
+
+
+2. nlogn sorting algorithm
+const containsDuplicate = (nums) => {
+    nums = nums.sort((a, b) => a - b);
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] == nums[i + 1]) {
+            return true;
+        }
+    }
+    return false;
 };
