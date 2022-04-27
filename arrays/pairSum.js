@@ -46,6 +46,8 @@ The size of this matrix is half of a N-2 x N-2 matrix or ((N-2)ˆ2)/2. Dropping 
 
 Space Complexity: O(1)
 The memory needed doesn't increase based on the size of the input.
+
+
 Optimized Solution
 Approach: Pointers
 The main hint in the prompt to devise an optimized approach is that the numbers are sorted in ascending order. With that information, it's possible to create two pointers:
@@ -96,6 +98,8 @@ The brute for solution works for non sorted ingeters, but the optmized solution 
 Examples
 pairSum([1, 5, 2, 4, 3, 1], 7) -> true
 pairSum([5, 3, 2, 4, 1], 10) -> false
+
+
 Approach: Using a map
 Instead of looking for pairs, it's possible to look for target values, considering the following:
 
@@ -191,7 +195,7 @@ const twoSum = (numbers, target) => {
     } else if (currentSum > target) {
       rightP--
     } else {
-      return [leftP + 1, rightP + 1]
+      return [leftP, rightP]
     }
   }
 }
