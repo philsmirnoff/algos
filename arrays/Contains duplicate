@@ -45,8 +45,20 @@ var containsDuplicate = function(nums) {
     return false
 }
 
+my solution that worked
+const containsDuplicate = (nums) => {
+    let memo = {}
+    for (let i = 0; i < nums.length; i++) {
+        if (memo[nums[i]] === undefined) {
+            memo[nums[i]] = i;
+        } else {
+            return true
+        }
+    } return false
+};
 
-2. nlogn sorting algorithm
+
+2. nlogn sorting algorithm  O(nlogn) 0(1)
 const containsDuplicate = (nums) => {
     nums = nums.sort((a, b) => a - b);
     for (let i = 0; i < nums.length; i++) {
@@ -56,3 +68,15 @@ const containsDuplicate = (nums) => {
     }
     return false;
 };
+
+more elegeant solution
+const containsDuplicate = (nums) => {
+    let memo = {}
+    for (let i = 0; i < nums.length; i++) {
+        if (memo[nums[i]] === undefined) {
+            memo[nums[i]] = i;
+        } else {
+            return true
+        }
+    } return false
+    };
