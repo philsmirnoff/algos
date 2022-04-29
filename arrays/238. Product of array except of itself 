@@ -46,6 +46,7 @@ rightProduct = [24,12,4,1]
 solutionProduct = [24,12,8,6]
 
 
+
 correct solution
 const productExceptSelf = (nums) => {
 
