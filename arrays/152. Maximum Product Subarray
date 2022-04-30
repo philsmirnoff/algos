@@ -58,3 +58,6 @@ const maxSubProduct = (nums) => {
   }
 
 console.log(maxSubProduct([2,3,-2,4]))
+
+
+https://youtu.be/-rUBh45rugs
