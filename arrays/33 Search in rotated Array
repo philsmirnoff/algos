@@ -39,3 +39,46 @@ Constraints:
 All values of nums are unique.
 nums is an ascending array that is possibly rotated.
 -104 <= target <= 104
+
+
+const search = (nums, target) => {
+    // let search for a pivot
+    // We face 2 cases :
+// 1> if arr[mid] > arr[right], it means we're in right sorted array, so go towards left to find the pivot element.
+// 2> else it means the array is rotated, so go towards left to find that right sorted array.
+
+    if(nums.length == 0 || nums == null) return -1;
+    let left = 0;
+    let right = nums.length - 1;
+
+    while (left < right) {
+    let mid = Math.floor((left + right) / 2);
+        if (nums[mid] > nums[right]) {
+            left = mid + 1
+        } else {
+            mid = right;
+        }
+    }
+    // Now that we've found our pivot, let's work on finding the target.
+    let pivot = left
+    left = 0;
+    right = nums.length - 1;
+    if (nums[pivot] <= target && target <= nums[right]) {
+        left = pivot
+    } else {
+        right = pivot
+    }
+
+    // Now that we know which part our target lies, let's perform binary search on that subarray:
+    while (left <= right) {
+        if (nums[mid] === target) {
+            return mid
+        } else if (nums[mid] < target) {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
+return -1;
+
+};
