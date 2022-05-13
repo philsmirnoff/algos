@@ -1,0 +1,142 @@
+143. Reorder List
+Medium
+
+5858
+
+212
+
+Add to List
+
+Share
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+
+
+Example 1:
+
+
+Input: head = [1,2,3,4]
+Output: [1,4,2,3]
+Example 2:
+
+
+Input: head = [1,2,3,4,5]
+Output: [1,5,2,4,3]
+
+
+
+Explanation: first we need to split the linked list two parts, 2. we need to reverse the last part aand 3rd is to merge
+
+video explanation : https://www.youtube.com/watch?v=kJuOnxc-qHM
+
+
+<script>
+
+// Javascript program to rearrange link list in place
+
+// Linked List Class
+var head; // head of the list
+
+    /* Node Class */
+     class Node {
+
+// Constructor to create a new node
+constructor(d) {
+    this.data = d;
+    this.next = null;
+}
+
+    }
+
+    function printlist(node) {
+        if (node == null) {
+            return;
+        }
+        while (node != null) {
+            document.write(node.data + " -> ");
+            node = node.next;
+        }
+    }
+
+    function reverselist(node) {
+        var prev = null, curr = node, next;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        node = prev;
+        return node;
+    }
+
+    function rearrange(node) {
+
+        // 1) Find the middle point using tortoise and hare
+        // method
+        var slow = node, fast = slow.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // 2) Split the linked list in two halves
+        // node1, head of first half 1 -> 2 -> 3
+        // node2, head of second half 4 -> 5
+        var node1 = node;
+        var node2 = slow.next;
+        slow.next = null;
+
+        // 3) Reverse the second half, i.e., 5 -> 4
+        node2 = reverselist(node2);
+
+        // 4) Merge alternate nodes
+        node = new Node(0); // Assign dummy Node
+
+        // curr is the pointer to this dummy Node, which
+        // will be used to form the new list
+        var curr = node;
+        while (node1 != null || node2 != null) {
+
+            // First add the element from first list
+            if (node1 != null) {
+                curr.next = node1;
+                curr = curr.next;
+                node1 = node1.next;
+            }
+
+            // Then add the element from second list
+            if (node2 != null) {
+                curr.next = node2;
+                curr = curr.next;
+                node2 = node2.next;
+            }
+        }
+
+        // Assign the head of the new list to head pointer
+        node = node.next;
+    }
+
+
+        head = new Node(1);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(5);
+
+        printlist(head); // print original list
+        rearrange(head); // rearrange list as per ques
+        document.write("<br/>");
+        printlist(head); // print modified list
+
+// This code contributed by gauravrajput1
+</script>
+
+Time Complexity: O(n)
+Auxiliary Space: O(1
