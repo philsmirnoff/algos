@@ -1,0 +1,77 @@
+242. Valid Anagram
+Easy
+
+4835
+
+212
+
+Add to List
+
+Share
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+
+
+Constraints:
+
+1 <= s.length, t.length <= 5 * 104
+s and t consist of lowercase English letters.
+
+
+Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
+
+
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function(s, t) {
+    // if the length of first word is not equal to the length of the second word return false
+   if (s.length !== t.length) {
+       return false
+   }
+    // lets keep track of the all leters in the first word
+    let letterCount = {}
+   // we will loop over the each of the letters and if they are not at the object, we will initialize the value to 1,  as its the first time seeing it, and if not if its the first time seeing it, we will increment it to 1.
+    for (let letter of s) {
+        if (letterCount[letter] === undefined) {
+            letterCount[letter] = 1;
+        } else {
+            letterCount[letter]++;
+        }
+    }
+    // now lets count each letter at the second word and see if its exist at the object
+    for (let letter of t) {
+        if (letterCount[letter] === undefined) {
+            return false;
+        }
+        // lets check if the count of the letter of the second word exceeds the count the letter of the first word
+        if (letterCount[letter] < 1) {
+            return false
+        }
+
+       // if we passed these two if statements that means that the count of the words doesnt exceed the count of the first word and all we have to do is to decrement that letter
+        letterCount[letter]--;
+        }
+    return true;
+};
+
+
+Video explanation : https://www.youtube.com/watch?v=FMkueJAQ2pE
+
+written explanation:
+https://terriblewhiteboard.com/valid-anagram/
