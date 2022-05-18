@@ -1,0 +1,110 @@
+5. Longest Palindromic Substring
+Medium
+
+17604
+
+1045
+
+Add to List
+
+Share
+Given a string s, return the longest palindromic substring in s.
+
+
+
+Example 1:
+
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+Example 2:
+
+Input: s = "cbbd"
+Output: "bb"
+
+
+Constraints:
+
+1 <= s.length <= 1000
+s consist of only digits and English letters.
+
+Explanation:
+we ll use inside out technique, take the eindex and check if the letter on previos and next to i indexes are equal, if it is its a palindrome
+string = 'babad'
+
+odd = getDrome(i - 1, i + 1, s);
+
+even = getDrome(i - 1; i, s)
+
+// then we chack the longest palindrom between even and odd.
+
+curMax = Math.max(even, odd)
+totalMax = Math.max(currMax, totalMax)
+
+T: O(n^2) for every of i element, in worse case we gonna have to go n^2 times.
+S: we have to create max and return palindrom not the indexes. 0(n)
+
+
+
+
+Implementation:
+
+
+const getDrome = (left, right, s) => {
+    while(left >= 0 && right < s.length) {
+        // we wnat to check if the left or right is out of balance
+        if(s[left] !== s[right]) break;
+        left--;
+        right++;
+    }
+    return [left + 1, right]
+}
+var longestPalindrome = function(s) {
+    // first we want to create running max, and beacuse we always gonna heave one character it will be [0, 1]
+    let max = [0, 1];
+    // we will iterate through the string
+    for(let i = 0; i < s.length; i++) {
+        // we want to find the even and odd palindrom and figure out which one is bigger
+        let even = getDrome(i - 1, i, s);
+        let odd = getDrome(i - 1, i, i + 1, s)
+        let curMax = odd[1] - odd[0] > even[1] - even [0] ? odd : even;
+
+        max = max[1] - max[0] > curMax[1] - curMax[0] ? max : curMax
+
+        // after that we have to create our helper function before =>
+    }
+
+
+
+  //  at the end we can
+    return s.slice(max[0], max[1]);
+    // if there is no palindrom in the string then in fact the first character of the string will be the palindrom
+};
+
+
+
+
+var longestPalindrome = function(s) {
+  if (s.length < 2) return s;
+  let max = '';
+  for (let i = 0; i < s.length; i++) {
+    let left = helper(i, i, s);
+    let right = helper(i, i + 1, s);
+    let currMax = left.length >= right.length ? left : right;
+    max = currMax.length > max.length ? currMax : max;
+  }
+
+  return max;
+};
+
+function helper(left, right, s) {
+  let curr = '';
+
+  while (left >= 0 && right < s.length && s[left] === s[right]) {
+    curr = s.substring(left, right + 1);
+    left -= 1;
+    right += 1;
+  }
+
+  return curr;
+}
