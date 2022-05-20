@@ -1,0 +1,85 @@
+// how to creatre Trees
+
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+const a = new Node('a');
+const b = new Node('b');
+const c = new Node('c');
+const d = new Node('d');
+const e = new Node('e');
+const f = new Node('f');
+
+
+a.left = b;
+a.right = c;
+b.left = d;
+b.right = e;
+c.right = f;
+
+
+
+
+            a
+           / \
+          b   c
+         / \   \
+        d   e   f
+
+traversing binary tree using depth first search using stack
+values: a, b, c, d, e, f
+time complexity O(n) where n is the # of node of the tree
+space complexity O(n), beceause we use the stack, linear datastructure
+
+dfs iteratively using a stack
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+const depthFirstValues = (root) => {
+  const stack = [root];
+  while (stack.length > 0) {
+    const current = stack.pop();
+    console.log(current.val)
+    // iterates from left to write
+    if (current.right) stack.push(current.right);
+    if (current.left) stack.push(current.left);
+
+  }
+}
+if you run the console.log on depthFirstValue you ll see the right sequence of values
+a b d e c f
+and as wee need to push our results in array we ll create the array called result and instead of console.log we ll push those results to the result []
+///// iterative solution //////////
+const depthFirstValues = (root) => {
+  // if the root is emplty it should return an empty array
+  if (root === null) return []
+  let result = []
+  const stack = [root];
+
+  while (stack.length > 0) {
+    const current = stack.pop();
+    result.push(current.val)
+    // iterates from left to write
+    if (current.right) stack.push(current.right);
+    if (current.left) stack.push(current.left);
+
+  }
+  return result;
+}
+
+/// recursive solution ///////
+const depthFirstValue = (root) => {
+  if (root === null) return [];
+  const leftValues = depthFirstValue(root.left);
+  const rightValues = depthFirstValue(root.right)
+}
