@@ -17,3 +17,15 @@ const maxPathSum = (root) => {
 
     return root.val + maxChildPathSum
 }
+
+
+const dfs = (root) => {
+  if (root === null) return -Infinity;
+  if (root.left === null && root.right === null) return root.val;
+
+  let maxChild = Math.math(dfs(root.left),
+  dfs(root.right))
+
+  return root.val + maxChild;
+
+}
