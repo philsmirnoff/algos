@@ -1,0 +1,15 @@
+for breadthFirstSearch we use queue
+we initialize queue with starting node
+
+
+const breadthFirstValues = (root, callback) => {
+  if (root === null) return []
+  const queue = [root]
+  let result = []
+  while (queue.length > 0) {
+    let curr = queue.shift();
+    result.push(curr.val)
+    if (curr.left) queue.push(curr.left)
+    if (curr.right) queue.push(curr.right)
+  }
+}
