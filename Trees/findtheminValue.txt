@@ -1,0 +1,38 @@
+//////////// find the min value /////////////
+// breadthFirstSearch iterative
+
+const breadthFirstSearch = (root) => {
+  if (root === null) return 0;
+  let minValue = Infinity;
+  const queue = [root]
+  while (queue.length > 0) {
+    const curr = queue.shift();
+   if (curr.val < minValue) minValue = curr.val
+    if (curr.left) queue.push(curr.left)
+    if (curr.right) queue.push(curr.right)
+
+  }
+  return minValue
+}
+
+// depthFirstSearch iterative stack
+const depthFirstSearch = (root) => {
+  if (root === null) return Infinity;
+  let minValue = Infinity;
+  const stack = [root];
+  while (stack.length > 0) {
+    curr = stack.pop()
+ if (curr.val < minValue) minValue = curr.val
+    if (curr.right) stack.push(curr.right)
+    if (curr.left) stack.push(curr.left)
+  }
+  return minValue
+}
+
+// depthFirstSearch recursive
+const depthFirstSearch = (root) => {
+  if (root === null) return Infinity;
+  let leftMin = depthFirstSearch(root.left)
+  let rightMin = depthFirstSearch(root.right)
+  return Math.min(root.val, leftMin, rightMin)
+}
