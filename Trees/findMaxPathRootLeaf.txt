@@ -1,0 +1,19 @@
+find the max path from the roof to left
+
+
+// dfs recursively
+// to find the max path recusively is better and we want to end at leaf point and we use negative infinity for our base case
+if I want to find minumum and my null nodes return infinity i know that infinity never going to win comparison, because infinity is very large.
+// becuase i find to find the maximum i ll make the base case for nul nodes return negative infinity, because i know that negative infinity never going to win any contest where we compare things looking for the larger values.
+and we make recursive call on any of those two children choosing the bigger one
+
+
+const maxPathSum = (root) => {
+  if (root === null) return -Infinity;
+  // we need to check whether I have a leaf
+  if (root.left === null && root.right === null ) return root.val;
+
+    const maxChildPathSum = Math.max(maxPathSum(root.left), maxPathSum(root.right))
+
+    return root.val + maxChildPathSum
+}
