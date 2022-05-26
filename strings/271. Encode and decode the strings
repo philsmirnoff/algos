@@ -77,3 +77,13 @@ var decode = function(s) {
     }
     return res;
 };
+
+/// using charCodeAt
+
+var encode = function(strs) {
+    return strs.join(String.fromCharCode(257));
+};
+
+var decode = function(s) {
+    return s.split(String.fromCharCode(257));
+};

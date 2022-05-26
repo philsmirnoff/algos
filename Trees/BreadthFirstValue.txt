@@ -2,7 +2,7 @@ for breadthFirstSearch we use queue
 we initialize queue with starting node
 
 
-const breadthFirstValues = (root, callback) => {
+const breadthFirstValues = (root) => {
   if (root === null) return []
   const queue = [root]
   let result = []
@@ -12,4 +12,5 @@ const breadthFirstValues = (root, callback) => {
     if (curr.left) queue.push(curr.left)
     if (curr.right) queue.push(curr.right)
   }
+  return result
 }

@@ -34,8 +34,59 @@ Constraints:
 0 <= strs[i].length <= 100
 strs[i] consists of lowercase English letters.
 Accepted
-1,352,614
-Submissions
-2,104,015
+
 
 Time complexity O(m * n)
+
+
+// lets sort the array at nlogn time and iterate through the array
+[eat, tea, tan, ate, nat, bat]
+
+[aet, aet, ant, aet, ant, abt]
+
+
+//
+use hashmap and check if [aet] is in the hash, if its not in the map we will added it to the map, and set the ate key with value eat
+hash[aet] = [eat, tea]
+next iteration aet is in there so add tea to the array, so add ant to the the hasg and set the value to tan
+[hash[ant] = tan]
+
+once we got al these values, we need to return all these values
+
+
+var groupAnagrams = function(strs) {
+  const sortedStrs = strs.map(word => word.split('').sort('').join(''))
+  
+  const hash = {}
+  
+  for (let i = 0; i < strs.length; i++) {
+    if we dont have in our hash sorted store[i], we will set the hash at that key to an empty array with our strs[i]
+    if (!hash[sortedSrs[i]]) {
+      hash[sortedStrs[i]] = [strs[i]]
+    } else {
+      hash[sortedSrs[i]].push(strs[i]);
+    }
+    return Object.value(hash)
+  }
+}
+
+
+// 
+
+/**
+ * @param {string[]} strs
+ * @return {string[][]}
+ */
+var groupAnagrams = function(strs) {
+    let res = [];
+    let map = {};
+    for (let i = 0; i < strs.length; i ++) {
+        let sorted = strs[i].split('').sort().join('');
+        if (!map[sorted]) map[sorted] = [];
+        map[sorted].push(strs[i]);
+    }
+    
+    return Object.values(map);  
+};
+
+

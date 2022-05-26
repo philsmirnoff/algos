@@ -1,0 +1,61 @@
+125. Valid Palindrome
+Easy
+
+3643
+
+5184
+
+Add to List
+
+Share
+A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+
+Given a string s, return true if it is a palindrome, or false otherwise.
+
+ 
+
+Example 1:
+
+Input: s = "A man, a plan, a canal: Panama"
+Output: true
+Explanation: "amanaplanacanalpanama" is a palindrome.
+Example 2:
+
+Input: s = "race a car"
+Output: false
+Explanation: "raceacar" is not a palindrome.
+Example 3:
+
+Input: s = " "
+Output: true
+Explanation: s is an empty string "" after removing non-alphanumeric characters.
+Since an empty string reads the same forward and backward, it is a palindrome.
+ 
+ 
+ 
+ we will use two pointers left pointer and right pointer
+ /**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function(s) {
+    // two pointers
+    // Remove all spaces and special characters from s
+    s = s.replace(/[^0-9a-z]/gi, "").toLowerCase();
+	// Set left pointer at starting index
+    let l = 0;
+	// Set right pointer at final index
+    let r = s.length - 1;
+	// Compare opposite left and right characters until we meet in the middle
+    while (l <= r) {
+	    // Simply return false if the left and right characters aren't the same
+        if (s[l] != s[r]) return false;
+		// Otherwise, continue moving the left and right pointers one step in
+        l++;
+        r--;
+    }
+	// If we get through the whole array without failing, s is a palindrome
+    return true;
+    }
+
+

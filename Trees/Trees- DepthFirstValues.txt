@@ -80,6 +80,7 @@ const depthFirstValues = (root) => {
 /// recursive solution ///////
 const depthFirstValue = (root) => {
   if (root === null) return [];
-  const leftValues = depthFirstValue(root.left);
-  const rightValues = depthFirstValue(root.right)
+  const leftValues = depthFirstValue(root.left); // [b,d,e]
+  const rightValues = depthFirstValue(root.right) /// [c, f]
+  return [root.val, ...leftValues, ...rightValues]
 }
