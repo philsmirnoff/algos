@@ -1,0 +1,18 @@
+var WordDictionary = function() {
+    this.map = new Map();
+};
+
+WordDictionary.prototype.addWord = function(word) {
+   let arr = this.map.get(word.length) || [];
+   arr.push(word);
+   this.map.set(word.length, arr);
+};
+
+WordDictionary.prototype.search = function(word) {
+    let out = this.map.get(word.length) || [];
+    for(let i = 0; i < word.length; i++) {
+        const c = word[i];
+        if (c !== '.') out = out.filter(w => w[i] === c);
+    }
+    return out.length > 0;
+};
