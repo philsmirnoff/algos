@@ -1,1 +1,1 @@
-# algos
+# algos for interviews
