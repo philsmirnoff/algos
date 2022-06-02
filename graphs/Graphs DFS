@@ -14,6 +14,15 @@ const depthFirstPrint = (graph, source) => {
      }
   }
 }
+
+
+// recursive dfs
+
+const depthFirstPrint = (graph, source) => {
+  for (let neighbor of graph[source]) {
+    depthFirstPrint(graph, neighbor);
+  }
+}
 const graph = {
   a: ['b', 'c'],
   b: ['d'],
