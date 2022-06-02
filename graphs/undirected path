@@ -1,0 +1,72 @@
+Given an edge list of undirected path
+
+edges: [
+  [i, j],
+  [k, i],
+  [m, k],
+  [k, l],
+  [o, n]
+]
+we need to convert into adjacency list
+
+graph: {
+  i: [j, k],
+  j: [i],
+  k: [i, m, l],
+  m: [k],
+  l: [k],
+  o: [n],
+  n: [o]
+}
+
+// what if we are having graph cycle, will be trapped in infinite traversal
+
+
+write a function, undirectedPath, that takes an array of edges for an undirected graph and two NodeList(nodeA, nodeB). The function should return a boolean indicating whether or not there exists a path between nodeA and nodeB.Given
+
+
+const undirectedPath = (edges, nodeA, nodeB) => {
+  // first we are going to convert our edge list into an adjacency list so we can do classic traversal
+  // lets write helper function that will build graph
+  const graph = buildGraph(edges);
+  // in order to avoid infinite loop we need to add set() = collection of items in O(1) time we can add into the set and check something in the set, we ll add visited
+  return hasPath(graph, nodeA, nodeB, visited);
+
+}
+
+// 2 function to check if there is  a path between the src and dst
+
+const hasPath = (graph, src, dst) = {
+
+  if (src === dst) return true
+  if(visited.has(src)) return false
+  // if not, it adds to the visited set
+  visited.add(src)
+
+  for (let neighbor of graph[src]) {
+  if  (hasPath(graph, neighbor, dst, visited) === true) {
+    return true
+  }
+  }
+  return false
+}
+/// Part I hepler funtion to build the graphs
+const buildGraph = (edges) => {
+  const graph = {}
+  // let iterate through the edge
+  for (let edge of edges) {
+    // destructure
+    const [a, b] = edge
+    // lets initialize these nodes as keys of this graph object
+    // if node a is not in the graph, then i ll initilize it in the graph, use it as key and assign it to empty array
+    if (!(a in graph)) graph[a] = [];
+    if (!(b in graph)) graph[b] = [];
+    // lets add neighbors to their edges
+    // b should be the neighbor of a
+    graph[a].push(b);
+    graph[b].push(a);
+
+  }
+
+  return graph;
+}
