@@ -1,0 +1,66 @@
+given adjacent list of nodes we need to find the amount of connected components
+for that we will initilize var count to zero
+the trick here is to use standard dfs or bfs traversal and iterative code
+first we will list out all our list nodes
+an iterate through all the list of this node in this list
+nodes:
+1            1 --- 2
+2
+3               4
+4               |
+5         5 ----6 --- 8
+6               |
+7               7
+8         1
+
+starting at one, continue traversal as far as possible, and mark all nodes as visited to avoid loops it also ensure that we double any components here. once i hit that node 2, I ve actually completed this full component, there is nowhere else I can explore, I shoul increment count by 1. Whenever i Complete traversal on the some region of the graph I need to increment my count.
+Now i have to come back to my node iteration, we get to the node 2 and we can see that it is visted and no need to traverse.
+we start from 3 and marked it as visited and increment count by 1, now count is 2
+we continue from 4 - 6 - 5 -8 -7, and increment by count 3.
+
+
+write a function, connectedComponentCount, that takes in the adjasency list of an undirected graph. The function should return the number of connected components within the graph.
+
+connectedComponentsCount({
+  0: [8, 1, 5],
+  1: [0],
+  5: [0, 8],
+  8: [0, 5],
+  2: [3, 4],
+  3: [2, 4],
+  4: [3, 2]
+})
+
+
+const connectedComponentsCount = (graph) => {
+  <!-- // 3 we need to mark visited nodes as visited using set() it offers O(1) look up and addition, we need to add visitied to all our recursive calls -->
+  const visited = new Set();
+
+  <!-- //7. create count -->
+  let count = 0;
+
+  <!-- //1. we need to begin traversal in evry potential node
+  // 6. we want to use in because ts give object and it would give me each of these keys like 0, 1, 5 -->
+  for (let node in graph) {
+    // i want this function to do node traversal as far as possible
+    <!-- first version at the beginning , now we need updated, if its exploring new component it should return true explore(graph, node, visited); and we need to increment count -->
+    if (explore(graph, neighbor, visited) === true) {
+      count++
+    }
+  }
+  return count
+}
+
+const explore = (graph, current) => {
+  <!-- // 4 lets mark visted nodes and add new nodes to visited -->
+  <!-- 8. string all the numbers --->
+  if (visited.has(String(current))) return false;
+  visited.add(String(current))
+  <!-- // 2. iterate through every neighbour of this node -->
+  for (let neighbour of graph[current]) {
+    explore(graph, neighbor, visited);
+  }
+
+  <!-- // 5. whenever it explores new node return true, to get to return true explore function must finish exploring all the neighbors, that means we explore all the components as far as possible -->
+  return true
+}
