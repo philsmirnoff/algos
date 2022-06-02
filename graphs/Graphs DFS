@@ -1,0 +1,24 @@
+dfs graph traversal
+
+const depthFirstPrint = (graph, source) => {
+  // initialize stack to the source
+  const stack = [ source ]
+
+  // while stack is not epmty, we will loop over graph and keep adding nodes to the stack and popping the element from the stack last in first out
+  while (stack.length > 0) {
+    const curr = stack.pop()
+    // lets find the neighbors of the current, we need to iterate through it
+   for (let neighbor of graph[current]) {
+     // let push all the neighbours at the top of the stack
+     stack.push(neighbor)
+     }
+  }
+}
+const graph = {
+  a: ['b', 'c'],
+  b: ['d'],
+  c: ['e'],
+  d: ['f'],
+  e: [],
+  f: []
+}
