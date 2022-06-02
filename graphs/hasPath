@@ -1,0 +1,29 @@
+has path
+write a function, hasPath, that takes an object representing the adjacency list of a directed acyclic graph and two nodes (src, dst). the function should return a boolean indicating whether or not exists a directed path between source and destination nodes
+
+const graph = {
+  f: ['g', 'i'],
+  g: ['h'],
+  h: [],
+  i: ['g','k'],
+  j: ['i'],
+  k: []
+}
+
+
+// dfs recursevely
+
+const hasPath = (graph, src, dst) => {
+  // base case
+  if (src === dst) return true
+
+  for (let neighbor of graph[src]) {
+    // if there is connecting point between my neighbor and destination point, i know in face that there is a path between src and dst
+   if (hasPath(graph, neighbor, dst) === true) {
+     return true;
+   }
+  }
+  return false
+}
+
+
