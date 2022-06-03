@@ -1,4 +1,57 @@
 island count
 write a function, islandCount that takes in a grid containing Ws and Ls. W represents water and L represents land. The function should return the number of islands on the grid. an Island is vertically or horizontally connected region of land
 
+const islandCount = (grid) => {
 
+  <!-- // 3. to avoid infinite loop we need to add visited nodes to the Set and pass it to explore -->
+  const visited = new Set()
+  <!-- 6. lets initialize count  -->
+  let count = 0;
+
+  <!-- // 1.lets iterate through every row column combination -->
+  for (let r = 0; r < grid.length; r++) {
+    <!-- // in case of if the grid is assymetric it should be done with grid[0].length -->
+    for (let c = 0; c < grid[0].length; c++) {
+
+      <!-- 6.1 and update our explore function with count -->
+      if (explore(grid, r, c, visited) === true) {
+        count++
+      }
+       <!-- // 2. helper function explore -->
+    <!-- explore(grid, r, c, visited) -->
+    }
+  }
+  <!-- 6.2 last return count -->
+  return count
+}
+
+
+explore = (grid, r, c, visited) => {
+  <!-- 4.5 lets create var rowInBounds -->
+  const rowInBounds = 0 <= r && r < grid.length
+  const colInBounds = 0 <= c && c < grid.length
+
+  if (!rowInBounds || !colInBounds) return false
+
+  if (grid[r][c] === "W") return false;
+
+
+<!-- //4. we need to combine r and c to define the location
+we need to create a position variable -->
+const pos = r + ',' + c;
+<!-- // 4.1if i already visited this position, then it  -->
+if (visited.has(pos)) return false;
+<!-- or //4.3 marked as visited -->
+visited.add(pos);
+
+<!-- // 5. if i passed all these base cases, i must be on unvisited piece of land and I want to do deoth first traversal and I want to explore 4 of my neighbours -->
+
+explore(grid, r - 1, c, visited);
+explore(grid, r + 1, c, visited);
+explore(grid, r, c - 1, visited);
+explore(grid, r, c + 1, visited);
+
+<!-- 5.1 by the time I return out of these recursive calls, i need to return true because it symbolize that i just finished exploring a brand new island and I need to count it-->
+return true
+
+}
