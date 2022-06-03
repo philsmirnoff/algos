@@ -26,6 +26,7 @@ const shortestPath = (edges, nodeA, nodeB) => {
       }
     }
   }
+  return -1;
 }
 
 <!-- 1. convert edge list into adjacency list that is good for traversal -->
