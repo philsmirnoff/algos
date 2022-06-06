@@ -32,7 +32,9 @@ const minimIsland = (grid) => {
      <!-- exploreSize(grid, r, c); -->
      <!-- 3. update explore function above -->
      const size = exploreSize(grid, r, c, visited);
-     if (size < minSize) minSize = size;
+
+     // if the size is valid
+     if (size > 0 && size < minSize) minSize = size;
     }
   }
   return minSize
