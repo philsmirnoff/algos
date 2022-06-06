@@ -14,3 +14,57 @@ Strategy:
 Time:
 O(rc)
 Space: O(tc)
+
+
+const minimIsland = (grid) => {
+  <!-- 1.3 to keep the track of visitied nodes, we will use Javascript Set  -->
+  const visited = new Set();
+
+  <!-- 6. Create minSize equal positive Infinity, i know if encounter any valid size, its going to be less than infinity -->
+  Let minSize = Infinity;
+
+
+  <!-- 1 Lets loop from left to write -->
+  for (let r = 0, r < grid.length; r++) {
+    for (c 0; c < gtid[0].length; c++) {
+
+     <!-- 1.1 and call helper function -->
+     <!-- exploreSize(grid, r, c); -->
+     <!-- 3. update explore function above -->
+     const size = exploreSize(grid, r, c, visited);
+     if (size < minSize) minSize = size;
+    }
+  }
+  return minSize
+}
+
+
+<!-- 2.Lets build helper function dfs -->
+const explore = (grid, r, c, visited) => {
+
+  <!-- 2.1lets check if the current position is inbounds  -->
+  const rowInBounds = 0 <= r && r < grid.length;
+  const colInBounds = 0 <= c && c < grid[0].length;
+
+  if (!rowInBounds || !colInBounds) return 0;
+
+  <!-- // 2.2 lets check if the position is water -->
+  if (grid[r][c] = "W") return 0;
+
+
+  <!-- 2.3 lets create var pos to have the position as string to add it set. -->
+  const pos = r + ',' + c;
+  if (visited.has(pos)) return 0;
+  visited.add(pos);
+
+  2.4 lets add recursive code, I ll explore all my four neighbours
+  and return the number repesnting the size of of the island that my neighbor is a part of.
+  I want to create the grand total of all of these return values, size variable and initilize it one not zero, because the one represnts my current position, my row column. whatever this calls return number, i will increment my size by that number and then i can return my total size at the end.
+
+  exploreSize(grid, r - 1, c, visited);
+  exploreSize(grid, r + 1, c, visited);
+  exploreSize(grid, r, c - 1, visited);
+  exploreSize(grid, r, c + 1, visited);
+
+  return size
+}
