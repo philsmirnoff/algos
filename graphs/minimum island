@@ -1,0 +1,16 @@
+Minimum island
+
+Write a function, minimIsland, that takes in a grid, containing Ws and Ls. W represnets water and L represent land. The function should return the size of the smasllest land. An Island is a vertically or horizontally connecte dregion of land
+
+Strategy:
+
+
+1. we will start nested loops from the left to right, if the position is water we dont need to do anything
+2. if the position is land we can start our dfs and I should be marking things as visited to avoid any infinite loops.  So by the time this traversal completes, I am going to mark all of these guys as visited.
+3. But also wanted to determine the size of this entire island region. So every time I get a position that is a land, I should treat it as one. And then when it comes to how I implement on my traversal,I can just gather up these ones, just add them all up.
+4.In this case its for and we need to have min size that we will need keep updating while traversing other islands.
+5. finish the traversing and return the min value
+
+Time:
+O(rc)
+Space: O(tc)
