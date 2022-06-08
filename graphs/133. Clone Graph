@@ -52,4 +52,94 @@ Input: adjList = []
 Output: []
 Explanation: This an empty graph, it does not have any nodes.
 
-////
+/// Solution
+var cloneGraph = function(node) {
+    // 3.base case if node is null
+    if (node === null) return null;
+
+    // Strategy
+    // clone Map<node, cloned>
+    // traversed Set
+
+    // BFS to traverse the graph (use above Set to avoid circle)
+    // everytime we perocess a node, check if it is already traversed
+    // for each neighbor,
+    //  if not cloned, create a new node, connected the node's clone
+    // push the neighbor into the queueu
+    // return the cloned input node
+
+    // 1. create hashmap and set
+    const clonedMap = new Map()
+    const traversed = new Set()
+
+    // 4. create new clone of the head
+    clonedMap.set(node, new Node(node.val))
+
+    // 2 initilize queueu with starting node
+    const queue = [node]
+    while (queue.length > 0) {
+        const head = queue.shift();
+
+        if (traversed.has(head)) {
+            continue
+        }
+        const clonedHead = clonedMap.get(head)
+
+        for (let neighbor of head.neighbors) {
+            if (clonedMap.has(neighbor)) {
+                clonedHead.neighbors.push(clonedMap.get(neighbor))
+            } else {
+                const clonedNeighbor = new Node(neighbor.val)
+                clonedHead.neighbors.push(clonedNeighbor)
+                clonedMap.set(neighbor, clonedNeighbor)
+            }
+            // if its not traversed, queueu it
+            if (!traversed.has(neighbor)) {
+                queue.push(neighbor)
+            }
+        }
+
+        traversed.add(head)
+    }
+    return clonedMap.get(node)
+
+};
+
+
+
+// Solution #2
+var cloneGraph = function(node) {
+    if (!node)
+        return undefined;
+    const cloned = new Map();
+    return clone(node);
+    function clone(navNode) {
+        if (!cloned.has(navNode.val)) {
+            const clonedNode = new Node(navNode.val, []);
+            cloned.set(navNode.val, clonedNode);
+            for (let neighbor of navNode.neighbors) {
+                clonedNode.neighbors.push(clone(neighbor));
+            }
+            return clonedNode;
+        } else {
+            return cloned.get(navNode.val);
+        }
+    }
+};
+
+// Solution
+var cloneGraph = function(node) {
+    let map = {};
+
+    return traverse(node);
+
+    function traverse  (node) {
+        if(!node) return node;
+        if(!map[node.val]) {
+            map[node.val] = new Node(node.val);
+            map[node.val].neighbors = node.neighbors.map(neighbor => traverse(neighbor))
+        }
+        return map[node.val]
+    }
+};
+
