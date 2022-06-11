@@ -1,0 +1,15 @@
+//when they say inver the binary tree, we visit every node in your tree and every time we visit the node take a look at their children and swap the posititons of the children and recursevely run ivert tree on left subtree and right subtree
+
+
+var invertTree = function(root) {
+    if (root == null) return root;
+    
+    let temp = root.left;
+    root.left = root.right;
+    root.right = temp;
+    
+    invertTree(root.left);
+    invertTree(root.right);
+    
+    return root;
+};
