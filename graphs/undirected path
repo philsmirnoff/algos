@@ -70,3 +70,4 @@ const buildGraph = (edges) => {
 
   return graph;
 }
+Space Complexity
