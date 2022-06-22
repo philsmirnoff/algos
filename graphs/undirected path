@@ -71,3 +71,4 @@ const buildGraph = (edges) => {
   return graph;
 }
 Space Complexity
+Time complexity
