@@ -1,0 +1,59 @@
+Write a function bestSum(targetSum, numbers) that takes in a targetSum and an array of numbersw as arguments. The function should return an array containing the shortest combination of numbers that add up to exactly the targetSum
+
+// brute force solution
+const bestSum(targetSum, numbers) {
+  // 1. base case
+  if (targetSum === 0) return [];
+  if (targetSum < 0) return null
+
+  // 4 intilize variable that will be updated as we traverse the tree
+  let shortestResult = null;
+  // 2. recursive case
+  for (let num of numbers) {
+  let remainder = targetSum - numbers;
+  let remainderResult = bestSum(remainder, numbers);
+
+  if (remainderCombination !== null) {
+    const combination = [... remainderCombination, num]
+    // if the combination is the shortest, update the shortestResult
+    if (shortestCombination === null || combination.length < shortestCombination.length) {
+      shortestResult = combination;
+    }
+  }
+ }
+  return shortestCombination;
+}
+
+time complexity: 0(n^m * m)
+space complexity: 0(m^2)
+
+memoization solution
+
+const bestSum(targetSum, numbers, memo = {}) {
+  // 1. base case
+  if (targetSum in [memo]) return [memo[targetSum]];
+  if (targetSum === 0) return [];
+  if (targetSum < 0) return null
+
+  // 4 intilize variable that will be updated as we traverse the tree
+  let shortestResult = null;
+  // 2. recursive case
+  for (let num of numbers) {
+  let remainder = targetSum - numbers;
+  memo[remainderCombination] = bestSum(remainder, numbers, memo);
+
+  if (remainderCombination !== null) {
+    const combination = [... remainderCombination, num]
+    // if the combination is the shortest, update the shortestResult
+    if (shortestCombination === null || combination.length < shortestCombination.length) {
+      shortestResult = combination;
+    }
+  }
+ }
+ memo[targetSum] = shortestCombination;
+  return shortestCombination;
+}
+
+
+Time complexity: (n^m * m);
+Space complexity: (m^2);
