@@ -1,5 +1,49 @@
 Write a function 'howSum(targetSum, numbers)' that takes in a targetSum and an array of numbers as a arguments.
 The function should return an array containing any combination of elements that add up to exactly the targetSum. If there is no combination that adds up to the targetSum, then return to null. If there are multiplle combinations possible, you mauy return any single one
 
-Time complexity: O(n)
-Space complexity: 0(n)
+
+const howSum = (targetSum, numbers) => {
+  // 1. based case when target sum is equal zero we can return en empty array []
+  if (targetSum === 0) return [];
+  // 2. senod base case when targetDum is negative we will retun null because we cannot geretare a negative targetSum
+  if (tagetSum < 0) return null;
+
+  // 3. make recursive call for every elements of the arrray
+  for (let num of numbers) {
+    const remaindermen = targetSum - num;
+    const remainderResult = howSum(remaindermen, numbers);
+    if (remainderResult !== null) {
+      return [ ...remainderResult, num ]
+    }
+  }
+  return null;
+  }
+
+
+  // time and space complexity
+  m = targetSum,
+  n - numbers.length
+Time complexity: O(n^m * m)
+Space complexity: 0(m)
+
+
+ optimized solution:
+
+const howSum = (targetSum, numbers, memo = {}) => {
+  if (targetSum in [memo]) return memo[targetSum]
+  // 1. based case when target sum is equal zero we can return en empty array []
+  if (targetSum === 0) return [];
+  // 2. senod base case when targetDum is negative we will retun null because we cannot geretare a negative targetSum
+  if (tagetSum < 0) return null;
+
+  // 3. make recursive call for every elements of the arrray
+  for (let num of numbers) {
+    const remaindermen = targetSum - num;
+    const remainderResult = howSum(remaindermen, numbers, memo);
+    if (remainderResult !== null) {
+      memo[targetSum] = [ ...remainderResult, num ];
+      return memo[targetSum];
+    }
+  }
+  return null;
+  }
