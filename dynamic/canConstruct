@@ -16,3 +16,26 @@ The function should return a boolean indicating whether or not the target can be
 
 Time Complexity: O(n^m*m)
 Space Complexity: O(m^2)
+
+
+Solution N2 - memoization
+
+const canConstruct = (target, wordBank, memo = {}) => {
+  if (target in memo) return memo[target];
+  if (target = '') return true;
+
+  for (let word of wordBank) {
+    if (target.indexOf(word) === 0) {
+      const suffix = target.slice(word.length);
+    if (canConstruct(suffix, wordBank, memo) === true) memo[target] = true;
+    return true;
+    }
+    }
+  }
+  memo[target] = false;
+  return false;
+}
+
+Time complexity: O(n * m^2)
+Space complexity: O(m^2)
+
