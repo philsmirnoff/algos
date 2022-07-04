@@ -1,0 +1,47 @@
+Write a function countConstruct(target, number) thataccepts a target string and an array of strings,
+The function should return the numbers of ways that the target can be constructed by concatetenating elements of the wordBank array. You may reuse elements of wordBank as many times as needed.
+
+
+
+const countConstruct = (target, wordbank) => {
+  if (target === '') return 1;
+
+  let totalCount = 0;
+  for (let word of wordBank) {
+    if (target.indexOf(word) === 0) {
+      const remainder = target.slice(word.length);
+      const count = countConstruct(remainder, wordBank);
+      totalCount += count;
+    }
+    }
+    return totalCount;
+}
+
+Brite force
+Time O(n^m * m)
+Space O(m^2)
+
+
+
+Solution N@ memoization
+const countConstruct = (target, wordbank, memo = {}) => {
+  if (target in memo) return memo[target];
+  if (target === '') return 1;
+
+  let totalCount = 0;
+  for (let word of wordBank) {
+    if (target.indexOf(word) === 0) {
+      const remainder = target.slice(word.length);
+      const count = countConstruct(remainder, wordBank, memo);
+      totalCount += count;
+    }
+    }
+    memo[target] = totalCount;
+    return totalCount;
+}
+
+where m = target.length
+n = wordBank.length;
+
+Time O(n * m^2)
+Space O(m^2)
