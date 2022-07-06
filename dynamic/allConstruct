@@ -8,3 +8,43 @@ allConstruct(purple, [purp, p, ur, le, purpl ])
   [ purp, le ],
   [p, ur, p, le]
 ]
+
+
+const allConstruct = (target, wordBank) => {
+  if (target === '') return [[]];
+
+  const result = [];
+  for (let word of wordBank) {
+    if (target.indexOf(word) === 0) {
+      const remainder = target.slice(word.length);
+      const combinations = allConstruct(remainder, wordBank);
+     const targetWays = combinations.map(combination => [word, ...combination]);
+     result.push(...targetWays);
+    }
+  }
+  return result;
+}
+m = target.length;
+n = wordBank.length;
+Time complexity: O(n^m) exponential;
+Space complexity: O(m) exponential;
+
+
+2. Memoization =
+
+const allConstruct = (target, wordBank, memo = {}) => {
+  if (target === '') return [[]];
+  if (target in memo) return memo[target];
+
+  const result = [];
+  for (let word of wordBank) {
+    if (target.indexOf(word) === 0) {
+      const remainder = target.slice(word.length);
+      const combinations = allConstruct(remainder, wordBank, memo);
+     const targetWays = combinations.map(combination => [word, ...combination]);
+     result.push(...targetWays);
+    }
+  }
+  memo[target] = result;
+  return result
+}
