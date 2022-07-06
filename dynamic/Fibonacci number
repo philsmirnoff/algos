@@ -39,3 +39,13 @@ Space complexity will be O(n) where n is the max stack depth depth of n, heigth 
 
 
  lets imagine we make top level call to the deep of  5 and that adds to the stack the same way 5 calls 4 and we add stack frame for every call that we make down till we hit the the base case; once we hit the base case scenario we have 5 stack frames 5-4-3-2-1 and it will return, and once function returns, it stack frame is removed from the stack and it this point only after it removed from that left one, it will add the right one to be explored and this process continues; notice that any point of time the most number of stack frame that we used is exactly 5; we know that the number of stack frames that we ever gonna use is really just a height of the tree f n and max stack depth of n;
+
+
+to improve the Time complexity we will use memoization;
+we will store dublicate subproblems, so we can get results later on, to implement the memoization we need to use some sort of fast access data staructure, hash map equivalent in JavaScript it will be object, where the keys will be arg to the function and values will be returned value. That way i have nice mapping to the argument to the function, that is a function call as well as its return value.
+  'we will assign memo to be an empty object, and this memo is going to store n as the key and values will be just the return the values for this function.
+    and we going o check if the n is in the memo, if it is the I can just get the stored value from the memo and I am done. I can return the value that corresponds too that memos key, an I am using original argument key in my memo.
+    if its not I need to do manually calculations and store the result in memo and return what I just put in that memo. We are saving the value inside the object. Also we need to pass memo object to the all recursive calls, so they can access to the same exact memo object, so they have some sort of global information to refernce accross all th recursive trees.
+
+
+    we will return the memo[n], if not we will calculate it and store it inside the memo and pass it to the memo inside that calls so they refer to the same object'
