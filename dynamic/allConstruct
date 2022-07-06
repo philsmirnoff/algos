@@ -1,0 +1,10 @@
+Write a function allConstruct(target, wordBank) that accepts a target string and an array of strings.
+That function should return 2D array containing all of the ways that the target can be constructed by concatenating elements of the wordBank array.Each element of the 2D array should represent one combination that constructs the target.
+
+
+allConstruct(purple, [purp, p, ur, le, purpl ])
+
+[
+  [ purp, le ],
+  [p, ur, p, le]
+]
