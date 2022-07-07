@@ -27,7 +27,7 @@ Time complexity: O(n^m * m)
 Space complexity: 0(m)
 
 
- optimized solution:
+ optimized solution with memoization:
 
 const howSum = (targetSum, numbers, memo = {}) => {
   if (targetSum in [memo]) return memo[targetSum]
@@ -45,5 +45,9 @@ const howSum = (targetSum, numbers, memo = {}) => {
       return memo[targetSum];
     }
   }
+  memo[targetSum] = null;
   return null;
   }
+
+  time Complexity O(n*m^2)
+  Space Complexity O(m^2)
