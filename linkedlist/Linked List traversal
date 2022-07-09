@@ -1,0 +1,43 @@
+Classic implementation of Traverse A Linked list problem
+
+Inside of instance of Node we need to store two thinkgs:
+actual value and reference to the next node in the linked list
+if thee is even is an x node.
+
+class Node{
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+
+const a = new Node('A');
+const b = new Node('B');
+const c = new Node('C');
+const d = new Node('D');
+
+a.next = b;
+b.next = c;
+d.next = d;
+
+
+// A -> B -> C -> D -> NUll;
+
+const printLinkedList = (head) => {
+  // if I want just traverse through a linked list and print out every node,
+ // I am going to need to update the current pointer;
+ // So I ll say current equal to the head of the link list
+
+      let current = head;
+      while (current !== null) {
+        // current node is not equal to null, we ll traverse through the linked list.
+        current = current.next;
+      }
+
+
+
+}
+
+printLinkedList(a)
+
