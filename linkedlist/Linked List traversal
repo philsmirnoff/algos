@@ -41,3 +41,12 @@ const printLinkedList = (head) => {
 
 printLinkedList(a)
 
+// Recursive
+
+const printLinkedList = (head) => {
+
+  // base case
+  if (head === null) return;
+  console.log(head.val)
+  printLinkedList(head.next)
+}
