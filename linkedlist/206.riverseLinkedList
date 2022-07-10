@@ -68,3 +68,6 @@ var reverseList = function(head) {
     // we need to return prev, not curr because it will retun null
     return prev
 };
+
+
+https://medium.com/future-vision/data-structures-algorithms-linked-lists-fc0b8a82d609
