@@ -19,7 +19,7 @@ const d = new Node('D');
 
 a.next = b;
 b.next = c;
-d.next = d;
+c.next = d;
 
 
 // A -> B -> C -> D -> NUll;
@@ -32,6 +32,7 @@ const printLinkedList = (head) => {
       let current = head;
       while (current !== null) {
         // current node is not equal to null, we ll traverse through the linked list.
+        console.log(current.val)
         current = current.next;
       }
 
