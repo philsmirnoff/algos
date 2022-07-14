@@ -14,3 +14,6 @@ const breadthFirstValues = (root) => {
   }
   return result
 }
+
+T: O(n);
+S: O(n);
