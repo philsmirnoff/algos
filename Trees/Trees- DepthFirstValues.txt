@@ -77,8 +77,13 @@ const depthFirstValues = (root) => {
   return result;
 }
 
+T: O(n);
+S: O(n);
+
 /// recursive solution ///////
 const depthFirstValue = (root) => {
+
+  // base case when its empty tree;
   if (root === null) return [];
   const leftValues = depthFirstValue(root.left); // [b,d,e]
   const rightValues = depthFirstValue(root.right) /// [c, f]
