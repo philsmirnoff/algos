@@ -1,0 +1,31 @@
+binary search
+Write a function, binarySearch, that takes in a sorted array of numbers and a target. The function should return the index where the target can be found within the array. If the target is not found in the array, then return -1.
+
+You may assume that the input array contains unique numbers sorted in increasing order.
+
+Your function must implement the binary search algorithm.
+
+test_00
+binarySearch([0, 1, 2, 3, 4, 5, 6, 7, 8], 6); // -> 6
+test_01
+binarySearch([0, 6, 8, 12, 16, 19, 20, 24, 28], 27); // -> -1
+
+binary search
+const binarySearch = (numbers, target) => {
+  let lo = 0;
+  let hi = numbers.length - 1;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (target < numbers[mid]) {
+      hi = mid - 1;
+    } else if (target > numbers[mid]) {
+      lo = mid + 1;
+    } else {
+      return mid;
+    }
+  }
+  return -1;
+};
+n = length of numbers array
+Time: O(logn)
+Space: O(1)
