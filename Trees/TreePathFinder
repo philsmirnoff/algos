@@ -67,3 +67,22 @@ module.exports = {
 n = number of nodes
 Time: O(n)
 Space: O(n)
+
+
+
+depth first
+const pathFinder = (root, target) => {
+  if (root === null) return null;
+  if (root.val === target) return [ root.val ];
+
+  const leftPath = pathFinder(root.left, target);
+  if (leftPath !== null) return [ root.val, ...leftPath];
+
+  const rightPath = pathFinder(root.right, target);
+  if (rightPath !== null) return [ root.val, ...rightPath];
+
+  return null;
+};
+n = number of nodes
+Time: O(n^2)
+Space: O(n)
