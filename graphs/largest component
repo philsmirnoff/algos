@@ -9,7 +9,7 @@ const largestComponent = (graph) => {
   const visted = new Set()
   let longest = 0
   for (let node in graph) {
-    const size = exploreSize(graph, node);
+    const size = exploreSize(graph, node, visited);
     if (size > longest) longest = size;
   }
   return longest;
@@ -26,3 +26,7 @@ const exploreSize = (graph, node, visited) => {
   }
   return size
 }
+n = number of nodes
+e = number edges
+Time: O(e)
+Space: O(n)
