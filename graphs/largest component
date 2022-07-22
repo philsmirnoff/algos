@@ -3,7 +3,11 @@ largest Component
 Write a function, largest component, that takes in the adjacency list of an undirected graph. the function should return the size of the largest connected component in the graph
 
 
-solution
+// solution
+// create set
+// initilize longest to 0;
+// traverse through every node is with for (let node in graph)
+
 
 const largestComponent = (graph) => {
   const visted = new Set()
