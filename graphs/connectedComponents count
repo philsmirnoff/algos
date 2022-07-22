@@ -64,3 +64,37 @@ const explore = (graph, current) => {
   <!-- // 5. whenever it explores new node return true, to get to return true explore function must finish exploring all the neighbors, that means we explore all the components as far as possible -->
   return true
 }
+// Better explanation;
+const connectedComponentsCount = (graph) => {
+  //2.2 add javascript set O(1) look up and addition, add visited
+  // to all recursive calls
+  const visited = new Set();
+  let count = 0
+  // 1. we will start traversing in every potential node
+  // starting from that node as far as possible
+  for (let node in graph) {
+    // explore(graph, node, visited) =-> fist version
+    // 3. if explore funnction will return true, that means its a new componet,
+    // we will increment the coount
+    if (explore(graph, node, visited) === true) {
+      count++;
+    }
+  }
+  return count;
+};
+
+// 2. time to create explore function that
+//will take graph and current node;
+const explore = (graph, current, visited) => {
+   //2.3 and mark visited nodes and add new nodes to visited
+if (visited.has(String(current))) return false;
+    // 4. convert the data into strings o get consistent types of data
+    visited.add(String(current));
+  //2.1 iterate through every neighbor of this node
+ for (let neighbor of graph[current]) {
+   explore(graph, neighbor, visited)
+  }
+// 2.4 explore function will return true,
+//whenever it explore all the component's neighbor as far as possible
+return true
+}
