@@ -1,1 +1,37 @@
+const { FormControl } = require("@material-ui/core")
+const { is } = require("sequelize/types/lib/operators")
+
 mergeSort Algo
+merge sort
+Write a function, mergeSort, that takes in an array of numbers as an argument. The function should return a new array containing elements of the original array sorted in ascending order. Your function must implement the merge sort algorithm.
+
+test_00
+const numbers = [10, 4, 42, 5, 8, 100, 5, 6, 12, 40];
+mergeSort(numbers);
+// -> [ 4, 5, 5, 6, 8, 10, 12, 40, 42, 100 ]
+
+
+Solution;
+// 1. main recursive function merge sort
+// 2. helper function merge, that will merge two sorted subarrays into single sorted array;
+// 3.  check if the nums length is less or equal to zero, if it is, return the nums
+// 4. slice nums from 0 to MID and from mid to the end and call the mergeSort on left and right subarrays, as a result we will get both sorted arrays and
+// return merge(leftSorted, rightSorted)
+
+// 5. now i want compare elements from the front of nums1 and nums2 , for merge function check while nums1 length is greater  than zero and nums 2 length is greater than zero, we will check if the front of nums1 is greater than front of nums 2 we will shift  out (or pop out for better complexity) and push it to merged array
+// after we done looping, we will add of left overs to the merged array.
+// it will  give n^2 time complexity, instead we will remove from back not front (O(1) time complexity)))
+// for that we will reverse nums1 and nums2 and change from zero to length - 1 and add reverse in merged push to nums reverse
+
+// Time:
+// O(n log n)
+// Space: O(n)
+
+const mergeSort = (nums) => {
+  if (nums.length <= 1) return nums;
+  const mid = Math.floor(nums.length / 2);
+  const left = mergeSort(nums.slice(0, mid));
+  const right = mergeSort(nums.slice(mid));
+  return merge(left, right);
+}
+
