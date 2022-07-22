@@ -1,0 +1,46 @@
+uncompress
+Write a function, uncompress, that takes in a string as an argument. The input string will be formatted into multiple groups according to the following pattern:
+
+<number><char>
+
+for example, '2c' or '3a'.
+The function should return an uncompressed version of the string where each 'char' of a group is repeated 'number' times consecutively. You may assume that the input string is well-formed according to the previously mentioned pattern.
+
+test_00:
+uncompress("2c3a1t"); // -> 'ccaaat'
+
+
+const uncompress = (s) => {
+  // todo solved by two pointers;
+  // 1. create an empty string for results and inices starting at index 0,
+  // where j will be responsible for checking if its a number and hits the character;
+  // and create numbers array and if j includes any of those numbers we have to do our logic;
+  const numbers = '0123456789'
+  let result = '';
+  let i = 0;
+  let j = 0;
+
+  // iterate through string while j < s.length;
+  while (j < s.length) {
+    // if the char in the index j is number
+    if (numbers.includes(s[j])) {
+      // we will increment j;
+      j++;
+    } else {
+    // if the current char is not a number, we will slice
+    // string from slice i to j that s will be my number
+    // and we need to convert into Number
+    const myNum = Number(s.slice(i, j));
+      // for loop to get number of iteration to add character to the result number of times
+       for (let count = 0; count < myNum; count++) {
+         // char j we need to add n times;
+         result += s[j]
+       }
+      // increment j
+      j+= 1;
+     //  keep up to date
+      i = j
+    }
+  }
+  return result;
+};
