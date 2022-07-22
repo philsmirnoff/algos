@@ -31,7 +31,9 @@ connectedComponentsCount({
   4: [3, 2]
 })
 
-
+// explanation: use set for keeping track of visited nodes,
+// count variable to increment when trasversing function returns true
+// and iterate through all nodes in the graph using for (let node in graph) and explore function keep track of visited nodes that takes current node and graph as arguments.
 const connectedComponentsCount = (graph) => {
   <!-- // 3 we need to mark visited nodes as visited using set() it offers O(1) look up and addition, we need to add visitied to all our recursive calls -->
   const visited = new Set();
