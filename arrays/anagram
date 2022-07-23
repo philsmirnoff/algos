@@ -6,19 +6,23 @@ anagrams('restful', 'fluster'); // -> true
 
 Solution:
 const anagrams = (s1, s2) => {
+  // todo
+  // lets use hash map
   const count = {};
+  // iterate through the character
   for (let char of s1) {
+    // check if the char in count
     if (!(char in count)) {
       count[char] = 0;
     }
-    count[char] += 1;
+  count[char] += 1;
   }
 
   for (let char of s2) {
-    if (count[char] === undefined) {
-      return false;
-    } else {
+    if (char in count) {
       count[char] -= 1;
+    } else {
+      return false;
     }
   }
 
@@ -27,9 +31,10 @@ const anagrams = (s1, s2) => {
       return false;
     }
   }
-
-  return true;
+  return true
 };
+
+
 n = length of string 1
 m = length of string 2
 Time: O(n + m)
