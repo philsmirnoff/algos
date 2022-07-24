@@ -42,3 +42,22 @@ const intersection = (a, b) => {
 
 
  solution number2 Alvins
+
+ const intersection = (a, b) => {
+ const result = []
+ const items = new Set();
+
+ for (let item of a) {
+   items.add(item);
+ }
+
+ for (let elem of b) {
+   if (items.has(elem)) {
+     result.push(elem)
+   }
+ }
+ return result
+//     n = length of array a, m = length of array b
+// Time: O(n+m)
+// Space: O(n)
+// };
