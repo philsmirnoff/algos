@@ -6,7 +6,7 @@ Write a function, largest component, that takes in the adjacency list of an undi
 // solution
 // create set
 // initilize longest to 0;
-// traverse through every node is with for (let node in graph)
+// traverse through every node is with for (let node in graph) use helper function to explore size initilize to size and update the longest if size is greater than longest.
 
 
 const largestComponent = (graph) => {

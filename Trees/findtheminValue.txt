@@ -3,6 +3,7 @@
 
 const breadthFirstSearch = (root) => {
   if (root === null) return 0;
+  // a great default value for our null node is Infinity, becuase positive Infinity definetly not gonna be a bigger value than the minValue thats are actually within the tree.
   let minValue = Infinity;
   const queue = [root]
   while (queue.length > 0) {

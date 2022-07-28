@@ -66,10 +66,8 @@ const buildGraph = (edges) => {
     // b should be the neighbor of a
     graph[a].push(b);
     graph[b].push(a);
-
-  }
-
-  return graph;
+   }
+   return graph;
 }
 Space Complexity
 Time complexity Object(n)
