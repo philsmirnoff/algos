@@ -14,5 +14,5 @@ The fisrt and 2nd snumber of the sequence, we sum the previous two.
     return table[n];
  }
 
- Time complexity O(n)
+ Time complexity O(n) linear
  Space complexity O(n)
