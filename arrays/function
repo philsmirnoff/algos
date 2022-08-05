@@ -1,0 +1,16 @@
+function breakPalindrome(palindromeStr) {
+    // Write your code here
+// base case if the length of input string is 1 - return an string IMPOSSIBLE
+  const length = palindromeStr.length;
+  if (length === 1) return 'IMPOSSIBLE';
+// iterate over the the first half of the str, as we  already know the second half
+  for (let i = 0; i < Math.floor(length / 2); i++) {
+      // if the character of the str is not equal 'a', change it to a and return it
+      if (palindromeStr[i] !== 'a') {
+          return palindromeStr.slice(0, 1) + 'a' + palindromeStr.slice(i + 1);
+      }
+  }
+  
+  // if the entire string consists of 'a change the last character to 'b' and return it
+  return palindromeStr.slice(0, length - 1) + 'b';
+}
