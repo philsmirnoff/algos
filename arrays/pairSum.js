@@ -203,4 +203,32 @@ const twoSum = (numbers, target) => {
 
 
 Time Complexity O(n)
-Space complexity: O(1)
+Space complexity: O(1
+
+
+
+  function recursiveStringReverse(str) {
+    if (str.length === 1) {
+      return str
+    }
+    return recursiveStringReverse(str.slice(1)) + str[0]
+  }
+
+  // write a function that implements a random sample of items in a single pass
+
+  function randInt(min, max)  {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  }
+  function sample(items, n) {
+    let result = []
+    for (let i = 0; i < n; i++) {
+      let index = randInt(0, items.length - 1)
+      result.push(items[index])
+      items.splice(index, 1)
+    }
+    return result
+
+
+    // given
+
+    sortBy(sortBy(objs, 'date'), 'name')  '))
