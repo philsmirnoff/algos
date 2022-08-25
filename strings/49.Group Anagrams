@@ -56,9 +56,9 @@ once we got al these values, we need to return all these values
 
 var groupAnagrams = function(strs) {
   const sortedStrs = strs.map(word => word.split('').sort('').join(''))
-  
+
   const hash = {}
-  
+
   for (let i = 0; i < strs.length; i++) {
     if we dont have in our hash sorted store[i], we will set the hash at that key to an empty array with our strs[i]
     if (!hash[sortedSrs[i]]) {
@@ -71,7 +71,7 @@ var groupAnagrams = function(strs) {
 }
 
 
-// 
+//
 
 /**
  * @param {string[]} strs
@@ -85,8 +85,24 @@ var groupAnagrams = function(strs) {
         if (!map[sorted]) map[sorted] = [];
         map[sorted].push(strs[i]);
     }
-    
-    return Object.values(map);  
+
+    return Object.values(map);
 };
 
 
+var groupAnagrams = function(strs) {
+    let sortedStrs = strs.map(el => el.split("").sort().join(""))
+    let hash = {};
+    for(let i=0; i < strs.length ; i++)
+    {
+        let str = sortedStrs[i];
+        if(!hash[str])
+        {
+            hash[str] = [strs[i]]
+        } else {
+            hash[str].push(strs[i])
+        }
+
+    }
+    return Object.values(hash)
+};
