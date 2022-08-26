@@ -108,3 +108,38 @@ function helper(left, right, s) {
 
   return curr;
 }
+
+
+// best solution
+
+var longestPalindrome = function(s) {
+if (s.length < 1) return '';
+
+    let longest = '';
+
+    for (let i = 0; i < s.length; i++) {
+        let oddPalindrom = expandFromCenter(s, i, i);
+        let evenPalindrom = expandFromCenter(s, i-1, i);
+
+        if (oddPalindrom.length > longest.length) {
+            longest = oddPalindrom;
+        }
+        if (evenPalindrom.length > longest.length) {
+            longest = evenPalindrom;
+        }
+    }
+
+
+
+    return longest;
+}
+
+ const expandFromCenter = (s, left, right) => {
+         let i = 0;
+         while (s[left - i] && s[left - i] === s[right + i]) {
+             i++
+         }
+         i--
+         return s.slice(left - i, right + i + 1)
+        }
+https://www.youtube.com/watch?v=lo8n0ivbhog
