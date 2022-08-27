@@ -1,0 +1,71 @@
+1395. Count Number of Teams
+Medium
+
+2140
+
+167
+
+Add to List
+
+Share
+There are n soldiers standing in a line. Each soldier is assigned a unique rating value.
+
+You have to form a team of 3 soldiers amongst them under the following rules:
+
+Choose 3 soldiers with index (i, j, k) with rating (rating[i], rating[j], rating[k]).
+A team is valid if: (rating[i] < rating[j] < rating[k]) or (rating[i] > rating[j] > rating[k]) where (0 <= i < j < k < n).
+Return the number of teams you can form given the conditions. (soldiers can be part of multiple teams).
+
+
+
+Example 1:
+
+Input: rating = [2,5,3,4,1]
+Output: 3
+Explanation: We can form three teams given the conditions. (2,3,4), (5,4,1), (5,3,1).
+
+
+ES6 JavaScript O(N^2) beats 98% with explanation
+5
+space_sailor's avatar
+space_sailor
+46
+Last Edit: October 5, 2020 11:21 AM
+
+552 VIEWS
+
+Every team is consist of 3 members, say Left, Middle and Right. (Left = rating[i], Middle = rating[j], Right = rating[k])
+
+If the value is in ascending order: Left < Middle < Right
+If the value is in descending order: Left > Middle > Right
+
+By checking the posible Left member count and Right member count, we can then get the total composition count by multiplying them.
+(Note that we need to calculate ascending and descending count separately.)
+
+const numTeams = rating => {
+  let ans = 0;
+
+  // 'i' is the index of Middle
+  for (let i = 1; i < rating.length - 1; i++) {
+    let descLeft = 0;
+    let descRight = 0;
+	let ascLeft = 0;
+	let ascRight = 0;
+
+    // Check for Left
+    for (let j = 0; j < i; j++) {
+      if (rating[j] > rating[i]) descLeft++;
+      if (rating[j] < rating[i]) ascLeft++;
+    }
+
+    // Check for Right
+    for (let j = i + 1; j < rating.length; j++) {
+      if (rating[j] < rating[i]) descRight++;
+      if (rating[j] > rating[i]) ascRight++;
+    }
+
+    ans += descLeft * descRight + ascLeft * ascRight;
+  }
+
+  return ans;
+};
