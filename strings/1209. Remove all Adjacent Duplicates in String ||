@@ -1,0 +1,42 @@
+var removeDuplicates = function(s, k) {
+        let stack = [];
+    for (let char of s) {
+     const top = stack[stack.length - 1];
+
+        // new char - push to the stack
+        if (!top || top.char !== char) {
+            stack.push({ char, count: 1 });
+            continue;
+        }
+        // same char, update count
+        top.count++;
+        // k same chars, delet it from the stack
+
+        if (top.count === k) {
+            stack.pop()
+        }
+ }
+    return stack.map(({ char, count }) => char.repeat(count)).join('')
+};
+
+
+var removeDuplicates = function(s, k) {
+        let stack = [];
+    for (let char of s) {
+     const top = stack[stack.length - 1];
+
+        // new char - push to the stack
+        if (!top || top.char !== char) {
+            stack.push({ char, count: 1 });
+            continue;
+        }
+        // same char, update count
+        top.count++;
+        // k same chars, delet it from the stack
+
+        if (top.count === k) {
+            stack.pop()
+        }
+ }
+    return stack.map(({ char, count }) => char.repeat(count)).join('')
+};
