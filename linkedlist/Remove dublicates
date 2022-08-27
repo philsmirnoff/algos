@@ -1,0 +1,25 @@
+var deleteDuplicatesUnsorted = function(head) {
+    let count = {};
+
+    let curr = head;
+
+    while (curr) {
+        count[curr.val] ? count[curr.val]++ : count[curr.val] = 1;
+        curr = curr.next;
+    }
+
+    curr = head;
+    let dummy = new ListNode(null, head);
+    let prev = dummy
+    while (curr) {
+        if (count[curr.val] > 1) {
+            prev.next = prev.next.next
+            curr = curr.next;
+        } else {
+            prev = curr;
+            curr = curr.next;
+        }
+    }
+
+    return dummy.next;
+};
