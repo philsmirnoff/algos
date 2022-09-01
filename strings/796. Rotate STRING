@@ -1,0 +1,33 @@
+796. Rotate String
+Easy
+
+2107
+
+90
+
+Add to List
+
+Share
+Given two strings s and goal, return true if and only if s can become goal after some number of shifts on s.
+
+A shift on s consists of moving the leftmost character of s to the rightmost position.
+
+For example, if s = "abcde", then it will be "bcdea" after one shift.
+
+
+Example 1:
+
+Input: s = "abcde", goal = "cdeab"
+Output: true
+
+var rotateString = function(s, goal) {
+    let spl = s.split('');
+
+    for (let i = 0; i < spl.length; i++) {
+        spl.push(spl.shift());
+        if (spl.join('') === goal) {
+            return true
+        }
+    }
+    return false
+};
