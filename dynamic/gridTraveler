@@ -1,3 +1,4 @@
+Grid Treveler
 Say that you are traveler on a 2D grid. You begin in the top-left corner and your goal is to travel to the bottom-right corner. You only move donq or right.
 
 In how many ways can you travel to the goal on a grid with dimensions m * n?
@@ -29,3 +30,4 @@ const gridTraveler = (m, n, memo = {}) => {
 
 Time Complexity O(m * n)
 Space complexity O(m + n)
+
