@@ -57,7 +57,7 @@ function maxSubArraySum = (arr, num) => {
   if (arr.length < num) {
     return null
   }
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < num; i++) {
     maxSum += arr[i];
   }
   tempSum = maxSum;
