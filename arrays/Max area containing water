@@ -25,6 +25,9 @@ Input: height = [1,8,6,2,5,4,8,3,7]
 Output: 49
 Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
 
+// To simplify the problem the value for the array looks like this (j-i) * min(height[j], [i]). we
+// we want to loop through the array and find this i and j and calculate the maxArea.
+// we will point i and j as front and back of the array and then we will make them move to the center untill they meet each other. the distance between j minus i
 
 
 var maxArea = function(height) {
@@ -41,3 +44,7 @@ var maxArea = function(height) {
   }
   return maxArea;
 };
+
+
+// solution video
+https://www.youtube.com/watch?v=FtrorVKobgw
