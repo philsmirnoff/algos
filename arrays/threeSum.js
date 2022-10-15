@@ -97,22 +97,22 @@ arrayTwoSum([11,-1], -10 + 0)`
 
 var threeSum = function(nums) {
   nums.sort((a, b) => a-b)
-  
+
   const result = []
 
-  
+
   for(let i = 0; i < nums.length; i++){
   //only run on the first instance of a number, skip to remaining to avoid duplicates
       if(i > 0 && nums[i] === nums[i-1]){
           continue
       }
-     
 
-      
-      //run 2sum on remainder of the sorted array 
+
+
+      //run 2sum on remainder of the sorted array
       let l = i + 1
       let r = nums.length - 1
-      
+
       while(l < r){
           if(nums[l] + nums[r] + nums[i] === 0){
               result.push([nums[i], nums[l], nums[r]])
@@ -123,19 +123,22 @@ var threeSum = function(nums) {
               l++
               continue
           }
-          
+
           l++
 
           while(l < nums.length && nums[l] === nums[l-1]){
               l++
           }
-          
+
       }
   }
-  
-  
+
+
   return result
 };
 /*
 
-[-2, 0, 1, 1, 2]ß
+[-2, 0, 1, 1, 2]
+
+T: 0(n^3);
+S: 0(1);
