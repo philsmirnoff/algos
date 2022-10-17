@@ -66,3 +66,5 @@ var maxProfit = function(prices) {
      return mxProfit
 }
 
+Time complexity: O(n)
+Space complexity: O(1)
