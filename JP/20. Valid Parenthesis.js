@@ -60,6 +60,6 @@ var isValid = function(s) {
 };
 
 Time complexity O(n);
-Spae complexity: 0(n)
+Space complexity: 0(n)
 
 https://www.youtube.com/watch?v=OxbxP5_-Tcs
