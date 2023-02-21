@@ -56,3 +56,16 @@ function spiralOrder(matrix) {
 return result;
 
 }
+
+// The idea is to use four pointers to traverse the matrix in a spiral order. We start by traversing right, then down, then left, and then up. At each step, we check if we have visited all the elements in the matrix. If not, we continue with the traversal. If we have visited all the elements, we stop and return the result.
+
+
+
+
+
+// Time and space complexity?
+// The time complexity of this solution is O(mn), where m is the number of rows and n is the number of columns in the matrix. This is because we need to visit each element in the matrix exactly once to add it to the result array.
+
+// The space complexity of this solution is O(mn) as well. This is because we need to store all the elements in the matrix in the result array. We also use four variables to keep track of the boundaries of the matrix, which require constant space.
+
+// Note that we do not use any additional data structures, so the space complexity is constant with respect to the input size.
