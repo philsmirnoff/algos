@@ -1,0 +1,88 @@
+function candyCrush(board) {
+  const m = board.length;
+  const n = board[0].length;
+  let crushed = true;
+
+  while (crushed) {
+    crushed = false;
+
+    // Mark the candies to be crushed
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const candy = Math.abs(board[i][j]);
+        if (candy !== 0 &&
+            (j + 2 < n && Math.abs(board[i][j+1]) === candy && Math.abs(board[i][j+2]) === candy ||
+             i + 2 < m && Math.abs(board[i+1][j]) === candy && Math.abs(board[i+2][j]) === candy)) {
+          board[i][j] = -candy;
+          crushed = true;
+        }
+      }
+    }
+
+    // Drop the candies and fill the empty cells
+    if (crushed) {
+      for (let j = 0; j < n; j++) {
+        let k = m - 1;
+        for (let i = m - 1; i >= 0; i--) {
+          if (board[i][j] > 0) {
+            board[k][j] = board[i][j];
+            k--;
+          }
+        }
+        while (k >= 0) {
+          board[k][j] = 0;
+          k--;
+        }
+      }
+    }
+  }
+
+  return board;
+}
+
+// The function uses a nested loop to iterate over each cell in the input array board, and checks if the candy in the current cell has two identical neighbors either horizontally or vertically. If so, it marks the current cell by negating its value.
+
+// After marking all the candies to be crushed, the function drops the crushed candies and fills the empty cells by moving the non-crushed candies downwards. It does this by iterating over the columns of the input array and for each column, it starts from the bottom and moves each non-empty candy downwards until it reaches the first empty cell. Then, it fills the remaining empty cells at the top with zeros.
+
+// The function repeats the above steps until no more candies can be crushed. Finally, it returns the resulting stable board.
+
+
+// The time complexity of the function is O((mn)^2), where m is the number of rows and n is the number of columns in the input array board. This is because the function repeatedly iterates over the entire input array until no more candies can be crushed. In the worst case, every candy in the input array needs to be crushed, and each iteration takes O(mn) time.
+
+// The space complexity of the function is O(1), as it modifies the input array board in place without using any additional data structures that grow with the size of the input. The function only uses a constant amount of additional memory to store the loop indices and temporary variables, regardless of the size of the input array.
+
+
+// another solution
+
+var candyCrush = function(board) {
+  const n = board.length;
+  const m = board[0].length;
+  
+  const recur() {
+    // move positive numbers down, eliminate zeros
+    for (let j = 0; j < m; j++) {
+      let k = n - 1;
+      for (let i = n - 1; i >= 0; i--) {
+        if (board[i][j] > 0) {
+          board[k][j] = board[i][j];
+          k--;
+        }
+      }
+      while (k >= 0) {
+        board[k][j] = 0;
+        k--;
+      }
+    }
+    let todo = false;
+    // hotizontal remove candy
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j+2 < m; j++) {
+        const v = board[i][j];
+        const v1 = board[i][j+1];
+        const v2 = board[i][j+2];
+        if (v != 0 && v == v1 && v == v2) {
+          board[i][j] = board[i][j+1] = board[i][j+2] = 0;
+          todo = true;
+        }
+      })
+  }
