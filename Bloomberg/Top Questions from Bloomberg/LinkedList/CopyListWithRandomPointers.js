@@ -33,6 +33,9 @@ Output: [[3,null],[3,0],[3,null]]
 
 
 var copyRandomList = function(head) {
+  if (!head) {
+    return null;
+  }
   // create a hash table to map the original nodes to the new nodes
   let nodeMap = new Map();
 
