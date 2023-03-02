@@ -111,3 +111,52 @@ var isValidBST = function(root) {
 
 // This solution has a time complexity of O(n) and a space complexity of O(n) due to the use of a stack to perform the in-order traversal.
 
+var buildTree = function(preorder, inorder) {
+  if (preorder.length === 0) {
+  return null;
+}
+
+let rootVal = preorder[0];
+let rootIndex = inorder.indexOf(rootVal);
+
+let leftInorder = inorder.slice(0, rootIndex);
+let rightInorder = inorder.slice(rootIndex + 1);
+
+let leftPreorder = preorder.slice(1, rootIndex + 1);
+let rightPreorder = preorder.slice(rootIndex + 1);
+
+let leftSubtree = buildTree(leftPreorder, leftInorder);
+let rightSubtree = buildTree(rightPreorder, rightInorder);
+
+let root = new TreeNode(rootVal);
+root.left = leftSubtree;
+root.right = rightSubtree;
+
+return root;
+};
+
+// Let's go over the solution line by line:
+
+// We define a function called buildTree that takes in the preorder and inorder arrays as arguments.
+
+// If the preorder array is empty, we return null because there are no more nodes to add to the binary tree.
+
+// We extract the value of the root node from the beginning of the preorder array.
+
+// We find the index of the root node's value in the inorder array, which splits the inorder array into the left and right subtrees.
+
+// We create new leftInorder and rightInorder arrays by slicing the inorder array based on the root index.
+
+// We create new leftPreorder and rightPreorder arrays by slicing the preorder array based on the size of the leftInorder array.
+
+// We recursively call the buildTree function on the leftPreorder and leftInorder arrays to construct the left subtree of the current node.
+
+// We recursively call the buildTree function on the rightPreorder and rightInorder arrays to construct the right subtree of the current node.
+
+// We create a new TreeNode with the value of the root node.
+
+// We assign the left and right subtrees to the left and right properties of the root node.
+
+// We return the root node of the binary tree.
+
+// Overall, this solution uses recursion to construct a binary tree from the preorder and inorder traversals by splitting the arrays into the left and right subtrees and constructing each subtree recursively. The time complexity of this solution is O(n^2) in the worst case where each node only has one child, and the space complexity is O(n) due to the use of recursive function calls.
