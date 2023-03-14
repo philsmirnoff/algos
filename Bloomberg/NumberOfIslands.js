@@ -133,3 +133,44 @@ function dfs(grid, i, j) {
 // At the end, we return the total number of islands.
 
 // This solution has a time complexity of O(m * n), where m is the number of rows and n is the number of columns in the grid, since we visit each cell once. The space complexity is O(m * n) in the worst case, where all cells are land and we need to store all of them on the call stack during the depth-first search.
+
+
+
+another solution
+const numIslands = function(grid) {
+  if (!grid || grid.length === 0) {
+    return 0;
+  }
+
+  const numRows = grid.length;
+  const numCols = grid[0].length;
+  let count = 0;
+
+  const dfs = function(row, col) {
+    if (row < 0 || row >= numRows || col < 0 || col >= numCols || grid[row][col] === '0') {
+      return;
+    }
+    grid[row][col] = '0';
+    dfs(row + 1, col);
+    dfs(row - 1, col);
+    dfs(row, col + 1);
+    dfs(row, col - 1);
+  }
+
+  for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j < numCols; j++) {
+      if (grid[i][j] === '1') {
+        dfs(i, j);
+        count++;
+      }
+    }
+  }
+
+  return count;
+};
+
+// This solution is similar to the BFS approach, but uses a recursive DFS function instead of a queue. We define a helper function dfs that takes the current row and column as arguments. If the current cell is not a land cell ('1'), or is out of bounds, we return. Otherwise, we mark the current cell as visited by changing it to a water cell ('0'), and recursively call dfs on all adjacent cells (up, down, left, right).
+
+// In the main function, we iterate through every cell in the grid and call dfs on each unvisited land cell ('1'), incrementing the count for each island found. Finally, we return the total count of islands.
+
+// The time and space complexity of this solution is the same as the BFS solution, O(m * n) for time (where m and n are the number of rows and columns in the grid) and O(min(m, n)) for space (stack space used by the DFS function).
