@@ -46,3 +46,6 @@ const wordBreak = (s, wordDict) => {
   // Return whether the entire string can be segmented into words
   return dp[n];
 };
+// The time complexity of this solution is O(n^3), where n is the length of the input string s. This is because we have nested loops to iterate over the string and the dictionary, and for each substring of the input string, we may need to check its presence in the dictionary, which takes O(n) time.
+
+// The space complexity of this solution is O(n), where n is the length of the input string s. This is because we are using a memoization table to store the results of subproblems, which takes O(n) space. Additionally, the recursion stack can go up to O(n) in the worst case.
