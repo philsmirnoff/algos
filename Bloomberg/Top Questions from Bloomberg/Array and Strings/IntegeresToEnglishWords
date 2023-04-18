@@ -1,0 +1,65 @@
+// Integer to English Words
+
+// Solution
+// Convert a non-negative integer num to its English words representation.
+
+
+
+// Example 1:
+
+// Input: num = 123
+// Output: "One Hundred Twenty Three"
+// Example 2:
+
+// Input: num = 12345
+// Output: "Twelve Thousand Three Hundred Forty Five"
+// Example 3:
+
+// Input: num = 1234567
+// Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+
+
+// Constraints:
+
+// 0 <= num <= 231 - 1
+
+
+// The time complexity of the solution is O(log_1000(num)) because we are dividing the input number by 1000 in each iteration of the while loop, which effectively reduces its size by a factor of 1000. Therefore, the number of iterations required is proportional to the logarithm base 1000 of the input number.
+
+// The space complexity of the solution is O(1) because we are using fixed-size arrays to store the English words for numbers below 20, multiples of 10 up to 90, and thousands. Additionally, we are using a constant amount of extra space to store the loop index, the words string, and the return value of the helper function during each iteration of the while loop.
+
+// Overall, the solution is very efficient in terms of both time and space complexity, and can handle very large input numbers without running into memory or performance issues.
+
+const below20 = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+const tens = ['','Ten','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+const thousands = ['','Thousand','Million','Billion'];
+
+const numberToWords = function(num) {
+    if (num === 0) {
+        return 'Zero';
+    }
+    let i = 0;
+    let words = '';
+
+    while (num > 0) {
+        if (num % 1000 !== 0) {
+            words = helper(num % 1000) + thousands[i] + ' ' + words;
+        }
+        num = Math.floor(num / 1000);
+        i++;
+    }
+
+    return words.trim();
+};
+
+const helper = function(num) {
+    if (num === 0) {
+        return '';
+    } else if (num < 20) {
+        return below20[num] + ' ';
+    } else if (num < 100) {
+        return tens[Math.floor(num / 10)] + ' ' + helper(num % 10);
+    } else {
+        return below20[Math.floor(num / 100)] + ' Hundred ' + helper(num % 100);
+    }
+};
