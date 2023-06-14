@@ -1,3 +1,4 @@
+var merge = function(intervals) {
   // Sort the intervals by start time
   intervals.sort((a, b) => a[0] - b[0]);
 
@@ -19,3 +20,6 @@
   }
 
   return merged;
+}
+
+[[1,4]]

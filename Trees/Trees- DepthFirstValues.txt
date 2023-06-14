@@ -89,3 +89,35 @@ const depthFirstValue = (root) => {
   const rightValues = depthFirstValue(root.right) /// [c, f]
   return [root.val, ...leftValues, ...rightValues]
 }
+
+
+
+////////--------------------////////////////////
+iterative using dfs
+
+const depthFirstValues = (root) => {
+  const result = [];
+  const stack = [root];
+  
+  while (stack.length > 0) {
+    let current = stack.pop();
+    result.push(current)
+    
+    if (current.right) stack.push(current.right);
+    if (current.left) stack.push(current.left)
+  }
+  return result
+}
+
+
+///////////
+recursive approach
+
+const depthFirstValues = (root) => {
+  if (root === null) return [];
+  
+  const leftValues = depthFirstValues(root.left);
+  const rightValues = depthFirstValues(root.right);
+  
+  return [root.val, ...leftValues, ...rightValues]
+}
