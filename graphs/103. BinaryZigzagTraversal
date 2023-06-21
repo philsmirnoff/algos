@@ -1,0 +1,64 @@
+class TreeNode {
+  constructor(val, left, right) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+const zigzagLevelOrder = function(root) {
+  // Check if the tree is empty
+  if (!root) {
+    return [];
+  }
+
+  // Create an array to store the result
+  const result = [];
+
+  // Create a queue for BFS and initialize it with the root node
+  const queue = [root];
+
+  // Initialize the level counter
+  let level = 0;
+
+  // Perform BFS traversal
+  while (queue.length > 0) {
+    // Get the number of nodes at the current level
+    const levelSize = queue.length;
+
+    // Create an array to store the nodes at the current level
+    const currentLevel = [];
+
+    // Process all nodes at the current level
+    for (let i = 0; i < levelSize; i++) {
+      // Remove the first node from the queue
+      const currentNode = queue.shift();
+
+      // Add the node value to the current level array
+      currentLevel.push(currentNode.val);
+
+      // Add the left and right children of the current node to the queue
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+    }
+
+    // Reverse the order of nodes if the current level is odd (zigzag pattern)
+    if (level % 2 !== 0) {
+      currentLevel.reverse();
+    }
+
+    // Add the current level array to the result array
+    result.push(currentLevel);
+
+    // Move to the next level
+    level++;
+  }
+
+  // Return the final zigzag level order traversal result
+  return result;
+};
