@@ -1,0 +1,49 @@
+107. Binary Tree Level Order Traversal II
+Medium
+
+4409
+
+310
+
+Add to List
+
+Share
+Given the root of a binary tree, return the bottom-up level order traversal of its nodes' values. (i.e., from left to right, level by level from leaf to root).
+
+
+
+Example 1:
+
+
+Input: root = [3,9,20,null,null,15,7]
+Output: [[15,7],[9,20],[3]]
+Example 2:
+
+Input: root = [1]
+Output: [[1]]
+Example 3:
+
+Input: root = []
+Output: []
+
+
+var levelOrderBottom = function(root) {
+    if (root === null) return [];
+    let queue = [root]
+    let result = []
+
+    while (queue.length) {
+        let levelSize = queue.length;
+        let currentLevel = []
+        for (let i = 0; i < levelSize; i++) {
+            let currentNode = queue.shift();
+            currentLevel.push(currentNode.val)
+
+            if (currentNode.left) queue.push(currentNode.left)
+            if (currentNode.right) queue.push(currentNode.right)
+         }
+        result.push(currentLevel)
+    }
+
+    return result.reverse()
+};

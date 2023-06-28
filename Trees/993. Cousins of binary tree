@@ -1,0 +1,74 @@
+993. Cousins in Binary Tree
+Easy
+
+3623
+
+178
+
+Add to List
+
+Share
+Given the root of a binary tree with unique values and the values of two different nodes of the tree x and y, return true if the nodes corresponding to the values x and y in the tree are cousins, or false otherwise.
+
+Two nodes of a binary tree are cousins if they have the same depth with different parents.
+
+Note that in a binary tree, the root node is at the depth 0, and children of each depth k node are at the depth k + 1.
+
+
+
+Exampl/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} x
+ * @param {number} y
+ * @return {boolean}
+ */
+var isCousins = function(root, x, y) {
+ if (root === null) return false;
+
+  // Create a queue for BFS
+  const queue = [];
+  queue.push(root);
+
+  // Perform BFS
+  while (queue.length > 0) {
+    const size = queue.length;
+    let foundX = false;
+    let foundY = false;
+
+    // Check each level of the tree
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+
+      // Check if the current node is x or y
+      if (node.val === x) foundX = true;
+      if (node.val === y) foundY = true;
+
+      // Check if the nodes are siblings (same parent)
+      if (node.left && node.right) {
+        if (
+          (node.left.val === x && node.right.val === y) ||
+          (node.left.val === y && node.right.val === x)
+        ) {
+          return false; // They are siblings
+        }
+      }
+
+      // Add the child nodes to the queue
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+
+    // Check if x and y were found at the same level but not siblings
+    if (foundX && foundY) return true;
+  }
+
+  return false; // x and y are not cousins
+};
