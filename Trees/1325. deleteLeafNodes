@@ -1,0 +1,51 @@
+1325. Delete Leaves With a Given Value
+Medium
+
+2040
+
+35
+
+Add to List
+
+Share
+Given a binary tree root and an integer target, delete all the leaf nodes with value target.
+
+Note that once you delete a leaf node with value target, if its parent node becomes a leaf node and has the value target, it should also be deleted (you need to continue doing that until you cannot).
+
+
+
+Example 1:
+
+
+
+Input: root = [1,2,3,2,null,2,4], target = 2
+Output: [1,null,3,null,4]
+Explanation: Leaf nodes in green with value (target = 2) are removed (Picture in left).
+After removing, new nodes become leaf nodes with value (target = 2) (Picture in center).
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} target
+ * @return {TreeNode}
+ */
+function removeLeafNodes(root, target) {
+  if (!root) return null;
+
+  root.left = removeLeafNodes(root.left, target);
+  root.right = removeLeafNodes(root.right, target);
+
+  if (!root.left && !root.right && root.val === target) {
+    return null;
+  }
+
+  return root;
+}
