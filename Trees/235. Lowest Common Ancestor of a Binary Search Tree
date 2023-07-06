@@ -130,3 +130,34 @@ var lowestCommonAncestor = function(root, p, q) {
         return root;
     }
 };
+
+
+solution 7
+class TreeNode {
+  constructor(val, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+
+const lowestCommonAncestor = function (root, p, q) {
+  // Base case: if root is null or matches either p or q, return root
+  if (!root || root === p || root === q) {
+    return root;
+  }
+
+  // Recurse on the left and right subtrees
+  const left = lowestCommonAncestor(root.left, p, q);
+  const right = lowestCommonAncestor(root.right, p, q);
+
+  // If both left and right subtrees return non-null values, root is the lowest common ancestor
+  if (left && right) {
+    return root;
+  }
+
+  // If only one of the subtrees returns a non-null value, that subtree's result is the lowest common ancestor
+  return left || right;
+};
+
