@@ -1,0 +1,18 @@
+const distributeCoins = function (root) {
+  let moves = 0; // Counter to keep track of moves required
+
+  const dfs = function (node) {
+    if (!node) return 0; // Base case: if node is null, return 0
+
+    const leftCoins = dfs(node.left); // Coins needed in the left subtree
+    const rightCoins = dfs(node.right); // Coins needed in the right subtree
+
+    moves += Math.abs(leftCoins) + Math.abs(rightCoins); // Update moves based on subtree imbalances
+
+    return node.val + leftCoins + rightCoins - 1; // Calculate and return excess/deficiency of coins
+  };
+
+  dfs(root); // Start the DFS traversal from the root of the tree
+
+  return moves; // Return the total moves required
+};
