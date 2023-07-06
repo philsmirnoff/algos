@@ -1,0 +1,24 @@
+const delNodes = function (root, to_delete) {
+  const result = []; // Store the roots of remaining trees after deletion
+  const set = new Set(to_delete); // Convert to_delete array to a set for efficient lookup
+
+  const dfs = function (node, isRoot) {
+    if (!node) return null; // Base case: if node is null, return null
+
+    const isDeleted = set.has(node.val); // Check if current node is to be deleted
+
+    if (isRoot && !isDeleted) {
+      result.push(node); // If it's the root and not to be deleted, add it to result
+    }
+
+    // Recursively traverse left and right subtrees with updated isDeleted flag
+    node.left = dfs(node.left, isDeleted);
+    node.right = dfs(node.right, isDeleted);
+
+    return isDeleted ? null : node; // Return null if node is deleted, otherwise return node itself
+  };
+
+  dfs(root, true); // Start the DFS traversal from the root of the entire tree
+
+  return result; // Return the roots of remaining trees
+};
