@@ -57,4 +57,32 @@ var maxDepth = function(root) {
 
 };
 
+var maxDepth = function(root) {
+    // we will use breadth first search
+    // initilize queue to root and while queue exist
+    // we will cretae currentLevel
+    // shift the currentNode from the queew and push ito the currentLevel
+    // and push current node val into the queeue
+    // if current nide has left child, push left child ito the quee
+    // currentNde has right child push right child in to queee
 
+    let queue = [root]
+    let maxDepth = 0;
+    let result = []
+    if (root && !root.left && root.right) return 1
+
+    while (queue.length) {
+        let levelSize = queue.length;
+        let currentLevel = []
+        for (let i = 0; i < levelSize; i++) {
+            let currentNode = queue.shift()
+            currentLevel.push(currentNode.val)
+
+            if (currentNode.left) queue.push(currentNode.left)
+            if (currentNode.right) queue.push(currentNode.right)
+        }
+        result.push(currentLevel)
+        maxDepth++
+    }
+ return maxDepth
+}
