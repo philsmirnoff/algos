@@ -49,3 +49,75 @@
 // undergroundSystem.getAverageTime("Leyton", "Waterloo");    // return 11.00000
 // undergroundSystem.checkOut(10, "Waterloo", 38);  // Customer 10 "Leyton" -> "Waterloo" in 38-24 = 14
 // undergroundSystem.getAverageTime("Leyton", "Waterloo");    // return 12.00000. Three trips "Leyton" -> "Waterloo", (10 + 12 + 14) / 3 = 12
+
+
+
+var UndergroundSystem = function() {
+  // create hashmap to keep track of customer, checkin station, and check in time
+  // create hashmap to keep track of total time travel, and trip counts
+      this.checkIns = new Map(); // { id: { stationName, time }}
+      this.travelTimes = new Map(); // { startStion:endStation: { totalTravel, count }}
+
+};
+
+/**
+* @param {number} id
+* @param {string} stationName
+* @param {number} t
+* @return {void}
+*/
+UndergroundSystem.prototype.checkIn = function(id, stationName, t) {
+  // record a customer's check in information
+  this.checkIns.set(id, { stationName, time: t });
+};
+
+/**
+* @param {number} id
+* @param {string} stationName
+* @param {number} t
+* @return {void}
+*/
+UndergroundSystem.prototype.checkOut = function(id, stationName, t) {
+  // retrieve the check in information for the given customer ID
+  const checkInInfo = this.checkIns.get(id);
+  const startStation = checkInInfo.stationName;
+  const travelTime = t - checkInInfo.time; // calculate travel time
+
+  // create unique key for the start and end station pair
+  const key = `${startStation}:${stationName}`;
+
+  // if the travel time information for the start and end station doesnt exist in traveltimes map, add it
+  if (!this.travelTimes.has(key)) {
+      this.travelTimes.set(key, { totalTime: 0, count: 0})
+  }
+
+  // retrieve the total travel time and the count of trips for the given start-end station pair
+  const travelInfo = this.travelTimes.get(key)
+
+  // update total travel time and the count of trips for the given start-end station pair
+  travelInfo.totalTime += travelTime;
+  travelInfo.count++;
+
+  // remove the customers check in information from the checkIns map
+  this.checkIns.delete(id)
+  };
+
+/**
+* @param {string} startStation
+* @param {string} endStation
+* @return {number}
+*/
+// calculate and return average travel time for the given start and end staion
+UndergroundSystem.prototype.getAverageTime = function(startStation, endStation) {
+  // create unique key for the start and station pair
+  const key = `${startStation}:${endStation}`
+
+
+      // Retrieve the travel time information for the start-end station pair
+      const travelInfo = this.travelTimes.get(key);
+
+      // Calculate and return the average travel time
+      return travelInfo.totalTime / travelInfo.count;
+
+
+};

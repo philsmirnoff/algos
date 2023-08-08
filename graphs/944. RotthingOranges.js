@@ -30,7 +30,7 @@ var orangesRotting = function(grid) {
   // up, down, left, right
   const directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
   while(queue.length && oranges > 0) {
-      let size = queue.length;
+      let size = queue.length
       for (let i = 0; i < size; i++) {
           // check up, down, left, right for each rotten orange to see if there are any frsh oranges
           const cell = queue.shift()

@@ -1,3 +1,7 @@
+
+// [1, 5], [6, 8], [10, 12], [15, 18] 
+// new interval [4, 7]
+// [1, 8], [10, 12], [15, 18]
 var insert = function(intervals, newInterval) {
   let [newStart, newEnd] = newInterval;
  const result = [];
