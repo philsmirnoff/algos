@@ -137,40 +137,55 @@ function dfs(grid, i, j) {
 
 
 another solution
-const numIslands = function(grid) {
-  if (!grid || grid.length === 0) {
-    return 0;
-  }
-
-  const numRows = grid.length;
-  const numCols = grid[0].length;
-  let count = 0;
-
-  const dfs = function(row, col) {
-    if (row < 0 || row >= numRows || col < 0 || col >= numCols || grid[row][col] === '0') {
-      return;
-    }
-    grid[row][col] = '0';
-    dfs(row + 1, col);
-    dfs(row - 1, col);
-    dfs(row, col + 1);
-    dfs(row, col - 1);
-  }
-
-  for (let i = 0; i < numRows; i++) {
-    for (let j = 0; j < numCols; j++) {
-      if (grid[i][j] === '1') {
-        dfs(i, j);
-        count++;
-      }
-    }
-  }
-
-  return count;
-};
 
 // This solution is similar to the BFS approach, but uses a recursive DFS function instead of a queue. We define a helper function dfs that takes the current row and column as arguments. If the current cell is not a land cell ('1'), or is out of bounds, we return. Otherwise, we mark the current cell as visited by changing it to a water cell ('0'), and recursively call dfs on all adjacent cells (up, down, left, right).
 
 // In the main function, we iterate through every cell in the grid and call dfs on each unvisited land cell ('1'), incrementing the count for each island found. Finally, we return the total count of islands.
 
 // The time and space complexity of this solution is the same as the BFS solution, O(m * n) for time (where m and n are the number of rows and columns in the grid) and O(min(m, n)) for space (stack space used by the DFS function).
+
+
+var numIslands = function(grid) {
+  const visited = new Set();
+let count = 0;
+// todo
+// 1. iterate through every column in this position
+for (let r = 0; r < grid.length; r++) {
+  // 2. in case it s assymetric it sshould be done with grid[0]
+  for (let c = 0; c < grid[0].length; c++) {
+    // dfs
+   if (explore(grid, r, c, visited) === true) {
+     count += 1;
+   }
+  }
+} return count
+};
+
+// create a helper function
+const explore = (grid, r, c, visited) => {
+  // after creating pos / lets create var rowInBounds to check that its in bounds -->
+const rowInBounds = 0 <= r && r < grid.length
+const colInBounds = 0 <= c && c < grid[0].length
+
+if (!rowInBounds || !colInBounds) return false
+// if your grid is equal water dont count
+if (grid[r][c] === "0") return false;
+
+  // lets create pos variable,
+  // that will be our stringify version of of our position
+  const pos = r + ',' + c;
+  // if I already visited this position It ll return false;
+  if(visited.has(pos)) return false;
+  visited.add(pos);
+
+  // if I passed all these base cases,
+  // I must be on unvisited piece of land and I want
+  // I want to explore 4 of my neighbors;
+  explore(grid, r - 1, c, visited);
+  explore(grid, r + 1, c, visited);
+  explore(grid, r, c - 1, visited);
+  explore(grid, r, c + 1, visited);
+
+  // once I finish counting return true
+  return true
+  }

@@ -62,6 +62,57 @@ var flatten = function(head) {
 };
 This code uses a stack to keep track of nodes that need to be visited later. It iterates through the linked list, handling the child nodes as specified and connecting nodes appropriately to flatten the structure.
 
+var flatten = function(head) {
+  if (!head) return null; // If the input linked list is empty, return null.
+
+  const stack = []; // Initialize a stack to keep track of nodes.
+  let curr = head; // Start from the head of the linked list.
+
+  while (curr !== null || stack.length > 0) {
+      // Iterate through the linked list until curr becomes null and the stack is empty.
+
+      if (curr.child) {
+          // If the current node has a child.
+          if (curr.next) stack.push(curr.next); // Push the next node onto the stack if it exists.
+          curr.next = curr.child; // Set the next pointer of the current node to the child node.
+          curr.child.prev = curr; // Set the previous pointer of the child node to the current node.
+          curr.child = null; // Set the child pointer of the current node to null.
+      } else if (curr.next === null && stack.length > 0) {
+          // If the current node doesn't have a child but the stack is not empty.
+          const nextNode = stack.pop(); // Pop a node from the stack.
+          curr.next = nextNode; // Set the next pointer of the current node to the popped node.
+          nextNode.prev = curr; // Set the previous pointer of the popped node to the current node.
+      }
+
+      curr = curr.next; // Move to the next node.
+  }
+
+  return head; // Return the head of the flattened linked list.
+};
+This code uses a stack to keep track of nodes that need to be visited later. It iterates through the linked list, handling the child nodes as specified and connecting nodes appropriately to flatten the structure.
+
+
+
+
+var flatten = function(head) {
+  if (!head) return head;
+  let stack = []; //store all rest part of linkedlist nodes when has child
+  let cur = head;
+  while (cur){
+      if (cur.child){
+          if (cur.next) stack.push(cur.next);  //must check cur.next is null or not before added to stack
+          cur.next = cur.child;
+          cur.next.prev = cur; //because it is doubly linkedlist
+          cur.child = null; //already assigned to next so now no child anymore. set null
+      }
+      else if (!cur.next && stack.length!= 0){ //now reach tail of linkedlist
+          cur.next = stack.pop();
+          cur.next.prev = cur; // because it is doubly linkedlist
+      }
+      cur = cur.next;
+  }
+  return head; //return reference of head
+};
 
 
 
