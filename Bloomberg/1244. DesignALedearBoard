@@ -64,3 +64,53 @@ Leaderboard.prototype.top = function(K) {
 Leaderboard.prototype.reset = function(playerId) {
     this.scores.set(playerId, 0); // Reset the player's score to 0.
 };
+
+
+// chatgtp solutions
+class Leaderboard {
+    constructor() {
+        // Create a map to store player scores with playerId as keys and scores as values.
+        this.scores = new Map();
+    }
+
+    addScore(playerId, score) {
+        if (this.scores.has(playerId)) {
+            // If player already exists, add the new score to the existing score.
+            this.scores.set(playerId, this.scores.get(playerId) + score);
+        } else {
+            // If player doesn't exist, add the player with the given score.
+            this.scores.set(playerId, score);
+        }
+    }
+
+    top(K) {
+        // Get an array of all player scores and sort them in descending order.
+        const sortedScores = [...this.scores.values()].sort((a, b) => b - a);
+
+        // Sum up the top K scores.
+        let sum = 0;
+        for (let i = 0; i < K && i < sortedScores.length; i++) {
+            sum += sortedScores[i];
+        }
+
+        return sum;
+    }
+
+    reset(playerId) {
+        // Reset the player's score to 0 or remove the player from the scores map.
+        this.scores.delete(playerId);
+    }
+}
+
+// Example usage
+const leaderboard = new Leaderboard();
+leaderboard.addScore(1, 73);
+leaderboard.addScore(2, 56);
+leaderboard.addScore(3, 39);
+leaderboard.addScore(4, 51);
+leaderboard.addScore(5, 4);
+console.log(leaderboard.top(1)); // Output: 73
+leaderboard.reset(1);
+leaderboard.reset(2);
+leaderboard.addScore(2, 51);
+console.log(leaderboard.top(3)); // Output: 141
