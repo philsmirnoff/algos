@@ -1,0 +1,161 @@
+A transaction is possibly invalid if:
+
+the amount exceeds $1000, or;
+if it occurs within (and including) 60 minutes of another transaction with the same name in a different city.
+You are given an array of strings transaction where transactions[i] consists of comma-separated values representing the name, time (in minutes), amount, and city of the transaction.
+
+Return a list of transactions that are possibly invalid. You may return the answer in any order.
+
+
+
+Example 1:
+
+Input: transactions = ["alice,20,800,mtv","alice,50,100,beijing"]
+Output: ["alice,20,800,mtv","alice,50,100,beijing"]
+Explanation: The first transaction is invalid because the second transaction occurs within a difference of 60 minutes, have the same name and is in a different city. Similarly the second one is invalid too.
+Example 2:
+
+Input: transactions = ["alice,20,800,mtv","alice,50,1200,mtv"]
+Output: ["alice,50,1200,mtv"]
+Example 3:
+
+Input: transactions = ["alice,20,800,mtv","bob,50,1200,mtv"]
+Output: ["bob,50,1200,mtv"]
+// great solution
+
+const invalidTransactions = transactions => {
+  let ans = [];
+  for (let i = 0; i < transactions.length; i++){
+      let [name, time, amount, city] = transactions[i].split(",");
+      if (amount>1000){
+          ans.push(transactions[i])
+          continue
+      }
+      for (let j = 0; j < transactions.length; j++){
+          if (j!==i){
+              let [name1, time1, amount1, city1] = transactions[j].split(",");
+              if (name1==name && Math.abs(time1-time)<=60 && city!==city1){
+                  ans.push(transactions[i]);
+                  break
+              }
+          }
+      }
+  }
+  return ans
+}
+
+
+
+
+var invalidTransactions = function(transactions) {
+    // Create an array to store invalid transactions
+    const invalid = [];
+
+    // Iterate through each transaction
+    for (let i = 0; i < transactions.length; i++) {
+        const [name1, time1, amount1, city1] = transactions[i].split(",");
+
+        // Check if the amount exceeds $1000
+        if (parseInt(amount1) > 1000) {
+            invalid.push(transactions[i]);
+            continue; // Move to the next transaction
+        }
+
+        // Check for other transactions within 60 minutes and different cities
+        let isValid = true;
+        for (let j = 0; j < transactions.length; j++) {
+            if (i !== j) {
+                const [name2, time2, amount2, city2] = transactions[j].split(",");
+                if (name1 === name2 && Math.abs(parseInt(time1) - parseInt(time2)) <= 60 && city1 !== city2) {
+                    isValid = false;
+                    break; // No need to check further for this transaction
+                }
+            }
+        }
+
+        if (!isValid) {
+            invalid.push(transactions[i]);
+        }
+    }
+
+    return invalid;
+};
+
+// Test cases
+const transactions1 = ["alice,20,800,mtv","alice,50,100,beijing"];
+console.log(invalidTransactions(transactions1)); // Output: ["alice,20,800,mtv","alice,50,100,beijing"]
+
+const transactions2 = ["alice,20,800,mtv","alice,50,1200,mtv"];
+console.log(invalidTransactions(transactions2)); // Output: ["alice,50,1200,mtv"]
+
+const transactions3 = ["alice,20,800,mtv","bob,50,1200,mtv"];
+console.log(invalidTransactions(transactions3)); // Output: ["bob,50,1200,mtv"]
+Let's analyze the time and space complexity of the provided solution:
+
+Time Complexity:
+
+The solution involves a nested loop. The outer loop runs through each transaction, and the inner loop checks all transactions again to find matching names and time conditions. In the worst case scenario, for each transaction, we might end up checking all transactions in the inner loop.
+For each transaction, the inner loop runs in O(n) time, where n is the number of transactions.
+Since we have n transactions and, in the worst case, we might check all transactions for each one, the overall time complexity is O(n^2).
+Space Complexity:
+
+The solution uses a constant amount of extra space for variables like name1, time1, amount1, and city1.
+The invalid array stores the invalid transactions, which at worst could contain all transactions.
+Overall, the space complexity is O(n), where n is the number of transactions.
+It's important to note that the provided solution has a quadratic time complexity due to the nested loop, which might not be efficient for larger input sizes. There are more optimized algorithms that can achieve better time complexity for this problem.
+
+// solution number 2
+
+
+var invalidTransactions = function(transactions) {
+    const transactionsMap = new Map(); // To store transactions by name
+
+    for (const transaction of transactions) {
+        const [name, time, amount, city] = transaction.split(",");
+        if (!transactionsMap.has(name)) {
+            transactionsMap.set(name, []);
+        }
+        transactionsMap.get(name).push({ time: parseInt(time), amount, city, original: transaction });
+    }
+
+    const invalid = new Set(); // To store indexes of invalid transactions
+
+    for (const [name, trans] of transactionsMap) {
+        trans.sort((a, b) => a.time - b.time); // Sort transactions by time
+
+        for (let i = 0; i < trans.length; i++) {
+            if (parseInt(trans[i].amount) > 1000) {
+                invalid.add(trans[i].original);
+            }
+
+            let j = i - 1;
+            while (j >= 0 && trans[i].time - trans[j].time <= 60) {
+                if (trans[i].city !== trans[j].city) {
+                    invalid.add(trans[i].original);
+                    invalid.add(trans[j].original);
+                }
+                j--;
+            }
+        }
+    }
+
+    return Array.from(invalid);
+};
+Time Complexity:
+
+The initial loop to populate the transactionsMap takes O(n) time, where n is the number of transactions.
+Sorting each transaction list within the map takes O(k * log(k)) time, where k is the average number of transactions per person.
+The nested loops for checking invalid transactions have a combined time complexity of O(n), as each transaction is visited at most twice (once for the sorting and once for checking).
+The overall time complexity is dominated by the sorting step, so the overall time complexity is O(n * k * log(k)).
+Space Complexity:
+
+The space complexity mainly comes from the transactionsMap and the invalid set, both of which can grow to contain all transactions.
+The transactionsMap can take up to O(n) space.
+The invalid set can take up to O(n) space.
+The other variables used in the solution take up constant space.
+The overall space complexity is O(n).
+This optimized solution has a better time complexity compared to the initial approach, especially when the number of transactions per person (k) is relatively small.
+
+
+
+/
