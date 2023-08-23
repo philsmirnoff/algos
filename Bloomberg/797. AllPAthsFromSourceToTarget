@@ -1,0 +1,66 @@
+Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1 and return them in any order.
+
+The graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph[i][j]).
+
+
+
+Example 1:
+
+
+Input: graph = [[1,2],[3],[3],[]]
+Output: [[0,1,3],[0,2,3]]
+Explanation: There are two paths: 0 -> 1 -> 3 and 0 -> 2 -> 3.
+Example 2:
+
+
+Input: graph = [[4,3,1],[3,2,4],[3],[4],[]]
+Output: [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
+
+
+var allPathsSourceTarget = function(graph) {
+    const n = graph.length; // Number of nodes in the graph
+    const result = []; // To store the final paths
+
+    // Helper function to perform DFS and find paths
+    const dfs = (node, path) => {
+        // If we've reached the last node, add the current path to the result
+        if (node === n - 1) {
+            result.push([...path]);
+            return;
+        }
+
+        // Explore all neighbors of the current node
+        for (const neighbor of graph[node]) {
+            path.push(neighbor); // Add neighbor to the current path
+            dfs(neighbor, path); // Recurse to the neighbor node
+            path.pop(); // Backtrack: remove the last node from the path
+        }
+    };
+
+    // Start DFS from the first node (0)
+    dfs(0, [0]);
+
+    return result;
+};
+
+// Test cases
+const graph1 = [[1,2],[3],[3],[]];
+console.log(allPathsSourceTarget(graph1)); // Output: [[0,1,3],[0,2,3]]
+
+const graph2 = [[4,3,1],[3,2,4],[3],[4],[]];
+console.log(allPathsSourceTarget(graph2)); // Output: [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
+Explanation:
+
+We define the allPathsSourceTarget function which takes the graph as input.
+
+The dfs helper function performs a depth-first search to explore all possible paths from the current node to the target node (node n - 1).
+
+If the current node is the target node, we add the current path to the result array.
+
+For each neighbor of the current node, we recursively explore that neighbor, adding it to the path, and then backtrack by removing the neighbor from the path before moving to the next neighbor.
+
+The main function starts the DFS process from node 0 with an initial path containing just the node 0.
+
+After the DFS process is complete, the result array contains all the possible paths from node 0 to node n - 1.
+
+This solution efficiently explores all possible paths using DFS and provides the required output for the given problem.
