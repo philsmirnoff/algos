@@ -28,6 +28,118 @@
 // lRUCache.get(1);    // return -1 (not found)
 // lRUCache.get(3);    // return 3
 // lRUCache.get(4);    // return 4
+
+
+// solution number 1
+To solve this problem, you can use a combination of a Hash Map and a Doubly Linked List to implement the Least Recently Used (LRU) cache. The Hash Map will help you quickly access and update the values associated with keys, while the Doubly Linked List will help you keep track of the order in which keys were recently accessed.
+
+Here's a JavaScript implementation of the LRU Cache:
+
+javascript
+Copy code
+class LRUCache {
+    constructor(capacity) {
+        this.capacity = capacity;
+        this.cache = new Map(); // Hash Map to store key-value pairs
+        this.doublyLinkedList = new DoublyLinkedList(); // Doubly Linked List for tracking usage order
+    }
+
+    get(key) {
+        if (this.cache.has(key)) {
+            const value = this.cache.get(key).value;
+            // Move the accessed key to the front of the linked list
+            this.doublyLinkedList.moveToFront(this.cache.get(key));
+            return value;
+        }
+        return -1; // Key not found
+    }
+
+    put(key, value) {
+        if (this.cache.has(key)) {
+            // Update the value and move the key to the front of the linked list
+            const node = this.cache.get(key);
+            node.value = value;
+            this.doublyLinkedList.moveToFront(node);
+        } else {
+            // Add a new key-value pair to the cache and linked list
+            if (this.cache.size === this.capacity) {
+                // If capacity is exceeded, remove the least recently used key
+                const removedNode = this.doublyLinkedList.removeFromEnd();
+                this.cache.delete(removedNode.key);
+            }
+            const newNode = new Node(key, value);
+            this.cache.set(key, newNode);
+            this.doublyLinkedList.addToFront(newNode);
+        }
+    }
+}
+
+class Node {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.prev = null;
+        this.next = null;
+    }
+}
+
+class DoublyLinkedList {
+    constructor() {
+        this.head = new Node(); // Dummy head node
+        this.tail = new Node(); // Dummy tail node
+        this.head.next = this.tail;
+        this.tail.prev = this.head;
+    }
+
+    addToFront(node) {
+        // Add a node to the front of the linked list
+        node.next = this.head.next;
+        node.prev = this.head;
+        this.head.next.prev = node;
+        this.head.next = node;
+    }
+
+    moveToFront(node) {
+        // Move a node to the front of the linked list
+        this.removeFromList(node);
+        this.addToFront(node);
+    }
+
+    removeFromEnd() {
+        // Remove a node from the end of the linked list and return it
+        const node = this.tail.prev;
+        this.removeFromList(node);
+        return node;
+    }
+
+    removeFromList(node) {
+        // Remove a node from the linked list
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+}
+Explanation:
+
+The LRUCache class implements the LRU cache using the Hash Map (this.cache) to store key-value pairs and the Doubly Linked List (this.doublyLinkedList) to track the usage order of keys.
+
+The Node class represents nodes in the Doubly Linked List.
+
+The DoublyLinkedList class defines methods for adding, moving, and removing nodes from the linked list.
+
+In the LRUCache class, the get method returns the value of a key if it exists in the cache. If found, it also moves the accessed key to the front of the linked list.
+
+The put method updates or adds a key-value pair to the cache. If the cache is at capacity, it removes the least recently used key before adding the new key-value pair.
+
+This solution ensures that both get and put operations run in O(1) average time complexity, as required by the problem. It effectively maintains the LRU cache behavior using a combination of Hash Map and Doubly Linked List.
+
+
+
+
+
+
+
+
+// solution number 2
 To implement this data structure in JavaScript, we can use a Map to store the key-value pairs and a Doubly Linked List to maintain the order of the keys based on their usage.
 
 // Node class represents a node in the Doubly Linked List
