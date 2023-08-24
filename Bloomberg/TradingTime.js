@@ -2,79 +2,47 @@
 
 
 // without coverting
-function canTradeDuringInterval(banks, tradingInterval) {
-  const [startTime, endTime] = tradingInterval;
-
-  for (const bank of banks) {
-    const [openingTime, closingTime] = bank.openingHours;
-    if (openingTime >= startTime && closingTime <= endTime) {
-      return true; // Found a bank that can be traded with during the interval
-    }
-  }
-
-  return false; // No bank can be traded with during the interval
-}
-
-// Test cases
-const banks = [
-  { name: 'Bank of America', openingHours: [0, 8] },
-  { name: 'Swiss Bank', openingHours: [12, 17] },
-  { name: 'Goldman Sachs', openingHours: [18, 23] }
-];
-
-console.log(canTradeDuringInterval(banks, [6, 10])); // Should print false
-console.log(canTradeDuringInterval(banks, [13, 17])); // Should print true
-
-
-// with converting:
-
-// Function to convert "HH:MM" time format to minutes since midnight
-function convertTimeToMinutes(time) {
-  const [hours, minutes] = time.split(':'); // Split the time string into hours and minutes
-  return parseInt(hours) * 60 + parseInt(minutes); // Convert hours to minutes and add minutes
-}
-
 // Function to check if there's a bank open for trading during the given interval
-function canTradeDuringInterval(banks, tradingInterval) {
-  // Extract start and end times from the trading interval
-  const [startHour, startMinute] = tradingInterval[0].split(':');
-  const [endHour, endMinute] = tradingInterval[1].split(':');
+function canTradeDuringInterval(banks, testInterval) {
+  // Initialize an array of length 24 to represent hours in a day
+  const a = Array(24).fill(0); // Initialize the array with all zeros
 
-  // Convert trading interval times to total minutes since midnight
-  const tradingStartTime = parseInt(startHour) * 60 + parseInt(startMinute);
-  const tradingEndTime = parseInt(endHour) * 60 + parseInt(endMinute);
+  // Function to set the hours during which a bank is open
+  function setBankHours(openingTime, closingTime) {
+    const startHour = parseInt(openingTime.split(':')[0]);
+    const endHour = parseInt(closingTime.split(':')[0]);
 
-  // Iterate through each bank
-  for (const bank of banks) {
-    const [openingTime, closingTime] = bank.openingHours; // Get bank's opening hours
-    // Convert bank's opening and closing times to total minutes since midnight
-    if (
-      convertTimeToMinutes(openingTime) >= tradingStartTime && // Check if opening time is after or equal to trading start
-      convertTimeToMinutes(closingTime) <= tradingEndTime // Check if closing time is before or equal to trading end
-    ) {
-      return true; // Found a bank that can be traded with during the interval
+    // Set the corresponding indexes in the 'a' array to 1
+    for (let hour = startHour; hour <= endHour; hour++) {
+      a[hour] = 1;
     }
   }
 
-  return false; // No bank can be traded with during the interval
+  // Set bank hours in the 'a' array
+  for (const bank of banks) {
+    setBankHours(bank.openingHours[0], bank.openingHours[1]);
+  }
+
+  const [startHour, endHour] = testInterval.split('-').map(time => parseInt(time.split(':')[0]));
+
+  // Check if all elements in the range of 'a' array are equal to 1
+  for (let hour = startHour; hour <= endHour; hour++) {
+    if (a[hour] !== 1) {
+      return false; // Found an hour with no open banks
+    }
+  }
+
+  return true; // All hours have open banks
 }
 
-// // Test cases
-// const banks = [
-//   { name: 'Bank of America', openingHours: ['00:00', '08:00'] },
-//   { name: 'Swiss Bank', openingHours: ['12:30', '18:45'] },
-//   { name: 'Goldman Sachs', openingHours: ['18:00', '23:00'] }
-// ];
-
-// console.log(canTradeDuringInterval(banks, ['06:00', '10:00'])); // Should print false
-// console.log(canTradeDuringInterval(banks, ['13:00', '17:00'])); // Should print true
-
-// Test cases
+// Example bank data
 const banks = [
-  { name: 'Bank of America', openingHours: ['00:00', '08:00'] },
-  { name: 'Swiss Bank', openingHours: ['12:30', '18:45'] },
-  { name: 'Goldman Sachs', openingHours: ['18:00', '23:00'] }
+  { openingHours: ['11:00', '17:00'], name: 'Morgan Stanley' },
+  { openingHours: ['09:00', '14:00'], name: 'Goldman Sachs' },
+  // Add more bank data here
 ];
 
-console.log(canTradeDuringInterval(banks, ['06:00', '10:00'])); // Should print false
-console.log(canTradeDuringInterval(banks, ['13:00', '17:00'])); // Should print true
+// Test the canTradeDuringInterval function
+const testInterval = '10:00-15:00';
+const canTrade = canTradeDuringInterval(banks, testInterval);
+console.log(canTrade); // Should print true or false
