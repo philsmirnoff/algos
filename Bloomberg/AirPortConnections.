@@ -1,0 +1,108 @@
+Given one directional airport connections, devise a solution that can provide the route from Airport A to Airport B.
+
+Implement 2 functions: one that adds a one-directional airport connection between 2 airports, and second that return out all possible routes between an origin and a destination. This could be done by implementing a class called AirMap that has two methods:
+
+1
+
+  addConnection(start, destination)
+  adds a ONE WAY connecting flight from start to destination
+2
+
+ getAllRoutes(start, destination)
+ return all possible routes from start to destination irrespective of hops
+A ----> B
+B ----> A
+A ----> C
+C ----> A
+A ----> D
+D ----> A
+B ----> C
+C ----> B
+B ----> D
+D ----> B
+
+airMap.getAllRoutes('C', 'D');
+[[C,A,B,D,]
+[C,A,D,]
+[C,B,A,D,]
+[C,B,D,]]
+
+
+class AirMap {
+  constructor() {
+    // Constructor of the AirMap class initializes a Map to store airport connections.
+    this.connections = new Map();
+  }
+
+  addConnection(start, destination) {
+    // Method to add a connection between two airports.
+    // If the starting airport is not in the connections Map, create an entry for it.
+    if (!this.connections.has(start)) {
+      this.connections.set(start, []);
+    }
+    // Add the destination airport to the connections of the starting airport.
+    this.connections.get(start).push(destination);
+  }
+
+  getAllRoutes(start, destination) {
+    // Method to find all possible routes between two airports.
+    // Initialize an array to store the found routes.
+    const routes = [];
+    // Initialize a Set to keep track of visited airports to prevent cycles.
+    const visited = new Set();
+
+    // Define a recursive function dfs (Depth-First Search).
+    const dfs = (currentAirport, currentRoute) => {
+      // If the current airport is the destination, add the current route to the routes array.
+      if (currentAirport === destination) {
+        routes.push([...currentRoute, destination]);
+        return;
+      }
+
+      // Mark the current airport as visited to prevent cycles.
+      visited.add(currentAirport);
+
+      // Check if the current airport has connections.
+      if (this.connections.has(currentAirport)) {
+        // Loop through each connected airport.
+        for (const nextAirport of this.connections.get(currentAirport)) {
+          // Check if the next airport has not been visited.
+          if (!visited.has(nextAirport)) {
+            // Recursively call dfs with the next airport and the updated route.
+            dfs(nextAirport, [...currentRoute, currentAirport]);
+          }
+        }
+      }
+
+      // Remove the current airport from visited to backtrack properly.
+      visited.delete(currentAirport);
+    };
+
+    // Start the DFS algorithm from the specified starting airport.
+    dfs(start, []);
+
+    // Return the array of found routes.
+    return routes;
+  }
+}
+
+// Create an instance of the AirMap class.
+const airMap = new AirMap();
+
+// Add connections between airports using the addConnection method.
+airMap.addConnection('A', 'B');
+airMap.addConnection('B', 'A');
+airMap.addConnection('A', 'C');
+airMap.addConnection('C', 'A');
+airMap.addConnection('A', 'D');
+airMap.addConnection('D', 'A');
+airMap.addConnection('B', 'C');
+airMap.addConnection('C', 'B');
+airMap.addConnection('B', 'D');
+airMap.addConnection('D', 'B');
+
+// Find all possible routes between airports 'C' and 'D'.
+const routes = airMap.getAllRoutes('C', 'D');
+
+// Print the found routes.
+console.log(routes);

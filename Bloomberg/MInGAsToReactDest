@@ -1,0 +1,272 @@
+
+
+// .....
+// .CR..
+// .R...
+// ....X
+
+// [
+// ['.', '.', '.', '.', '.'],
+// ['.', 'C', 'R', '.', '.'],
+// ['.', 'R', '.', '.', '.'],
+// ['.', '.', '.', '.', 'X']
+// ]
+
+// - -> 7
+
+// '.' = sand
+// 'C' = car
+// 'X' = destination
+// 'R' = rocks
+
+Write a function that takes in the map and returns the min gas to reach dest
+
+// NUmber 1 solution using breadth first search
+const shortestDestination = function (map) {
+  const carPosition = [];
+  const destPosition = [];
+  let minGas = Infinity;
+  const visited = {};
+
+  // Find car and destination positions
+  for (let i = 0; i < map.length; i++) {
+    for (let j = 0; j < map[i].length; j++) {
+      if (map[i][j] === "C") {
+        carPosition.push(i, j);
+      }
+      if (map[i][j] === "X") {
+        destPosition.push(i, j);
+      }
+    }
+  }
+
+  const bfs = function (grid, startRow, startCol) {
+    const queue = [[startRow, startCol, 0]]; // [row, col, gas]
+
+    while (queue.length > 0) {
+      const [currentRow, currentCol, currentGas] = queue.shift();
+
+      if (
+        currentRow < 0 ||
+        currentRow >= grid.length ||
+        currentCol < 0 ||
+        currentCol >= grid[0].length ||
+        grid[currentRow][currentCol] === "R" ||
+        visited[`${currentRow}-${currentCol}`]
+      ) {
+        continue;
+      }
+
+      if (currentRow === destPosition[0] && currentCol === destPosition[1]) {
+        minGas = Math.min(minGas, currentGas);
+        return; // Found the destination, no need to continue exploring
+      }
+
+      visited[`${currentRow}-${currentCol}`] = true;
+
+      const nextGas = grid[currentRow][currentCol] === "." ? currentGas + 1 : currentGas + 2;
+
+      queue.push([currentRow + 1, currentCol, nextGas]);
+      queue.push([currentRow - 1, currentCol, nextGas]);
+      queue.push([currentRow, currentCol + 1, nextGas]);
+      queue.push([currentRow, currentCol - 1, nextGas]);
+    }
+  };
+
+  // Start BFS from the car's position
+  bfs(map, carPosition[0], carPosition[1]);
+
+  return minGas;
+};
+
+// Example map
+const map = [
+  ['.', '.', '.', '.', '.'],
+  ['.', 'C', 'R', '.', '.'],
+  ['.', 'R', '.', '.', '.'],
+  ['.', '.', '.', '.', 'X']
+];
+
+const minGas = shortestDestination(map);
+console.log(minGas); // Output: 7
+
+
+// NUmber 1 solution dfs
+const shortestDestination = function (map) {
+  const carPosition = [];
+  const destPosition = [];
+  let minGas = Infinity; // Corrected 'Infintiy' to 'Infinity'
+  const visited = {}; // Use an object to track visited positions
+
+  // Find car and destination positions
+  for (let i = 0; i < map.length; i++) {
+    for (let j = 0; j < map[i].length; j++) {
+      if (map[i][j] === "C") {
+        carPosition.push(i, j);
+      }
+      if (map[i][j] === "X") {
+        destPosition.push(i, j);
+      }
+    }
+  }
+
+  const bfs = function (grid, i, j, count, visited) {
+    if (
+      i < 0 ||
+      i >= grid.length ||
+      j < 0 ||
+      j >= grid[i].length ||
+      grid[i][j] === "R" ||
+      visited[`${i}-${j}`] // Check if position has been visited
+    ) {
+      return Infinity;
+    }
+    if (grid[i][j] === ".") {
+      count++;
+    }
+    if (i === destPosition[0] && j === destPosition[1]) { // Corrected destination check
+      return count;
+    }
+    visited[`${i}-${j}`] = true;
+
+    return Math.min(
+      bfs(grid, i + 1, j, count, visited),
+      bfs(grid, i - 1, j, count, visited),
+      bfs(grid, i, j + 1, count, visited),
+      bfs(grid, i, j - 1, count, visited)
+    );
+  };
+
+  // Start BFS from the car's position
+  minGas = bfs(map, carPosition[0], carPosition[1], 0, visited);
+
+  return minGas;
+};
+
+// Example map
+const map = [
+  ['.', '.', '.', '.', '.'],
+  ['.', 'C', 'R', '.', '.'],
+  ['.', 'R', '.', '.', '.'],
+  ['.', '.', '.', '.', 'X']
+];
+
+const minGas = shortestDestination(map);
+console.log(minGas); // Output: 7
+
+Number 2 solution
+
+function minGasToReachDestination(map) {
+  const numRows = map.length; // Get the number of rows in the map
+  const numCols = map[0].length; // Get the number of columns in the map
+  const INF = Number.MAX_SAFE_INTEGER; // A constant to represent infinity
+
+  // Function to check if a given row and column are valid coordinates
+  const isValid = (row, col) => row >= 0 && row < numRows && col >= 0 && col < numCols && map[row][col] !== 'R';
+
+  // Possible movement directions: up, down, left, right
+  const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+  const queue = []; // Initialize a queue for BFS traversal
+  const visited = new Array(numRows).fill(null).map(() => new Array(numCols).fill(false)); // Initialize a 2D array to track visited cells
+
+  let startRow = -1, startCol = -1, destRow = -1, destCol = -1;
+
+  // Find the starting and destination coordinates
+  for (let row = 0; row < numRows; row++) {
+      for (let col = 0; col < numCols; col++) {
+          if (map[row][col] === 'C') {
+              startRow = row;
+              startCol = col;
+          } else if (map[row][col] === 'X') {
+              destRow = row;
+              destCol = col;
+          }
+      }
+  }
+
+  queue.push([startRow, startCol, 0]); // Push the starting cell into the queue with gas value 0
+  visited[startRow][startCol] = true; // Mark the starting cell as visited
+
+  while (queue.length > 0) {
+      const [currentRow, currentCol, gas] = queue.shift(); // Dequeue the next cell to explore
+
+      if (currentRow === destRow && currentCol === destCol) {
+          return gas; // If destination is reached, return the gas required
+      }
+
+      // Explore the possible neighboring cells
+      for (const [dr, dc] of directions) {
+          const newRow = currentRow + dr;
+          const newCol = currentCol + dc;
+
+          // Check if the new cell is valid and not visited
+          if (isValid(newRow, newCol) && !visited[newRow][newCol]) {
+              visited[newRow][newCol] = true; // Mark the new cell as visited
+              queue.push([newRow, newCol, gas + 1]); // Push the new cell into the queue with incremented gas
+          }
+      }
+  }
+
+  return INF; // If destination is not reachable
+}
+
+// The given map
+const map = [
+  ['.', '.', '.', '.', '.'],
+  ['.', 'C', 'R', '.', '.'],
+  ['.', 'R', '.', '.', '.'],
+  ['.', '.', '.', '.', 'X']
+];
+
+const minGas = minGasToReachDestination(map); // Calculate the minimum gas required
+console.log(minGas); // Output the result
+
+
+
+
+
+
+
+
+Given a 2d matrix that represents a matrix where . denotes empty land, c indicates car, and o indicates oasis, and another integer gas which indicates gas we have left. Traversing one unit in the matrix consumes 1 gas unit. You can move up, down, left, and right.I got the somewhat same problem, the only modification I got is that there are also rocks in the desert denoted as "r". I wrote the following implementation, I ran out of time since the question wasn't so clear to me in the beginning but the interviewer was good with this approach:
+
+
+const desert = [
+    ['.', '.', '.', 'c'],
+    ['.', '.', '.', '.'],
+    ['.', 'r', 'r', '.'],
+    ['.', '.', 'o', '.'],
+]
+
+function ride(desert, gas) {
+    if (!desert) return desert;
+
+    let result = false,
+        numOfSteps = 0;
+
+    for (let i = 0; i < desert.length; i++) {
+        for (let j = 0; j < desert[i].length; j++) {
+            if (desert[i][j] === 'c') {
+                numOfSteps += 1;
+                result = dfs(desert, i, j, gas, numOfSteps);
+            }
+        }
+    }
+    return result;
+}
+
+function dfs(desert, i, j, gas, numOfSteps) {
+    //console.log(numOfSteps)
+    if (i < 0 || i >= desert.length || j < 0 || j >= desert.length || desert[i][j] === 'r' || numOfSteps > gas) {
+        return false;
+    }
+    if (desert[i][j] === 'o') return true;
+    let found = dfs(desert, i + 1, j, gas, numOfSteps + 1)
+            || dfs(desert, i - 1, j, gas, numOfSteps + 1)
+            || dfs(desert, i, j + 1, gas, numOfSteps + 1)
+            || dfs(desert, i, j - 1, gas, numOfSteps + 1);
+    return found;
+}
+
+console.log(ride(desert, 5))
