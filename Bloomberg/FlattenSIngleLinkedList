@@ -1,0 +1,38 @@
+class Node {
+  constructor(val, next = null, child = null) {
+    this.val = val;
+    this.next = next;
+    this.child = child;
+  }
+}
+
+function flattenLinkedList(head) {
+  if (!head) {
+    return null;
+  }
+
+  const stack = [];
+  let current = head;
+
+  while (current) {
+    if (current.child) {
+      // If the current node has a child, push its next onto the stack
+      if (current.next) {
+        stack.push(current.next);
+      }
+
+      // Set the current node's next to its child and clear the child pointer
+      current.next = current.child;
+      current.child = null;
+    }
+
+    if (!current.next && stack.length > 0) {
+      // If we reached the end of the current level, pop from the stack
+      current.next = stack.pop();
+    }
+
+    current = current.next;
+  }
+
+  return head;
+}

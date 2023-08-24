@@ -1,0 +1,88 @@
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+Implement the MinStack class:
+
+MinStack() initializes the stack object.
+void push(int val) pushes the element val onto the stack.
+void pop() removes the element on the top of the stack.
+int top() gets the top element of the stack.
+int getMin() retrieves the minimum element in the stack.
+You must implement a solution with O(1) time complexity for each function.
+
+
+
+Example 1:
+
+Input
+["MinStack","push","push","push","getMin","pop","top","getMin"]
+[[],[-2],[0],[-3],[],[],[],[]]
+
+Output
+[null,null,null,null,-3,null,0,-2]
+
+Explanation
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin(); // return -3
+minStack.pop();
+minStack.top();    // return 0
+minStack.getMin(); // return -2
+
+
+class MinStack {
+  constructor() {
+    // Initialize two arrays to store the elements and the minimum values
+    this.stack = [];
+    this.minStack = [];
+  }
+
+  push(val) {
+    // Push the element onto the main stack
+    this.stack.push(val);
+
+    // Update the minStack with the new minimum element
+    // Only push if it's the first element or if the new element is smaller or equal
+    if (this.minStack.length === 0 || val <= this.minStack[this.minStack.length - 1]) {
+      this.minStack.push(val);
+    }
+  }
+
+  pop() {
+    if (this.stack.length === 0) {
+      return; // Stack is empty, nothing to pop
+    }
+
+    // Check if the top element of both stacks is the same (minimum)
+    if (this.stack[this.stack.length - 1] === this.minStack[this.minStack.length - 1]) {
+      this.minStack.pop(); // Pop from minStack as well
+    }
+
+    this.stack.pop(); // Always pop from the main stack
+  }
+
+  top() {
+    if (this.stack.length === 0) {
+      return null; // Stack is empty, no top element
+    }
+    return this.stack[this.stack.length - 1]; // Return the top element
+  }
+
+  getMin() {
+    if (this.minStack.length === 0) {
+      return null; // minStack is empty, no minimum element
+    }
+    return this.minStack[this.minStack.length - 1]; // Return the minimum element
+  }
+}
+
+// Test the MinStack class
+const minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+console.log(minStack.getMin()); // Should print -3
+minStack.pop();
+console.log(minStack.top());    // Should print 0
+console.log(minStack.getMin()); // Should print -2
