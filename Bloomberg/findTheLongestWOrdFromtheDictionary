@@ -1,0 +1,103 @@
+// solve this question The question was to find longest matching word from dictionary for given set of chars.
+// e.g.
+// dict={when, what, whatthen, whatnow}, input="whatno", expected output= "what"
+// dict={when, what, whatthen, whatnow}, input="whatnwo", expected output= "whatnow"
+// dict={when, what, whatthen, whatnow}, input="wonthaw", expected output= "whatnow"
+
+
+
+// Definition of a TrieNode class
+class TrieNode {
+  constructor() {
+    // A map to store child nodes where keys are characters
+    this.children = new Map();
+    // A flag to indicate the end of a valid word
+    this.isEndOfWord = false;
+  }
+}
+
+// Definition of a Trie class
+class Trie {
+  constructor() {
+    // Initialize the root of the Trie with an empty TrieNode
+    this.root = new TrieNode();
+  }
+
+  // Method to insert a word into the Trie
+  insert(word) {
+    let node = this.root;
+    for (const char of word) {
+      // If the character is not in the children of the current node, add it
+      if (!node.children.has(char)) {
+        node.children.set(char, new TrieNode());
+      }
+      // Move to the next node corresponding to the character
+      node = node.children.get(char);
+    }
+    // Mark the end of the word
+    node.isEndOfWord = true;
+  }
+
+  // Method to find the longest matching word from a given input character count
+  findLongestMatchingWord(input) {
+    let longestMatch = '';
+
+    // Depth-First Search (DFS) function to traverse the Trie
+    const dfs = (node, currentWord) => {
+      // Check if the current node represents the end of a valid word
+      if (node.isEndOfWord && currentWord.length > longestMatch.length) {
+        longestMatch = currentWord;
+      }
+
+      // Iterate through each child node
+      for (const [char, childNode] of node.children) {
+        // Get the count of the character in the input
+        const charCount = input[char] || 0;
+        // If the character is available in the input
+        if (charCount > 0) {
+          // Decrement the character count and explore the child node
+          input[char] = charCount - 1;
+          dfs(childNode, currentWord + char);
+          // Restore the character count after backtracking
+          input[char] = charCount;
+        }
+      }
+    };
+
+    // Start DFS from the root node with an empty current word
+    dfs(this.root, '');
+
+    // Return the longest matching word found
+    return longestMatch;
+  }
+}
+
+// Function to find the longest matching word given a dictionary and input characters
+function findLongestMatchingWord(dict, input) {
+  // Create a new Trie
+  const trie = new Trie();
+
+  // Insert each word from the dictionary into the Trie
+  for (const word of dict) {
+    trie.insert(word);
+  }
+
+  // Count the occurrence of each character in the input
+  const charCount = {};
+  for (const char of input) {
+    charCount[char] = (charCount[char] || 0) + 1;
+  }
+
+  // Find and return the longest matching word from the Trie
+  return trie.findLongestMatchingWord(charCount);
+}
+
+// Test cases
+const dict1 = ['when', 'what', 'whatthen', 'whatnow'];
+console.log(findLongestMatchingWord(dict1, 'whatno')); // Should print "what"
+
+const dict2 = ['when', 'what', 'whatthen', 'whatnow'];
+console.log(findLongestMatchingWord(dict2, 'whatnwo')); // Should print "whatnow"
+
+const dict3 = ['when', 'what', 'whatthen', 'whatnow'];
+console.log(findLongestMatchingWord(dict3, 'wonthaw')); // Should print "whatnow"
