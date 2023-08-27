@@ -106,3 +106,13 @@ const routes = airMap.getAllRoutes('C', 'D');
 
 // Print the found routes.
 console.log(routes);
+
+Map: The space complexity of storing connections in the map is O(E), where E is the number of connections.
+
+Visited Set: The set used to track visited airports has a space complexity of O(V), where V is the number of airports.
+
+DFS Recursive Call Stack: The maximum depth of the recursion call stack is limited by the number of airports in the longest route. In the worst case, this depth could be equal to the number of airports V, resulting in an additional O(V) space complexity due to the recursive calls.
+
+Overall, the space complexity of the solution is O(E + V), where E is the number of connections and V is the number of airports.
+
+Keep in mind that this analysis assumes that the number of connections is directly related to the number of airports and that the DFS algorithm explores each connection only once. If there are specific constraints or characteristics of the test cases that deviate from this assumption, the actual complexity might differ.

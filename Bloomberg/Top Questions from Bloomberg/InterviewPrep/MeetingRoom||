@@ -22,32 +22,32 @@ Input: intervals = [[7,10],[2,4]]
 Output: 1
 
 
-const minMeetingRooms = (intervals) => {
-    let start = []
-    let end = []
-    let i = 0
-    let j = 0
-    let count = 0
-    let result = 0
-    // we will iterate over the interval and take the start and end times and push them into the two
-    for (let val of intervals) {
-        start.push = intervals[0]
-        end.push = intervals[1]
-  }
+var minMeetingRooms = function(intervals) {
+	const start=[]
+	const end=[]
+	let count=0
+	let result=0
+	let i=0
+	let j=0
 
-    // arrays start and end and sort them out in increasing order
-     start.sort((a, b) => a - b)
-     end.sort((a, b) => a - b)
-    // if the start time is less than end time that means we need a room
-    while (i < intervals.lengh) {
-        if (start[i] < end[j]) {
-            count++
-            i++
-        } else {
-            count--
-            j++
-        }
-        result = Math.max(result, count)
-    }
-return result
-}
+	for(let val of intervals){
+		start.push(val[0])
+		end.push(val[1])
+	}
+
+	start.sort((a,b) =>a-b)
+	end.sort((a,b) =>a-b)
+
+	while(i < start.length){
+		if(start[i] < end[j]){
+			count++
+			i++
+		}else{
+			j++
+			count--
+		}
+		result=Math.max(count,result)
+	}
+
+	return result
+};
