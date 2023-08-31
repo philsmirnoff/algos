@@ -51,3 +51,11 @@ var minMeetingRooms = function(intervals) {
 
 	return result
 };
+
+intervals = [[7,10],[2,4]]
+start = [2, 7] 2
+end = [4, 10]
+
+count++ 2, 
+
+

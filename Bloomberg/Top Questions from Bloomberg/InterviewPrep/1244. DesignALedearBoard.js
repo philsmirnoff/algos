@@ -114,3 +114,108 @@ leaderboard.reset(1);
 leaderboard.reset(2);
 leaderboard.addScore(2, 51);
 console.log(leaderboard.top(3)); // Output: 141
+
+
+
+
+class Leaderboard {
+    constructor() {
+        this.players = {}; // Object to store player scores
+        this.heap = [];    // Max heap to maintain leaderboard
+    }
+
+    addScore(playerId, score) {
+        if (playerId in this.players) {
+            this.players[playerId] += score; // Update existing player's score
+            this._addToHeap(playerId);       // Maintain heap after score update
+        } else {
+            this.players[playerId] = score;  // Add new player with score
+            this.heap.push({ playerId, score }); // Add to heap
+            this._heapifyUp(this.heap.length - 1); // Maintain max heap property
+        }
+    }
+
+    top(K) {
+        let totalScore = 0;
+        for (let i = 0; i < K; i++) {
+            if (this.heap.length > 0) {
+                totalScore += this.heap[0].score; // Accumulate top score
+                this._removeFromHeap(); // Remove top score player from heap
+            }
+        }
+        return totalScore;
+    }
+
+    reset(playerId) {
+        if (playerId in this.players) {
+            this.players[playerId] = 0; // Reset player's score
+            this._addToHeap(playerId);  // Maintain heap after score reset
+        }
+    }
+
+    _heapifyUp(index) {
+        while (index > 0) {
+            const parentIndex = Math.floor((index - 1) / 2); // Calculate parent index
+            if (this.heap[parentIndex].score >= this.heap[index].score) {
+                break; // Exit loop if max heap property is satisfied
+            }
+            // Swap parent and child elements
+            [this.heap[parentIndex], this.heap[index]] = [this.heap[index], this.heap[parentIndex]];
+            index = parentIndex; // Move to parent index
+        }
+    }
+
+    _removeFromHeap() {
+        if (this.heap.length > 1) {
+            this.heap[0] = this.heap.pop(); // Replace top element with last element
+            this._heapifyDown(0); // Maintain max heap property after removal
+        } else {
+            this.heap.pop(); // Remove the only element in the heap
+        }
+    }
+
+    _heapifyDown(index) {
+        const leftChildIndex = 2 * index + 1; // Calculate left child index
+        const rightChildIndex = 2 * index + 2; // Calculate right child index
+        let largest = index; // Assume the current index has the largest value
+
+        if (leftChildIndex < this.heap.length && this.heap[leftChildIndex].score > this.heap[largest].score) {
+            largest = leftChildIndex; // Update largest if left child is larger
+        }
+        if (rightChildIndex < this.heap.length && this.heap[rightChildIndex].score > this.heap[largest].score) {
+            largest = rightChildIndex; // Update largest if right child is larger
+        }
+
+        if (largest !== index) {
+            // Swap current element with the largest child
+            [this.heap[largest], this.heap[index]] = [this.heap[index], this.heap[largest]];
+            this._heapifyDown(largest); // Recursively maintain max heap property
+        }
+    }
+
+    _addToHeap(playerId) {
+        for (let i = 0; i < this.heap.length; i++) {
+            if (this.heap[i].playerId === playerId) {
+                this.heap.splice(i, 1); // Remove player's entry from heap
+                this._heapifyDown(i); // Maintain max heap property after removal
+                break;
+            }
+        }
+        // Add updated player's entry to the heap
+        this.heap.push({ playerId, score: this.players[playerId] });
+        this._heapifyUp(this.heap.length - 1); // Maintain max heap property after addition
+    }
+}
+
+// Testing
+const leaderboard = new Leaderboard();
+leaderboard.addScore(1, 73);
+leaderboard.addScore(2, 56);
+leaderboard.addScore(3, 39);
+leaderboard.addScore(4, 51);
+leaderboard.addScore(5, 4);
+console.log(leaderboard.top(1));  // Output: 73
+leaderboard.reset(1);
+leaderboard.reset(2);
+leaderboard.addScore(2, 51);
+console.log(leaderboard.top(3));  // Output: 141
