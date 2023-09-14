@@ -1,0 +1,109 @@
+1029. Two City Scheduling
+Medium
+4.5K
+336
+company
+TikTok
+company
+Bloomberg
+company
+DoorDash
+A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti.
+
+Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
+
+
+
+Example 1:
+
+Input: costs = [[10,20],[30,200],[400,50],[30,20]]
+Output: 110
+Explanation:
+The first person goes to city A for a cost of 10.
+The second person goes to city A for a cost of 30.
+The third person goes to city B for a cost of 50.
+The fourth person goes to city B for a cost of 20.
+
+The total minimum cost is 10 + 30 + 50 + 20 = 110 to have half the people interviewing in each city.
+Example 2:
+
+Input: costs = [[259,770],[448,54],[926,667],[184,139],[840,118],[577,469]]
+Output: 1859
+Example 3:
+
+Input: costs = [[515,563],[451,713],[537,709],[343,819],[855,779],[457,60],[650,359],[631,42]]
+Output: 3086
+
+
+Constraints:
+
+2 * n == costs.length
+2 <= costs.length <= 100
+costs.length is even.
+1 <= aCosti, bCosti <= 1000
+
+
+var twoCitySchedCost = function(costs) {
+      // What we do is we take the costs array and decide to sort it by the difference in
+    // cost of City A and City B.
+    // Example [[10, 20]....] <-- the first subArray is our option to send the person to
+    // city A ($10) or city B ($20). The difference is negative $10.
+    // We are subtracting as 10 - 20 which obviously gives a negative value.
+    // Another way we can read the above result is that we SAVE $10 by opting for city A instead B.
+    // So we use a built in Javascript method to sort the costs array and we pass it a COMPARE FUNCTION.
+    // To sort it ascending order (cheapest for city A to most expensive for city A) we calculate the difference in each
+    // subarray like the example I showed and we compare it to the subArray next to it.
+    // This is portrayed as a[0] - a[1] <---the difference in the first subArray and b[0] - b[1] <--the dif. in
+    // the next subArray.
+
+    // When all is said and done, the ordered sortedDifference array looks like this:
+    // [ [ 30, 200 ], [ 10, 20 ], [ 30, 20 ], [ 400, 50 ] ]
+    // BUT from a 'difference' perspective this is how it was ordered:
+    // [-170][-10][10][350]
+    // remember when I mentioned SAVING $10?
+    // One way you could read the above is saying if it's negative then we saved going to City A.
+    // A positive would mean we over payed for city A, AKA we could have saved going to city B.
+    // so we save $170 sending the first person to cityA, then we save $10 sending the second person to cityA.
+    // For the third person we save $10 sending them to city B! and the fourth we save a whopping $350 by sending them
+    // to city B!
+    let sortedDifference = costs.sort((a,b) => a[0] - a[1] - (b[0] -b[1]))
+
+    // We create a sum variable add the min costs
+    let sum = 0
+
+    // Remember, the question stated we have to send an equal amount of people to each city.
+    // Costs array has a length of 4 subArrays. You can think of that as having to send 4 people
+    // and each costs is a decision to send them to either city A or city B.
+
+    // So it's very important that we divide the amount of 'people' equally and send them to either city.
+    // We'll be using this half variable in our for loop.
+    let half = sortedDifference.length / 2
+
+    // So now that we have an ordered Array called sortedDifference we can iterate over it to determine
+    // which of the 2 options (cityA or cityB) is cheapest.
+    // Remember that the sorting for sortedDifference is in ascending order but only for perspective of city A.
+    // So the beginning of the sortedDifference starts with the cheapest trips to city A and gradually increases
+    // to more expensive trips. So expensive that we are better off sending people to city B.
+
+    // So we iterate the array, and tell our index to stop before it reaches the halfway point.
+    // Everything in the first half will be our min cost to go to city A.
+    // The second half will be the min cost for us to choose city B
+    for (let i = 0; i < half; i++) {
+        // With each iteration here we add the min cost for city A and the first min cost for city B.
+        // Since our sortedDifference is...
+        // [ [ 30, 200 ], [ 10, 20 ], [ 30, 20 ], [ 400, 50 ] ]
+        //     ^                             ^
+        //  sortedDifference[0][0]          sortedDifference[half+0][1]         (first iteration)
+        //
+        // [ [ 30, 200 ], [ 10, 20 ], [ 30, 20 ], [ 400, 50 ] ]
+        //                   ^                            ^
+        //            sortedDifference[1][0]        sortedDifference[half+1][1]  (second iteration)
+        //
+        //
+        // add all of those to our sum
+        sum += sortedDifference[i][0]+sortedDifference[half+i][1]
+    }
+
+    // return the min cost sum
+    return sum
+};
