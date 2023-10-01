@@ -43,6 +43,96 @@ All the integers in s are in the range [1, 300].
  * @param {string} s
  * @return {string}
  */
+
+
+ function decodeString(encodedString) {
+    // Stack to store pending elements
+    const pendingElements = [];
+
+    // Iterate through each character in the encoded string
+    for (let i = 0; i < encodedString.length; i++) {
+        // If the current character is not ']', push it onto the stack
+        if(encodedString[i] !== "]") {
+            pendingElements.push(encodedString[i]);
+            continue;
+        }
+
+        // Initialize an empty string to store the characters inside the brackets
+        let stringToRepeat = "";
+
+        // Pop elements from the stack until '[' is encountered
+        while(pendingElements[pendingElements.length - 1] !== "[") {
+            stringToRepeat = pendingElements.pop() + stringToRepeat;
+        }
+
+        // Remove the '[' from the stack
+        pendingElements.pop();
+
+        // Initialize an empty string to store the repetition count
+        let repetitionCount = "";
+
+        // Pop elements from the stack until a non-digit character is encountered
+        while(!isNaN(pendingElements[pendingElements.length - 1])) {
+            repetitionCount = pendingElements.pop() + repetitionCount;
+        }
+
+        // Repeat the string and convert repetitionCount to an integer
+        const result = stringToRepeat.repeat(parseInt(repetitionCount));
+
+        // Push the result back onto the stack
+        pendingElements.push(result);
+    }
+
+    // Join the elements in the stack to get the final decoded string
+    return pendingElements.join("");
+}
+
+Solution number 2
+const decodeString = s => {
+	const stack = [];
+
+	// using a stack, build segments from inside out
+	for (const cv of s) {
+		// case 1: cv !== ']', push current value into stack
+		if (cv !== ']') {
+			stack.push(cv);
+			continue;
+		}
+
+		let substring = '';
+		let n = '';
+
+		// build substring
+		// 1. pop off from stack and create substring until ']'
+		// 2. '[': marks the start of a substring
+		while (stack[stack.length - 1] !== '[') {
+			substring = stack.pop() + substring;
+		}
+
+		// case 2: value === ']', decode and add to stack
+		stack.pop();
+
+		// build number
+		// 1. pop off from stack and concat until element is NOT a number
+		// 2. non-number: marks the start of the segment
+		while (!isNaN(stack[stack.length - 1])) {
+			n = stack.pop() + n;
+		}
+
+		// build segment
+		// 1. concat substring n number of times
+		// 2. decoded: push segment into the stack to keep segments in order
+		const segment = substring.repeat(Number(n));
+
+		stack.push(segment);
+	}
+
+	// join together each segment in stack
+	return stack.join('');
+};
+
+
+
 var decodeString = function(s) {
   let stack = []; // create an empty stack to store the decoded string and the number of repetitions
   let currentString = ""; // create an empty string to store the current substring

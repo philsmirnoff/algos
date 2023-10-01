@@ -9,6 +9,7 @@
 
 
 // Input: head = [1,2,3,4,5]
+
 // Output: [5,4,3,2,1]
 // Example 2:
 
@@ -58,3 +59,7 @@ var reverseList = function(head) {
 // After the loop is finished, prev will be pointing to the last node in the original list, which is now the first node in the reversed list. We return prev.
 
 // So overall, this function iterates over the original linked list, and reverses the direction of the next pointers to create a new linked list that is the reverse of the original.
+
+
+// input head: 1 -> 2 -> 3 -> 4
+// output prev: 4 -> 3 -> 2 -> 1

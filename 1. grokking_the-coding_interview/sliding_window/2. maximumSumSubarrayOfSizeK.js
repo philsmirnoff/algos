@@ -28,3 +28,22 @@ console.log(`Maximum sum of a subarray of size K: ${max_sub_array_of_size_k(3, [
 
 // Time Complexity: O(N)
 // Space Complexity: O(1)
+
+
+const maxSumSubbarray = (k, arr) => {
+    let maxSum = 0;
+    let windowStart = 0;
+    let windowSum = 0;
+
+    for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+        windowSum += arr[windowEnd];
+
+        while (windowEnd <= k - 1) {
+            maxSum = Math.max(windowSum, maxSum);
+
+            windowSum -= arr[windowStart];
+            windowStart++;
+        }
+    }
+    return maxSum;
+}

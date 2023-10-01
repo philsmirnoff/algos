@@ -28,3 +28,21 @@ console.log(`Averages of subarrays of size K: ${result}`);
 
 // Time Complexity: O(N)
 // Space Complexity: O(N)
+
+
+
+const find_averages = (k, arr) => {
+    let windowSum = 0;
+    let windowStart = 0;
+    let result = [];
+    for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+        windowSum += arr[windowEnd]
+        
+        while (windowEnd >= k - 1) {
+            result.push(windowSum/k)
+            windowSum -= arr[windowStart];
+            windowStart++
+        }
+    }
+    return result
+}
