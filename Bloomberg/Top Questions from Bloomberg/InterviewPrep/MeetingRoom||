@@ -21,6 +21,17 @@ Example 2:
 Input: intervals = [[7,10],[2,4]]
 Output: 1
 
+// 1. create two arrays to keep start and end time
+// 2. create var count and result of rooms
+// 3. set the index i and j to 0
+// 4. Iterate over the intervals and push the val[0] to start
+// and end val[1] to the end array
+// 5. sort each of them in descending order
+// 6. while i < start.length if start[i] < end[j] = count++, i++
+//    else: count--, j--
+// 7. result=Math.max(count, result)
+// 8. return result
+
 
 var minMeetingRooms = function(intervals) {
 	const start=[]
@@ -53,9 +64,18 @@ var minMeetingRooms = function(intervals) {
 };
 
 intervals = [[7,10],[2,4]]
-start = [2, 7] 2
+start = [2, 7] 
 end = [4, 10]
 
 count++ 2, 
+count++ 1
+count-- 0
+count ++ 1
+count ++ 1
+
+
+
+
+ 
 
 
