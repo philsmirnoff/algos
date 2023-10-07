@@ -50,6 +50,18 @@
 // undergroundSystem.checkOut(10, "Waterloo", 38);  // Customer 10 "Leyton" -> "Waterloo" in 38-24 = 14
 // undergroundSystem.getAverageTime("Leyton", "Waterloo");    // return 12.00000. Three trips "Leyton" -> "Waterloo", (10 + 12 + 14) / 3 = 12
 
+// break it down in steps how to solve this problem
+// 1. In the class constructor create a hashmap checkIns to keep track of a customer, checkin station and checkin time.
+// id: { stationName, time: t}
+// 2. create a hashmap travelTimes to keep track of total time travel, trip counts
+// { `startStation:endStation`: {totalTime: 0, count: 0}
+// 3. for checkIn method record a customer's check in information
+//   this.checkIns.set(id, { stationName, time: t });
+// 4. for checkout method: // retrieve the check in information for the given customer ID, checkInInfo, startStation, timeTravel(calculate time)
+// 5. create a key `${startStation}:${stationName}`, check if the key exist in travelTime hashmap, if its not add it with value totalTime, count
+// 6. extract the travelInfo and update totalTime and count and delete id from checkIns
+// 7. for getAverage method: create key `${startStation}:${endStation}`
+// 8. extract travelInfo and return travelInfo.totalTime / travelInfo.count
 
 
 var UndergroundSystem = function() {
@@ -66,6 +78,8 @@ var UndergroundSystem = function() {
 * @param {number} t
 * @return {void}
 */
+
+
 UndergroundSystem.prototype.checkIn = function(id, stationName, t) {
   // record a customer's check in information
   this.checkIns.set(id, { stationName, time: t });

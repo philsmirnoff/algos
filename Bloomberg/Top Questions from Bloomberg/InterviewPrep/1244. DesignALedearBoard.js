@@ -37,7 +37,42 @@
 // leaderboard.addScore(2,51);   // leaderboard = [[2,51],[3,39],[4,51],[5,4]];
 // leaderboard.top(3);           // returns 141 = 51 + 51 + 39;
 
+1. Create in a class a hashMap scores to keep track playerId, scores
+2. in addScore method check if the playerId exists in hashMap if yes, update the score, if it doesnt exist add it
+3. In top(K) method, create variable and make a copy of this.scores.values()and sorted in descending order
+4. iterate over the top 5 values and add it to the sum variable, return sum
+5. in reset method delete playerId from the hashmap;
 
+
+class Leaderboard {
+    constructor() {
+        this.scores = new Map()
+    }
+
+    addScore(playerId, score) {
+        if (this.scores.has(playerId)) {
+            this.scores.set(playerId, this.scores.get(playerId) 
+            + score) 
+        } else {
+            this.scores.set(playerId, score)
+        }
+    }
+
+
+    top(K) {
+        let sortedScores = [...this.scores.values()].sort((a,b) => b - a)
+        let sum = 0
+        for (let i = 0; i < K && i < sortedScores.length; i++) {
+            sum += sortedScores[i]
+        }
+        return sum
+    }
+
+
+    reset(playerId) {
+        this.scores.delete(playerId)
+    }
+}
 Leaderboard.prototype.addScore = function(playerId, score) {
     if (!this.scores.has(playerId)) {
         this.scores.set(playerId, 0); // Initialize the player's score to 0 if not present.
