@@ -8,17 +8,17 @@ void put(int key, int value) Update the value of the key if the key exists. Othe
 The functions get and put must each run in O(1) average time complexity.
 
 
-1. Initialize an empty Map this.cache to store the key-value pairs
-2. this.capacity to Store the maximum capacity of the cache
-3. get(key) If the key is not in the cache, return -1 (as specified)
-4. Retrieve the value associated with the key
-5. Remove the key-value pair from the cache to simulate usage
-6. Re-add the key-value pair to the cache to move it to the "most recently used" position
-7. Return the retrieved value
-8. put(key, value) If the key is already in the cache, remove it to simulate updating
-9. Add the new key-value pair to the cache
-10. If the cache size exceeds the capacity, remove the "least recently used" key
-11. Use .keys().next().value to retrieve the first key in the Map (which is the "least recently used" key)
+// 1. Initialize an empty Map this.cache to store the key-value pairs
+// 2. this.capacity to Store the maximum capacity of the cache
+// 3. get(key) If the key is not in the cache, return -1 (as specified)
+// 4. Retrieve the value associated with the key
+// 5. Remove the key-value pair from the cache to simulate usage
+// 6. Re-add the key-value pair to the cache to move it to the "most recently used" position
+// 7. Return the retrieved value
+// 8. put(key, value) If the key is already in the cache, remove it to simulate updating
+// 9. Add the new key-value pair to the cache
+// 10. If the cache size exceeds the capacity, remove the "least recently used" key
+// 11. Use .keys().next().value to retrieve the first key in the Map (which is the "least recently used" key)
 
 
 
