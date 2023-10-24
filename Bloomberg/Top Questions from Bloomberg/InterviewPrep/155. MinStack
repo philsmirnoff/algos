@@ -31,6 +31,16 @@ minStack.top();    // return 0
 minStack.getMin(); // return -2
 
 
+1. Initialize two arrays to store the elements and the minimum values, stack, minStack.
+2. Push the element onto the main stack.
+3. Update the minStack with the new minimum element.
+if (this.minStack.length === 0 || val <= this.minStack[this.minStack.length - 1]) {
+      this.minStack.push(val);
+    }
+4. if the top element of stack and minstack are same Pop the element from the minStack. and always pop the element form the main stack.
+5. Return the top element of the main stack.
+6. Return the top element of the minStack.
+
 class MinStack {
   constructor() {
     // Initialize two arrays to store the elements and the minimum values

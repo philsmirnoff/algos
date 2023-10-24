@@ -46,6 +46,16 @@ browserHistory.back(7);                   // You are in "google.com", you can mo
 // when we move back, we will decrement the index and return the url at that index
 // when we move forward, we will increment the index and return the url at that index
 
+
+1. create a constructor that takes in the homepage and initialize the history array with the homepage and curr to 0
+2. visit function will take in a url and we will slice the history array from 0 to curr + 1 and store it in history
+3. we will push the url to the history array and increment the curr
+4. back function will take in steps and we will decrement the curr by steps and return the url at that index
+4a. if curr - steps is less than 0, we will return the url at index 0
+5. forward function will take in steps and we will increment the curr by steps and return the url at that index
+5a. if curr + steps is greater than the length of history array, we will return the url at the last index
+
+
 class BrowserHistory {
   constructor(homepage) {
     this.history = [homepage];
