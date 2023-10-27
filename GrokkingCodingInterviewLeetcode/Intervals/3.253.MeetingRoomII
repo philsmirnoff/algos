@@ -1,0 +1,63 @@
+https://leetcode.com/problems/meeting-rooms-ii/description/
+
+var minMeetingRooms = function(intervals) {
+    const starts = intervals.map(x => x[0]);
+    const ends = intervals.map(x => x[1]);
+
+    starts.sort((a, b) => a - b);
+    ends.sort((a, b) => a - b);
+
+    let roomsNeeded = 0, e = 0;
+
+    for(let s = 0; s < starts.length; s++) {
+        if(starts[s] >= ends[e]) {
+            roomsNeeded--;
+            e++;
+        }
+        roomsNeeded++;
+    }
+    return roomsNeeded
+};
+
+// // Define a function named minMeetingRooms that takes a list of intervals as input
+var minMeetingRooms = function(intervals) {
+    // Initialize arrays to store the start and end times of intervals
+    const start = [];
+    const end = [];
+    // Initialize variables for counting, result, and pointers
+    let count = 0;
+    let result = 0;
+    let i = 0;
+    let j = 0;
+
+    // Iterate through each interval in the input list
+    for (let val of intervals) {
+        // Store the start and end times in separate arrays
+        start.push(val[0]);
+        end.push(val[1]);
+    }
+
+    // Sort the start and end arrays in ascending order
+    start.sort((a, b) => a - b);
+    end.sort((a, b) => a - b);
+
+    // Use two pointers to iterate through the start and end arrays
+    while (i < start.length) {
+        // If the start time of the current meeting is less than the end time of the next meeting
+        if (start[i] < end[j]) {
+            // Increment the count of ongoing meetings and move the start pointer forward
+            count++;
+            i++;
+        } else {
+            // If the start time is not less than the end time, decrement the count and move the end pointer forward
+            j++;
+            count--;
+        }
+
+        // Update the result with the maximum of the current count and previous result
+        result = Math.max(count, result);
+    }
+
+    // Return the final result, which represents the minimum meeting rooms required
+    return result;
+};
