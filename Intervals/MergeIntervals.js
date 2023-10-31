@@ -23,3 +23,9 @@ var merge = function(intervals) {
 }
 
 [[1,4]]
+
+
+// 1. Sort the intervals by start time
+// 2. Iterate through the intervals and merge overlapping intervals
+// 3. 
+

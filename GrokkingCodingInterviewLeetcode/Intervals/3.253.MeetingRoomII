@@ -1,5 +1,61 @@
 https://leetcode.com/problems/meeting-rooms-ii/description/
 
+// 1. Create arrays to store the start and end times of intervals
+using map
+    const starts = intervals.map(x => x[0]);
+    const ends = intervals.map(x => x[1]); 
+//2. Sort the arrays of start and end times in ascending order
+    starts.sort((a, b) => a - b);
+    ends.sort((a, b) => a - b);
+// 3. Initialize variables to keep track of rooms needed and the end pointer
+    let roomsNeeded = 0, e = 0;
+//4 // Iterate through the start times
+    for (let s = 0; s < starts.length; s++) {
+        // If the current start time is greater than or equal to the current end time
+        if (starts[s] >= ends[e]) {
+            // Decrement the rooms needed and move the end pointer forward
+            roomsNeeded--;
+            e++;
+        }
+        // Increment the rooms needed for the current start time
+        roomsNeeded++;
+    }
+
+    // Return the final count of rooms needed
+    return roomsNeeded;
+};
+
+
+// Define a function named minMeetingRooms that takes a list of intervals as input
+var minMeetingRooms = function(intervals) {
+    // Create arrays to store the start and end times of intervals using map
+    const starts = intervals.map(x => x[0]);
+    const ends = intervals.map(x => x[1]);
+
+    // Sort the arrays of start and end times in ascending order
+    starts.sort((a, b) => a - b);
+    ends.sort((a, b) => a - b);
+
+    // Initialize variables to keep track of rooms needed and the end pointer
+    let roomsNeeded = 0, e = 0;
+
+    // Iterate through the start times
+    for (let s = 0; s < starts.length; s++) {
+        // If the current start time is greater than or equal to the current end time
+        if (starts[s] >= ends[e]) {
+            // Decrement the rooms needed and move the end pointer forward
+            roomsNeeded--;
+            e++;
+        }
+        // Increment the rooms needed for the current start time
+        roomsNeeded++;
+    }
+
+    // Return the final count of rooms needed
+    return roomsNeeded;
+};
+
+
 var minMeetingRooms = function(intervals) {
     const starts = intervals.map(x => x[0]);
     const ends = intervals.map(x => x[1]);
