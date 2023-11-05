@@ -32,6 +32,14 @@
 // Explanation: "anagram" and "mangaar" are anagrams.
 
 
+// 1. create hashmap
+// 2. Iterate over the string s, check if letter in hashmap,
+// if is, increase the count, else initilize it to 1
+// 3. initilize the variable changes to 0
+// 4. iterate over the t string, if it has
+// decrement the count for the letter
+// else the letter doesnt exist, then increment changes
+// 5. return changes
 var minSteps = function(s, t) {
   /*  create a hashMap for s iterate throgh t
       and check how many letters are missing
