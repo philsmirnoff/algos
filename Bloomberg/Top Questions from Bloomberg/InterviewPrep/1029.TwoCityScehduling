@@ -42,6 +42,31 @@ Constraints:
 costs.length is even.
 1 <= aCosti, bCosti <= 1000
 
+
+
+// var twoCitySchedCost = function(costs) {
+//     costs.sort((a, b) => {
+//         let aDiff = a[0] - a[1];
+//         let bDiff = b[0] - b[1];
+//         return aDiff - bDiff;
+//     });
+//     let sum = 0;
+//     for (let i = 0; i < costs.length; i++) {
+//         if (i >= costs.length / 2) sum += costs[i][1];
+//         else sum += costs[i][0];
+//     }
+//     return sum;
+// };
+
+1. Sort costs by difference between aCost and bCost (ascending)
+2. create a variable to store the total cost
+3. create variable halfway to store the halfway point of the costs array
+4. iterate through the costs array
+5. if i is less than halfway, add aCost to total cost
+6. else add bCost to total cost
+7. return total cost
+
+
 1. Sort costs by difference between aCost and bCost (ascending)
 costs.sort((a, b) => (a[0] - a[1]) - (b[0] - b[1]));
 2 create a variable to store the total cost
