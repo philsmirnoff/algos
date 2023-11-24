@@ -1,0 +1,27 @@
+26. Remove Duplicates from Sorted Array
+Easy
+
+Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+
+Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
+
+Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
+Return k.
+
+Solution Explanation:
+In this problem, we need to separate the duplicates in-place such that the resultant length of the array remains sorted. As the input array is sorted, therefore, one way to do this is to shift the elements left whenever we encounter duplicates. In other words, we will keep one pointer for iterating the array and one pointer for placing the next non-duplicate number. So our algorithm will be to iterate the array and whenever we see a non-duplicate number we move it next to the last non-duplicate number we’ve seen.
+
+
+
+var removeDuplicates = function(nums) {
+    let nextNondublicate = 1;
+    let i = 0;
+    while (i < nums.length) {
+        if (nums[nextNondublicate - 1] !== nums[i]) {
+            nums[nextNondublicate] = nums[i]
+            nextNondublicate++
+        }
+        i++
+    }
+    return nextNondublicate
+};

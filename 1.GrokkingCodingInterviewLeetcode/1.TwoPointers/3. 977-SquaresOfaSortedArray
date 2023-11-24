@@ -1,0 +1,63 @@
+977. Squares of a Sorted Array
+Easy
+
+Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+
+
+Example 1:
+
+Input: nums = [-4,-1,0,3,10]
+Output: [0,1,9,16,100]
+Explanation: After squaring, the array becomes [16,1,0,9,100].
+After sorting, it becomes [0,1,9,16,100].
+Example 2:
+
+Input: nums = [-7,-3,2,3,11]
+Output: [4,9,9,49,121]
+
+
+
+Explanation
+We start by obtaining the length of the input array, arr, which we store in variable n. Then, we create a new array, squares, of the same length to hold the squared values. We also create a variable highestSquareIdx and set it to n - 1, the last index of squares, which will help us populate the squares array from the highest (rightmost) index towards the lowest (leftmost).
+
+We initialize two pointers, left and right, to 0 and n - 1, respectively. These pointers represent the indices of the elements at the start (lowest) and end (highest) of the array.
+
+We enter a loop that continues as long as left is less than or equal to right.
+
+In each iteration, we calculate the squares of the elements at the left and right indices, storing them in leftSquare and rightSquare respectively.
+
+We then compare leftSquare with rightSquare. The larger of these two squares is inserted at the position of highestSquareIdx in the squares array, and highestSquareIdx is decremented.
+
+If leftSquare was larger, we increment left to move towards the higher numbers in the array. If rightSquare was larger or equal, we decrement right to move towards the lower numbers in the array. We're comparing absolute square values, so even if numbers in the array are negative, we're dealing with their positive square.
+
+This process repeats, filling up the squares array from right to left, until left and right meet or cross each other.
+
+At this point, the squares array is filled with the squares of the numbers in the input array, sorted in ascending order. This array is then returned as the result.
+
+
+Solution:
+
+var sortedSquares = function(nums) {
+    const n = nums.length
+    let squares = Array(n).fill(0)
+    let biggest = n - 1
+    let left = 0
+    let right = n - 1
+
+
+    while (left <= right) {
+        let leftSquare = nums[left] * nums[left]
+        let rightSquare = nums[right] * nums[right]
+
+        if (leftSquare < rightSquare) {
+            squares[biggest] = rightSquare
+            right--
+        } else {
+            squares[biggest] = leftSquare
+            left++
+        }
+        biggest--
+    }
+    return squares
+};
