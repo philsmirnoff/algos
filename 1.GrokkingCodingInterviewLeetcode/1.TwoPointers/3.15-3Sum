@@ -1,0 +1,90 @@
+https://leetcode.com/problems/3sum/
+
+15. 3Sum
+Medium
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+
+Example 1:
+
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Explanation:
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+The distinct triplets are [-1,0,1] and [-1,-1,2].
+Notice that the order of the output and the order of the triplets does not matter.
+Example 2:
+
+Input: nums = [0,1,1]
+Output: []
+Explanation: The only possible triplet does not sum up to 0.
+Example 3:
+
+Input: nums = [0,0,0]
+Output: [[0,0,0]]
+Explanation: The only possible triplet sums up to 0.
+
+Grokking coding interview explaination:
+
+This problem follows the Two Pointers pattern and shares similarities with Pair with Target Sum. A couple of differences are that the input array is not sorted and instead of a pair we need to find triplets with a target sum of zero.
+
+To follow a similar approach, first, we will sort the array and then iterate through it taking one number at a time. Let’s say during our iteration we are at number ‘X’, so we need to find ‘Y’ and ‘Z’ such that . At this stage, our problem translates into finding a pair whose sum is equal to “-X” (as from the above equation ).
+
+Another difference from Pair with Target Sum is that we need to find all the unique triplets. To handle this, we have to skip any duplicate number. Since we will be sorting the array, so all the duplicate numbers will be next to each other and are easier to skip.
+
+Here is the detailed walk through of the algorithm:
+
+The method searchTriplets is the main method that orchestrates the process. The algorithm starts by sorting the input array.
+
+It then starts iterating over the array. For each element, it calls the method searchPair to find pairs in the rest of the array that add up to the negative value of the current element. The purpose of this is to find three numbers that add up to zero (i.e., the current number and two other numbers that add up to the negative of the current number).
+
+The searchPair method uses the two-pointer technique to find pairs that add up to a given target. It starts with one pointer at the beginning of the array (or the index after the current number) and another pointer at the end of the array. It calculates the sum of the numbers at the pointers, and if the sum is equal to the target, it adds a triplet consisting of the negative target (which is the number we're currently processing in the searchTriplets method) and the two numbers that make up the sum to the result list.
+
+If the sum is less than the target, it means we need to increase the sum, so we move the left pointer one step to the right. If the sum is greater than the target, it means we need to decrease the sum, so we move the right pointer one step to the left.
+
+To avoid adding duplicate triplets to the list, the algorithm skips elements that are the same as the previous element both in the searchTriplets method and in the searchPair method.
+
+In the end, the searchTriplets method returns a list of all unique triplets in the array that add up to zero.
+
+
+GCIs solution:
+
+function threeSum(nums) {
+  nums.sort((a, b) => a - b);
+  const triplets = [];
+  for (i = 0; i < nums.length; i++) {
+    // skip same element to avoid duplicate triplets
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+    search_pair(nums, -nums[i], i + 1, triplets);
+  }
+
+  return triplets;
+}
+
+
+function search_pair(nums, target_sum, left, triplets) {
+  let right = nums.length - 1;
+  while (left < right) {
+    const current_sum = nums[left] + nums[right];
+    if (current_sum === target_sum) { // found the triplet
+      triplets.push([-target_sum, nums[left], nums[right]]);
+      left += 1;
+      right -= 1;
+      while (left < right && nums[left] === nums[left - 1]) {
+        left += 1; // skip same element to avoid duplicate triplets
+      }
+      while (left < right && nums[right] === nums[right + 1]) {
+        right -= 1; // skip same element to avoid duplicate triplets
+      }
+    } else if (target_sum > current_sum) {
+      left += 1; // we need a pair with a bigger sum
+    } else {
+      right -= 1; // we need a pair with a smaller sum
+    }
+  }
+}
