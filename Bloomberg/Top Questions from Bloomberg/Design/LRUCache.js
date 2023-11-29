@@ -118,6 +118,8 @@ class DoublyLinkedList {
         node.next.prev = node.prev;
     }
 }
+
+// 1 <--> 2 <--> 3
 Explanation:
 
 The LRUCache class implements the LRU cache using the Hash Map (this.cache) to store key-value pairs and the Doubly Linked List (this.doublyLinkedList) to track the usage order of keys.
