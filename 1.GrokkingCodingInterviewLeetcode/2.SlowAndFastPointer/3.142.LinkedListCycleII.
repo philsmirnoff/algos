@@ -1,0 +1,131 @@
+Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed). It is -1 if there is no cycle. Note that pos is not passed as a parameter.
+
+Do not modify the linked list.
+
+
+
+Example 1:
+
+
+Input: head = [3,2,0,-4], pos = 1
+Output: tail connects to node index 1
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+Example 2:
+
+
+Input: head = [1,2], pos = 0
+Output: tail connects to node index 0
+Explanation: There is a cycle in the linked list, where tail connects to the first node.
+Example 3:
+
+
+Input: head = [1], pos = -1
+Output: no cycle
+Explanation: There is no cycle in the linked list.
+
+
+grokking coding interview explaination:
+class Solution {
+  findCycleStart(head) {
+    let cycleLength = 0;
+    // find the LinkedList cycle
+    let slow = head,
+      fast = head;
+    while ((fast !== null && fast.next !== null)) {
+      fast = fast.next.next;
+      slow = slow.next;
+      if (slow === fast) { // found the cycle
+        cycleLength = this.calculateCycleLength(slow);
+        break;
+      }
+    }
+    return this.findStart(head, cycleLength);
+  }
+
+
+  calculateCycleLength(slow) {
+    let current = slow, cycleLength = 0;
+    while (true) {
+      current = current.next;
+      cycleLength += 1;
+      if (current === slow) {
+        break;
+      }
+    }
+    return cycleLength;
+  }
+
+  findStart(head, cycleLength) {
+    let pointer1 = head,
+      pointer2 = head;
+    // move pointer2 ahead 'cycle_length' nodes
+    while (cycleLength > 0) {
+      pointer2 = pointer2.next;
+      cycleLength -= 1;
+    }
+    // increment both pointers until they meet at the start of the cycle
+    while (pointer1 !== pointer2) {
+      pointer1 = pointer1.next;
+      pointer2 = pointer2.next;
+    }
+
+    return pointer1;
+  }
+}
+
+
+
+I found the leetcode solution is way more better;
+Solution 1 Using set to store the node, if the node is already in the set, then return the node, if not, add the node to the set.
+
+var detectCycle = function(head) {
+
+    let set = new Set()     // take a new set
+    while(head){  //start a loop till head has a value
+        if(set.has(head)) return head   //before putting the node in the set, check if that head already exist in the set. if so, return that head
+        set.add(head) //add the head in the set
+        head= head.next  //move to the next node in the list
+    }
+    return null   //if doesnot exist, return null
+};
+
+
+Solution 2: Using two pointers, slow and fast. If the slow and fast pointer meet, then there is a cycle. If there is a cycle, then move the slow pointer to the head and keep the fast pointer at the meeting point. Now move both the pointers one step at a time, they will meet at the starting point of the cycle.
+// var detectCycle = function(head) {
+//     // linkedList has one or zero elements
+//     if (head === null || head.next === null) {
+//         return null;
+//     }
+
+//     // looking for cycle
+//     let slow = head;
+//     let fast = head;
+//     let hasCycle = false;
+
+//     while (fast !== null && fast.next !== null) {
+//         slow = slow.next;
+//         fast = fast.next.next;
+//         // once the two pointers meet, we have a cycle !
+//         if (slow == fast) {
+//             hasCycle = true;
+//             break;
+//         }
+//     };
+
+//     // if there's no cycle
+//     if(!hasCycle) {
+//         return null;
+//     }
+
+//     // Initializing new pointer to head
+//     slow = head;
+//     // keep moving the two pointers till they meet again
+//     while (slow != fast) {
+//         slow = slow.next;
+//         fast = fast.next;
+//     }
+
+//     return slow;
+// };
