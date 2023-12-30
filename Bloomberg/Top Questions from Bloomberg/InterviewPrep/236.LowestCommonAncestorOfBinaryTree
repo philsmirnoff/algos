@@ -1,0 +1,88 @@
+236. Lowest Common Ancestor of a Binary Tree
+Medium
+15.7K
+374
+company
+Facebook
+company
+Amazon
+company
+Bloomberg
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+
+
+Example 1:
+
+
+Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+Output: 3
+Explanation: The LCA of nodes 5 and 1 is 3.
+
+const lowestCommonAncestor = (root, p, q) => {
+    // Initialize a variable to store the result of the LCA
+    let result = null
+
+    // Define a recursive function to perform Depth-First Search (DFS) on the binary tree
+    const dfs = (node) => {
+        // If the current node is null, return null
+        if (node === null) return null
+
+        // Recursively call dfs on the left subtree and store the result in the variable 'left'
+        let left = dfs(node.left)
+        // Recursively call dfs on the right subtree and store the result in the variable 'right'
+        let right = dfs(node.right)
+        // Check if the current node is one of the target nodes (p or q) and store the result in the variable 'curr'
+        let curr = node === p || node === q
+
+        // If both target nodes are found in different subtrees, set 'result' to the current node (LCA)
+        if (left + right + curr >= 2) result = node
+
+        // Return whether the current node or one of its descendants is a target node
+        return left || right || curr
+    }
+
+    // Start the DFS from the root node
+    dfs(root)
+    // Return the LCA found during the DFS traversal
+    return result
+}
+
+
+The function lowestCommonAncestor takes three parameters: root (the root of the binary tree), p, and q (the nodes for which we need to find the LCA).
+
+It initializes a variable result to null. This variable will store the result of the LCA.
+
+The function dfs (Depth-First Search) is defined within lowestCommonAncestor. It recursively explores the binary tree.
+
+Inside dfs, if the current node is null, it returns null.
+
+It recursively calls dfs on the left and right subtrees and stores the results in left and right.
+
+It checks whether the current node is one of the target nodes (p or q) and stores the result in the variable curr.
+
+If the sum of left, right, and curr is greater than or equal to 2, it means that both target nodes are found in different subtrees. In this case, the current node is the LCA, and it sets result to the current node.
+
+The function returns left || right || curr. This represents whether the current node or one of its descendants is a target node.
+
+Finally, the lowestCommonAncestor function is called with the root node to start the DFS, and it returns the LCA stored in the result variable.
+
+This solution uses a recursive depth-first search to traverse the binary tree, and when it finds the LCA, it stops further exploration. The LCA is efficiently found by checking the conditions at each step in the DFS traversal.
+
+
+
+1.// Initialize a variable to store the result of the LCA
+2.// Define a recursive function to perform Depth-First Search (DFS) on the binary tree
+2.a// inside of the function dfs // If the current node is null, return null
+2.b// Recursively call dfs on the left subtree and store the result in the variable 'left'
+2.c// Recursively call dfs on the right subtree and store the result in the variable 'right'
+2.d // Check if the current node is one of the target nodes (p or q) and store the result in the variable 'curr'
+2.e // If both target nodes are found in different subtrees, set 'result' to the current node (LCA)
+2.f // Return whether the current node or one of its descendants is a target node
+3.// Start the DFS from the root node
+4.// Return the LCA found during the DFS traversal
+*/
+
+https://www.youtube.com/watch?v=VSuZoj4YC1E
