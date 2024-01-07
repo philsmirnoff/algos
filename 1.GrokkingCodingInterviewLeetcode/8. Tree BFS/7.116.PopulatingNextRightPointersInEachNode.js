@@ -54,3 +54,6 @@ function connect(root) {
 
   return root;
 }
+
+t: 0(n)
+S: (logn)
