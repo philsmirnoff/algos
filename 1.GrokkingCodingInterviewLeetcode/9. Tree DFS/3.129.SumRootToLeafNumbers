@@ -1,0 +1,48 @@
+129. Sum Root to Leaf Numbers
+Medium
+7.4K
+119
+company
+Facebook
+company
+Amazon
+company
+ServiceNow
+You are given the root of a binary tree containing digits from 0 to 9 only.
+
+Each root-to-leaf path in the tree represents a number.
+
+For example, the root-to-leaf path 1 -> 2 -> 3 represents the number 123.
+Return the total sum of all root-to-leaf numbers. Test cases are generated so that the answer will fit in a 32-bit integer.
+
+A leaf node is a node with no children.
+
+
+
+Example 1:
+
+
+Input: root = [1,2,3]
+Output: 25
+Explanation:
+The root-to-leaf path 1->2 represents the number 12.
+The root-to-leaf path 1->3 represents the number 13.
+Therefore, sum = 12 + 13 = 25.
+
+
+var sumNumbers = function(root) {
+    return dfs(root, 0)
+};
+
+const dfs = (currNode, pathSum) => {
+    if (currNode === null) return 0
+
+    // calculate the path number of the current node
+    pathSum = pathSum * 10 + currNode.val
+
+    // if the current node is a leaf, return the current path sum
+    if (currNode.left === null && currNode.right === null) return pathSum
+
+    // traverse left and right subtree
+    return dfs(currNode.left, pathSum) + dfs(currNode.right, pathSum)
+}
