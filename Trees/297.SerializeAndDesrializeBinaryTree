@@ -1,0 +1,89 @@
+Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+
+Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+
+Clarification: The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+
+
+
+Example 1:
+
+
+Input: root = [1,2,3,null,null,4,5]
+Output: [1,2,3,null,null,4,5]
+
+
+// Definition for a binary tree node.
+function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+}
+
+/**
+ * Encodes a tree to a single string.
+ * @param {TreeNode} root
+ * @return {string}
+ */
+function serialize(root) {
+    // Base case: if the node is null, represent it as a marker (e.g., '#')
+    if (!root) {
+        return '#';
+    }
+
+    // Serialize the current node's value
+    const serializedNode = root.val;
+
+    // Recursively serialize the left and right subtrees
+    const leftSerialized = serialize(root.left);
+    const rightSerialized = serialize(root.right);
+
+    // Combine the serialized values in a string format
+    return serializedNode + ',' + leftSerialized + ',' + rightSerialized;
+}
+
+/**
+ * Decodes your encoded data to a tree.
+ * @param {string} data
+ * @return {TreeNode}
+ */
+function deserialize(data) {
+    // Split the serialized string into an array of values
+    const values = data.split(',');
+
+    // Recursive function to build the tree
+    function buildTree() {
+        // Get the next value from the array
+        const val = values.shift();
+
+        // If the value is '#', it represents a null node
+        if (val === '#') {
+            return null;
+        }
+
+        // Create a new node with the current value
+        const node = new TreeNode(parseInt(val));
+
+        // Recursively build the left and right subtrees
+        node.left = buildTree();
+        node.right = buildTree();
+
+        // Return the current node
+        return node;
+    }
+
+    // Start building the tree from the root
+    return buildTree();
+}
+
+// Example usage:
+const root1 = new TreeNode(1);
+root1.left = new TreeNode(2);
+root1.right = new TreeNode(3);
+root1.right.left = new TreeNode(4);
+root1.right.right = new TreeNode(5);
+
+const serializedTree = serialize(root1);
+console.log('Serialized Tree:', serializedTree);
+
+const deserializedTree = deserialize(serializedTree);
+console.log('Deserialized Tree:', deserializedTree);
