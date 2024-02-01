@@ -65,6 +65,9 @@ var maxDepth = function(root) {
     // and push current node val into the queeue
     // if current nide has left child, push left child ito the quee
     // currentNde has right child push right child in to queee
+    // push currentLevel into the result
+    // increase maxDepth
+    // return maxDepth
 
     let queue = [root]
     let maxDepth = 0;
