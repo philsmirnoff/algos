@@ -66,3 +66,24 @@ var levelOrder = function(root) {
     }
     return results;
 };
+
+
+Time Complexity:
+
+The algorithm traverses each node exactly once.
+At each node, it performs constant time operations (e.g., pushing and popping from the queue, accessing node values).
+Therefore, the time complexity depends on the number of nodes in the binary tree.
+Let n be the number of nodes in the binary tree. In the worst case, all n nodes need to be visited.
+Hence, the time complexity is O(n).
+Space Complexity:
+
+The space complexity is determined by the maximum number of nodes that are stored in the queue at any given time during the BFS traversal.
+At each level of the binary tree, the number of nodes in the queue can be at most equal to the number of nodes at that level.
+In the worst case, the maximum number of nodes at any level can be roughly half of the total number of nodes in the tree (for a completely full tree).
+Therefore, the space complexity of the queue is O(n/2), which simplifies to O(n).
+Additionally, the result array stores the values of nodes level by level, which also contributes to the space complexity.
+Hence, the overall space complexity is O(n).
+In summary:
+
+Time Complexity: O(n)
+Space Complexity: O(n)
