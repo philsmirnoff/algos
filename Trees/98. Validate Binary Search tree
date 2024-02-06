@@ -52,3 +52,39 @@ const helper = (root, min, max) => {
   const rightValidBST = helper(root.right, root.val, max)
   return leftValidBST && rightValidBST
 }
+
+
+// Main function to check if the given binary tree is a valid BST
+const isValidBST = root => helper(root, null, null)
+
+// Helper function for recursive traversal and validation
+const helper = (root, min, max) => {
+  // Base case: if the current node is null, it's a valid BST
+  if (root === null) return true
+
+  // Check if the current node's value violates the BST property
+  if (min !== null && root.val <= min) return false
+  if (max !== null && root.val >= max) return false
+
+  // Recursively check the left and right subtrees
+  // For the left subtree, the maximum value becomes the current node's value
+  // For the right subtree, the minimum value becomes the current node's value
+  const leftValidBST = helper(root.left, min, root.val)
+  const rightValidBST = helper(root.right, root.val, max)
+
+  // Return true only if both the left and right subtrees are valid BSTs
+  return leftValidBST && rightValidBST
+}
+
+
+The isValidBST function calls the helper function with the root node of the binary tree and null for both min and max initially.
+In the helper function:
+It first checks if the current node is null. If so, it returns true because an empty tree is considered a valid BST.
+Then, it checks if the current node's value violates the BST property with respect to the given min and max values. If it does, it returns false.
+Recursively, it calls the helper function for the left and right subtrees, updating the min and max values accordingly.
+Finally, it returns true if both left and right subtrees are valid BSTs; otherwise, it returns false.
+The isValidBST function returns the result obtained from the helper function, indicating whether the entire binary tree is a valid BST.
+
+
+Time Complexity: O(n)
+Space Complexity: O(log n) on average, O(n) in the worst case
