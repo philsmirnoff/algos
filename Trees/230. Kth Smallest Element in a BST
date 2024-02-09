@@ -33,6 +33,23 @@ var kthSmallest = function(root, k) {
     }
 };
 
+Time Complexity:
+
+In the provided solution, a depth-first search (DFS) algorithm is used to traverse the binary search tree (BST) in an in-order manner.
+In the DFS traversal, each node is visited exactly once.
+Visiting a single node involves appending its value to the array.
+Therefore, the time complexity is O(N), where N is the number of nodes in the BST.
+Space Complexity:
+
+In the provided solution, an array array is used to store the values of the nodes in sorted order.
+The size of the array will be equal to the number of nodes in the BST.
+Therefore, the space complexity of the solution is also O(N), where N is the number of nodes in the BST.
+In summary:
+
+Time Complexity: O(N)
+Space Complexity: O(N)
+This solution provides a straightforward approach to find the kth smallest element in a BST but requires extra space to store the sorted values of the nodes.
+
 // solution 3
 
 // create array and return kth index
