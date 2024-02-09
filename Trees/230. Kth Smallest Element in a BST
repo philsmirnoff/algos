@@ -32,3 +32,26 @@ var kthSmallest = function(root, k) {
         dfs(root.right)
     }
 };
+
+// solution 3
+
+// create array and return kth index
+
+var kthSmallest = function(root, k) {
+    let arr = []
+    inOrder(root, arr)
+    return findKthSmallest(arr, k)
+};
+
+// create inOrder function to populate array
+function inOrder(root, arr) {
+    if (root === null) return
+    inOrder(root.left, arr)
+    arr.push(root.val)
+    inOrder(root.right, arr)
+}
+
+// create function to return kth index
+function findKthSmallest(arr, k) {
+    return arr[k - 1]
+}
