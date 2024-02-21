@@ -92,3 +92,5 @@ var buildTree = function(preorder, inorder) {
 // We return the root node of the binary tree.
 
 // Overall, this solution uses recursion to construct a binary tree from the preorder and inorder traversals by splitting the arrays into the left and right subtrees and constructing each subtree recursively. The time complexity of this solution is O(n^2) in the worst case where each node only has one child, and the space complexity is O(n) due to the use of recursive function calls.
+
+// Overall, this solution uses recursion to construct a binary tree from the preorder and inorder traversals by splitting the arrays into the left and right subtrees and constructing each subtree recursively. The time complexity of this solution is O(n^2) in the worst case where each node only has one child, and the space complexity is O(n) due to the use of recursive function calls.
