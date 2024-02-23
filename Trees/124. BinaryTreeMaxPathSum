@@ -127,3 +127,41 @@ const minPathSum = (root) => {
 
   return minSum;
 };
+
+
+/// another great solutionvar maxPathSum = function (root) {
+  // Initialize the maximum sum to negative infinity
+  const ans = { val: -Infinity };
+
+  // Start the depth-first search (DFS) to compute the maximum path sum
+  dfs(root, ans);
+
+  // Return the maximum path sum found during the DFS traversal
+  return ans.val;
+};
+
+// Depth-First Search (DFS) function
+function dfs(root, ans) {
+  // Base case: If the current node is null, return 0
+  if (!root) return 0;
+
+  // Recursively compute the maximum sum of the left subtree
+  const left = dfs(root.left, ans);
+
+  // Recursively compute the maximum sum of the right subtree
+  const right = dfs(root.right, ans);
+
+  // Calculate the maximum value considering three cases:
+  // 1. Only the current node
+  // 2. Current node + left subtree
+  // 3. Current node + right subtree
+  const maxVal = Math.max(root.val, root.val + left, root.val + right);
+
+  // Update the global maximum sum if it's greater than the current maximum value
+  ans.val = Math.max(ans.val, maxVal, root.val + left + right);
+
+  // Return the maximum value among the three cases to be used in parent nodes
+  return maxVal;
+}
+Time complexity: O(n)
+Space complexity: O(h)O(h), where hh is the height of the binary tree
