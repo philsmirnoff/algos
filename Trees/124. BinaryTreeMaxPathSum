@@ -62,3 +62,68 @@ var maxPathSum = function(root) {
     // Return the maximum path sum
     return maxSum;
 };
+
+Neetcode explaination:
+       1
+      / \
+     2   3
+        / \
+       4   5
+we gonna start from the root node, like normal, and here we want to know whats the maxPathSum we can do from here, if we split from this position, going left and right subtree. But why start from the root if can solve subpromblem first, and possibly use that subproblem in the result at the root position? So we gonna leverage that idea of dfs, recursively and we will end up having linear time complexity.
+So we gonna start from the root, and then we gonna go to the left and we ll check whats the maximum we can get from left subtree, if we never end up splitting. in this case its pretty simple since it doesnt have left or light subtrees. so we end up having maxSumPath of two.
+We still want to know whats the maxPathSUm from the root, so we go to the right subtree, node 3. and here we recursively we will ask same whats the the MaxPathSum we can get if we ll run through from this position 3 and we end up splitting to the left and right subtree.
+and by the way our maxSumPath is 2
+so from position 3, we check our left subtree 4, and since it doesnt have any children, we end up having maxSumPath of 4. no we check the right subtree 5, and we end up having maxSumPath of 5.
+now from position 3, we do have whats the maxPathSUm we can get from the left without splitting and right subtree if we never split, adn we are hiving 5.
+And now we  are at his node 3, we have computed left and right sub problems. From node 3 we will be computing two different values (by the way our result is equal 5 so far) we will be computing the maxPathSum if we end up splitting from this position, and we will be computing the maxPathSum if we never end up splitting from this position.
+
+We will compute maxPathSum if we are allowed to split from this position to the left and to the right. so if we are allowed to split from this position, we will be having 3 + 4 + 5 = 12. and we will be updating our maxSumPath to 12. This isnot the value that we will be returning, but we will be updating our maxSumPath to 12.
+
+So whats the value I want to return up to my parent, remember what this node 1 wanted to compute was whats the max it will have if it is allowed to the left and to the right. from here on, node 3, we dont want to split twice, we want to split once, so we want to return the maxPathSum if we are allowed to split once, so we will be returning 3 + max(4, 5) = 8. and this is the value we will be returning to our parent.
+
+so whats the maxPatsSum we can get from this position 1, we will take node itself and take left and take right 1 + 2 + 8 = 11. Since 11 is maller than 12, we dont update the maxPathSum.
+
+
+const maxPathSum = (root) => {
+  let maxSum = Number.NEGATIVE_INFINITY;
+
+  const maxPathSumHelper = (node) => {
+    if (node === null) {
+      return 0;
+    }
+
+    const leftSum = Math.max(maxPathSumHelper(node.left), 0);
+    const rightSum = Math.max(maxPathSumHelper(node.right), 0);
+
+    maxSum = Math.max(maxSum, node.val + leftSum + rightSum);
+
+    return node.val + Math.max(leftSum, rightSum);
+  };
+
+  maxPathSumHelper(root);
+
+  return maxSum;
+};
+
+
+minPathSUm
+const minPathSum = (root) => {
+  let minSum = Number.POSITIVE_INFINITY;
+
+  const minPathSumHelper = (node) => {
+    if (node === null) {
+      return 0;
+    }
+
+    const leftSum = Math.min(minPathSumHelper(node.left), 0);
+    const rightSum = Math.min(minPathSumHelper(node.right), 0);
+
+    minSum = Math.min(minSum, node.val + leftSum + rightSum);
+
+    return node.val + Math.min(leftSum, rightSum);
+  };
+
+  minPathSumHelper(root);
+
+  return minSum;
+};
