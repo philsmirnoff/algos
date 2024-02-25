@@ -129,7 +129,8 @@ const minPathSum = (root) => {
 };
 
 
-/// another great solutionvar maxPathSum = function (root) {
+/// another great solution
+var maxPathSum = function (root) {
   // Initialize the maximum sum to negative infinity
   const ans = { val: -Infinity };
 
