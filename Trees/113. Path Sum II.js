@@ -83,3 +83,14 @@ function getPaths(currentNode, currentTotal, targetSum, output, currentPath) {
   currentPath.pop()
   return
 }
+
+
+Time Complexity:
+Traversal: The algorithm traverses each node of the binary tree once. In the worst-case scenario, it visits every node in the tree.
+Copying Paths: When a valid path is found, a copy of the path is created to add it to the output array.
+Overall: Considering all these operations, the time complexity of the algorithm is O(N), where N is the number of nodes in the binary tree.
+Space Complexity:
+Recursion Stack: The space complexity is primarily determined by the recursion stack. Since the algorithm utilizes recursive calls to traverse the tree, the maximum depth of the recursion stack is the height of the binary tree.
+Output Array: Additionally, the space required to store the paths found in the output array contributes to the space complexity.
+Overall: The space complexity of the algorithm is O(N + H), where N is the number of nodes in the binary tree, and H is the height of the binary tree.
+In summary, the time complexity of the algorithm is O(N), and the space complexity is O(N + H), where N is the number of nodes in the binary tree, and H is the height of the binary tree.
