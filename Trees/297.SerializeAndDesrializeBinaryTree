@@ -87,3 +87,83 @@ console.log('Serialized Tree:', serializedTree);
 
 const deserializedTree = deserialize(serializedTree);
 console.log('Deserialized Tree:', deserializedTree);
+
+Solution number 2:
+Serialize function
+
+Convert the values of all nodes to strings and push them in the pre-order traversal by recursive dfs function. Returns a string with values, separated by commas.
+
+Deserialize function
+Convert input data to array of strings by split method. Create the counter i and look up the array:
+
+If value equals "null" returns null and increment the counter.
+Else create the tree node, increment the counter and bind nodes in the pre-order traversal by recursive dfs function. Returns the created node.
+Complexity
+Time complexity: O(n)O(n)O(n)
+Space complexity: O(n)O(n)O(n)
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+
+/**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
+var serialize = function(root) {
+    let result = []
+    // dfs preorder
+    const dfs = (node) => {
+        if (!node) {
+            result.push("null")
+        } else {
+            result.push(node.val.toString())
+            dfs(node.left)
+            dfs(node.right)
+        }
+    }
+    dfs(root)
+    return result.join(",")
+};
+
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+var deserialize = function(data) {
+    // we know that the data is given will be comma delimetted, so we gonna
+    // split it based on the comma into array
+    const array = data.split(",")
+
+    // lets create a  and make it global
+    let i = 0
+
+    // lets define another dfs function and i dont need to pass any variables,
+    // because i is global,
+    const dfs = () => {
+        // base case: 1) if element in array is equal null, return null, else create treeNode
+        if (array[i] === "null") {
+            i++
+            return null
+        } else {
+            const node = new TreeNode(Number(array[i]))
+            i++
+            // now we will call dfs and return value will be node.left
+            node.left = dfs()
+            node.right = dfs()
+
+            return node
+        }
+    }
+// call dfs  and return result, because for the function, we take a string of data, converting into the tree
+   return dfs()
+
+
+};
