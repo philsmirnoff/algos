@@ -12,7 +12,7 @@ Given the roots of two binary trees p and q, write a function to check if they a
 
 Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
- 
+
 
 Example 1:
 
@@ -29,7 +29,7 @@ Example 3:
 
 Input: p = [1,2,1], q = [1,1,2]
 Output: false
- 
+
 
 solution
 
@@ -47,3 +47,30 @@ var isSameTree = function(p, q) {
     };
     return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 };
+
+// time complexity is O(n) and space complexity is O(1) because we are not using any extra space
+
+Let's analyze the time and space complexity of the isSameTree function.
+
+Time Complexity Analysis:
+The time complexity of the function primarily depends on the number of nodes in the trees p and q. Let n be the number of nodes in the larger tree.
+
+Traversing through the trees requires visiting each node once.
+The function performs a recursive depth-first search (DFS) traversal to compare corresponding nodes of the trees.
+Therefore, the time complexity is O(n), where n is the total number of nodes in the trees.
+
+Space Complexity Analysis:
+The space complexity of the function is determined by the recursive calls and the call stack used during the recursion.
+
+In the worst-case scenario, if the trees are completely unbalanced, the depth of the recursive call stack could be n, where n is the number of nodes in the larger tree.
+Additionally, the space complexity also depends on any auxiliary space used within the recursive calls.
+In this function:
+
+The function uses a constant amount of extra space for comparisons and base cases, so it's O(1) in addition to the space used by the call stack.
+The space complexity due to the call stack is O(n) in the worst case, as explained earlier.
+Therefore, the overall space complexity is O(n), where n is the total number of nodes in the larger tree.
+
+In summary:
+
+Time complexity: O(n)
+Space complexity: O(n)
