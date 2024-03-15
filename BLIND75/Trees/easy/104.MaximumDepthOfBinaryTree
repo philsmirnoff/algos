@@ -1,0 +1,49 @@
+https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
+
+dfs recursively:
+edge case:
+if !root return null
+call recusively left and and right subtree
+return Math.max(left, right) + 1
+
+const maxDepth = (root) => {
+    if (!root) return null
+
+    const left = maxDepth(root.left)
+    const right = maxDepth(root.right)
+
+    return Math.max(left, right) + 1
+}
+
+
+bfs iterative
+initilise depth varliable to zero, initilise queue to root and var result to an empty array
+while queue.length exist, initilize currentSize queue.length and currentLevel to an empty array
+iterate over the currentSize and initise currentNode to queue.shift and push it to CurrentLevel
+if current node has left and right child push it to queue
+push current level into result and increase depth
+
+
+const maxDepth = (root) => {
+    if (!root) return null
+    let depth = 0
+    const queue = [root]
+    const result = []
+
+
+    while (queue.length > 0) {
+    let currentSize = queue.length;
+    let currentLevel = []
+
+    for (let i = 0; i < currentSize; i++) {
+        let currentNode = queue.shift()
+        currentLevel.push(currentNode)
+
+        if (currentNode.left) queue.push(currentNode.left)
+        if (currentNode.right) queue.push(currentNode.right)
+    }
+    result.push(currentLevel)
+    depth++
+    }
+    return depth
+}
