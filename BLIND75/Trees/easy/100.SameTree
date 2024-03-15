@@ -1,0 +1,23 @@
+https://leetcode.com/problems/same-tree/description/
+
+Recurcsive dfs,
+
+Edge cases:
+
+If p = q, return true
+
+If (p.val = null & q.val ≠ null,) || (p.val ≠ null & q.val = null) return false
+
+If (p.val ≠ q.val) return false
+
+return run function on the left subtree of both trees & run function on right subtree.
+
+
+const isSameTree = (p, q) => {
+    if (p === q) return true
+
+    if ((p !== null && q === null) || (p === null && q !== null)) return false
+    if (p.val !== q.val) return false
+
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
+}
