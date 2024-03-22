@@ -1,11 +1,12 @@
 https://leetcode.com/problems/subtree-of-another-tree/
 
-// dfs recursive
-// base case:
-// if root is null return false
-// create dfs function isIdentical(node1, node2) just like in same tree, run it on the node.left, node.right
-// Check if the current subtree is identical to the target tree, if it is return true
-// Recursively check if the target tree is a subtree of the left or right subtree of the current node
+
+dfs recursive
+base case:
+if root is null return false
+create dfs function isIdentical(node1, node2) just like in same tree, run it on the node.left, node.right
+Check if the current subtree is identical to the target tree, if it is return true
+Recursively check if the target tree is a subtree of the left or right subtree of the current node
 
 
 
