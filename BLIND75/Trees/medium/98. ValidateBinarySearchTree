@@ -1,0 +1,27 @@
+https://leetcode.com/problems/validate-binary-search-tree/description/
+
+// explaination:
+1. create a helper function valid that takes in a root, min, and max
+2. if the root is null, return true
+3. if the root value is less than or equal to the min, return false
+4. if the root value is greater than or equal to the max, return false
+5. recursively call the valid function on the left subtree with the min as the min and the root value as the max
+6. recursively call the valid function on the right subtree with the root value as the min and the max as the max
+7. return the result of the left subtree and the right subtree
+
+
+var isValidBST = function(root) {
+    return valid(root, -Infinity, Infinity)
+};
+
+const valid = (root, min, max) => {
+    if (root === null) return true
+    if (min !== null && root.val <= min) return false
+    if (max !== null && root.val >= max) return false
+
+    const leftSubtree = valid(root.left, min, root.val)
+    const rightSubtree = valid(root.right, root.val, max)
+
+    return leftSubtree && rightSubtree
+
+}
