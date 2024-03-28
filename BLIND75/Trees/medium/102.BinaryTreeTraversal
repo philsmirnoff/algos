@@ -2,6 +2,22 @@ https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
 Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
 
+
+1. BFS iterative
+2. If root is null, return empty array
+3. Create a result array
+4. Create a queue and push root into it
+5. While queue is not empty
+  1. Create a level array
+  2. Get the size of the queue
+  3. Iterate through the size
+    1. Shift the first element from the queue
+    2. Push the value of the node into the level array
+    3. If the node has left child, push it into the queue
+    4. If the node has right child, push it into the queue
+  4. Push the level array into the result array
+6. Return the result array
+
 const levelOrder = (root) => {
   if (!root) return [];
   const result = [];

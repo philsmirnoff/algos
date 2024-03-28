@@ -1,0 +1,25 @@
+https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+
+// Given preorder and inorder traversal of a tree, construct the binary tree.
+// explaination
+1. base case: if preorder or inorder is empty, return null
+2. zero index of the the preeorder will be our root, initilize root to new node with the first element of preorder
+3. find the mid index of the root value in inorder
+4. root.left will be the recursive call of buildTree with the left side of the inorder and preorder
+5. root.right will be the recursive call of buildTree with the right side of the inorder and preorder
+6. return root
+
+check if the preorder and inorder length exists, if not return null, zero index in preorder will be our root, Recursively build the left subtree using the elements from preorder.slice(1, mid + 1) and inorder.slice(0, mid). Recursively build the right subtree using elements from preorder.slice(mid + 1) and inorder.slice(mid + 1), return root
+
+var buildTree = function(preorder, inorder) {
+    // base case
+    if (!preorder.length || !inorder.length) return null
+
+    let root = new TreeNode(preorder[0])
+    let mid = inorder.indexOf(root.val)
+
+    root.left = buildTree(preorder.slice(1, mid + 1), inorder.slice(0, mid))
+    root.right = buildTree(preorder.slice(mid + 1), inorder.slice(mid + 1))
+    
+    return root
+};

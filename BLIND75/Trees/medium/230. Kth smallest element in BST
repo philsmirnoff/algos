@@ -1,1 +1,29 @@
 https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+
+
+expalination: 
+1. create an array to store all the values of the tree
+2. create a dfs function to traverse the tree
+3. return array[k - 1] to get the kth smallest element in the tree
+4. in the helper function if the root is null return
+5. call the dfs function on the left side of the tree
+6. push the root value into the array
+7. call the dfs function on the right side of the tree
+
+
+
+var kthSmallest = function(root, k) {
+    let array = []
+    dfs(root)
+    return array[k - 1]
+
+    function dfs(root){
+        if(!root){
+            return
+        }
+        dfs(root.left)
+        array.push(root.val)
+        dfs(root.right)
+    }
+};
+
