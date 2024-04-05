@@ -52,3 +52,27 @@ const lowestCommonAncestor = (root, p, q) => {
     // If the conditions above are not met, the current root is the lowest common ancestor.
     return root;
 };
+
+
+
+const lowestCommonAncestor = (root, p, q) => {
+    // Base case: if the root is null, return null.
+    if (root === null) {
+        return null;
+    }
+
+    // If p and q are both less than the current root value,
+    // the common ancestor must be in the left subtree.
+    if (p.val < root.val && q.val < root.val) {
+        return lowestCommonAncestor(root.left, p, q);
+    }
+
+    // If p and q are both greater than the current root value,
+    // the common ancestor must be in the right subtree.
+    if (p.val > root.val && q.val > root.val) {
+        return lowestCommonAncestor(root.right, p, q);
+    }
+
+    // If the conditions above are not met, the current root is the lowest common ancestor.
+    return root;
+};
