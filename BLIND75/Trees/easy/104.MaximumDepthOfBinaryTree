@@ -47,3 +47,7 @@ const maxDepth = (root) => {
     }
     return depth
 }
+
+Time complexity: O(n)
+Space complexity: O(n)
+*/
