@@ -1,7 +1,7 @@
 https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
 
 
-expalination: 
+expalination:
 1. create an array to store all the values of the tree
 2. create a dfs function to traverse the tree
 3. return array[k - 1] to get the kth smallest element in the tree
@@ -26,4 +26,29 @@ var kthSmallest = function(root, k) {
         dfs(root.right)
     }
 };
+
+
+
+To analyze the time and space complexity of the given code, we need to understand how the function traverses the binary search tree (BST) and how the elements are stored and accessed.
+
+Time Complexity:
+
+Traversing the tree: The dfs function is a depth-first search traversal of the BST. It visits every node in the tree exactly once (in in-order fashion: left subtree, root, right subtree).
+Building the array: The function stores the values of the tree in an array array during the traversal. Since each node is visited once, it takes O(n) time to fill the array, where n is the number of nodes in the tree.
+Accessing the kth smallest element: Accessing the k - 1 index in the array takes constant time O(1).
+Therefore, the total time complexity of the function is the sum of the time taken to traverse the tree and access the kth smallest element, which is O(n) + O(1), simplifying to O(n).
+
+Space Complexity:
+
+Array: The function creates an array array to store the values of all nodes in the tree. Since the size of the array is equal to the number of nodes in the tree (n), the space complexity for the array is O(n).
+Call stack: The recursive nature of the dfs function leads to a call stack. In the worst case, the maximum depth of the recursion will be equal to the height of the tree. If the tree is balanced, the height will be O(log n). In the worst-case scenario, the height of the tree could be O(n), such as in a degenerate (unbalanced) tree.
+Therefore, the space complexity is the sum of the space used by the array and the call stack, which is O(n) + O(log n) in the best case (balanced tree) or O(n) + O(n) in the worst case (unbalanced tree). This simplifies to O(n).
+
+In summary:
+
+The time complexity of the function is O(n).
+The space complexity of the function is O(n).
+
+
+
 
