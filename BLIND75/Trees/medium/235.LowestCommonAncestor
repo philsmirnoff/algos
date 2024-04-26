@@ -76,3 +76,15 @@ const lowestCommonAncestor = (root, p, q) => {
     // If the conditions above are not met, the current root is the lowest common ancestor.
     return root;
 };
+
+
+Time Complexity
+Average case: In a balanced binary search tree, the function will recursively search for the LCA by comparing the values of p and q with the current root. In each recursion, it decides to move either to the left or right child based on the values of p and q. In each step, the search space is halved, so the time complexity is proportional to the height of the tree, which is O(log n), where n is the number of nodes in the tree.
+Worst case: In an unbalanced binary search tree (such as a linked list), the height of the tree can be as large as n, so the worst-case time complexity is O(n).
+Space Complexity
+Recursive function calls: The space complexity is due to the recursive function calls. In the average case (balanced tree), the recursion depth is O(log n), since the function will call itself recursively until the base case is reached. In the worst case (unbalanced tree), the recursion depth can be O(n).
+Space for the function stack: Apart from recursion, there is no additional data structure being used.
+In summary:
+
+Time Complexity: Average case is O(log n); worst case is O(n).
+Space Complexity: Average case is O(log n); worst case is O(n).
