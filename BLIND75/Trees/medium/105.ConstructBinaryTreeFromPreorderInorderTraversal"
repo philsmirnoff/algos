@@ -20,6 +20,16 @@ var buildTree = function(preorder, inorder) {
 
     root.left = buildTree(preorder.slice(1, mid + 1), inorder.slice(0, mid))
     root.right = buildTree(preorder.slice(mid + 1), inorder.slice(mid + 1))
-    
+
     return root
 };
+
+The provided function buildTree constructs a binary tree from given preorder and inorder traversal arrays. Let's analyze its time and space complexity:
+
+Time Complexity:
+Finding mid in inorder array: The function searches for root.val in the inorder array using the indexOf function. This operation takes O(n) time in the worst case, where n is the length of the inorder array.
+Recursive Calls: The function then recursively calls itself twice for the left and right subtrees. These recursive calls pass sliced subarrays of preorder and inorder. In each recursive call, the length of the arrays decreases.
+Total Time Complexity: In each recursive call, finding mid takes O(n), and the total number of recursive calls is related to the height of the tree. In the worst case, the function is called n times, resulting in a time complexity of O(n^2).
+Space Complexity:
+Recursion Stack: The function uses a stack for recursion, which can have a depth equal to the number of nodes in the binary tree in the worst case. So, the recursion stack can take up to O(n) space.
+Slicing the arrays: Each recursive call creates new sliced arrays for preorder and inorder, resulting in additional memory usage. However, the total space complexity is still dominated by the recursion stack.
