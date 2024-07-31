@@ -1,0 +1,54 @@
+// 217. Contains Duplicate
+// Easy
+
+// 6238
+
+// 1009
+
+// Add to List
+
+// Share
+// Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+// Example 1:
+
+// Input: nums = [1,2,3,1]
+// Output: true
+// Example 2:
+
+// Input: nums = [1,2,3,4]
+// Output: false
+// Example 3:
+
+// Input: nums = [1,1,1,3,3,4,3,2,4,2]
+// Output: true
+
+var containsDuplicate = function (nums) {
+  let map = {};
+  for (let char of nums) {
+    if (!(char in map)) {
+      map[char] = 0;
+    }
+    map[char]++;
+  }
+
+  for (let char in map) {
+    if (map[char] > 1) {
+      return true;
+    }
+  }
+  return false;
+};
+
+
+
+// 2. nlogn sorting algorithm  O(nlogn) 0(1)
+const containsDuplicate = (nums) => {
+    nums = nums.sort((a, b) => a - b);
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] == nums[i + 1]) {
+            return true;
+        }
+    }
+    return false;
+};
