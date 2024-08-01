@@ -57,7 +57,7 @@ const twoSum = (nums, target) => {
       let num = nums[i]
       let complementPair = target - num
 
-      if (complementPair in hashmap) return [i, hashmap[complementPair]]
+      if (complementPair in hashmap) return [ hashmap[complementPair], i]
 
       hashmap[num] = i
   }
