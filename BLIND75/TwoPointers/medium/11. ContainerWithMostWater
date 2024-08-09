@@ -1,0 +1,83 @@
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+
+Notice that you may not slant the container.
+
+
+To solve the "Max Water Container" problem, where you need to find the maximum area of water a container formed by two bars can hold, you can use the two-pointer technique. This approach is efficient and straightforward.
+
+Approach
+Initialize Two Pointers:
+
+Use two pointers: one at the beginning (left) and one at the end (right) of the array.
+Calculate Area:
+
+Compute the area of water that can be held between the bars at these two pointers. The area is determined by the width between the pointers and the height of the shorter bar.
+Move Pointers:
+
+To potentially find a larger area, move the pointer pointing to the shorter bar inward. This is because the width between the bars decreases as you move the pointers inward, but the height might increase, potentially leading to a larger area.
+Track Maximum Area:
+
+Keep track of the maximum area encountered during this process.
+Continue Until Pointers Meet:
+
+Continue this process until the two pointers meet.
+Solution
+Here’s how you can implement this approach in JavaScript:
+
+javascript
+Copy code
+function maxArea(height) {
+  let maxArea = 0; // To store the maximum area
+  let left = 0;    // Left pointer
+  let right = height.length - 1; // Right pointer
+
+  while (left < right) {
+    // Calculate the current area
+    const width = right - left;
+    const minHeight = Math.min(height[left], height[right]);
+    const currentArea = width * minHeight;
+
+    // Update the maximum area if the current area is larger
+    maxArea = Math.max(maxArea, currentArea);
+
+    // Move the pointer pointing to the shorter bar inward
+    if (height[left] < height[right]) {
+      left++;
+    } else {
+      right--;
+    }
+  }
+
+  return maxArea;
+}
+
+// Example usage
+const height = [1, 7, 2, 5, 4, 7, 3, 6];
+console.log(maxArea(height)); // Output: 49
+Explanation
+Two Pointers Initialization:
+
+left starts at the beginning of the array, and right starts at the end.
+Calculate Area:
+
+The width of the container is right - left.
+The height of the container is the minimum height of the bars at the left and right pointers.
+Area is calculated as width * minHeight.
+Move Pointers:
+
+If the height at the left pointer is less than the height at the right pointer, increment the left pointer to try a potentially taller bar.
+Otherwise, decrement the right pointer.
+Update Maximum Area:
+
+Update maxArea with the maximum value found.
+End Condition:
+
+The loop continues until the left and right pointers meet.
+Time Complexity
+Time Complexity: O(n), where n is the number of bars in the array. Each bar is considered at most twice (once by each pointer).
+Space Complexity: O(1). The algorithm uses a constant amount of extra space.
+This solution efficiently finds the maximum area of water a container can store using the two-pointer technique.
