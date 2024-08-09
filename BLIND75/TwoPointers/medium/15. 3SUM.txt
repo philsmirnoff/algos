@@ -61,7 +61,7 @@ Solution
 Here’s how you can implement this approach in JavaScript:
 
 javascript
-Copy code
+
 function threeSum(nums) {
   const result = [];
   nums.sort((a, b) => a - b); // Sort the array
