@@ -1,0 +1,125 @@
+Medium
+Topics
+Companies
+Hint
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+
+
+
+Example 1:
+
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Explanation:
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+The distinct triplets are [-1,0,1] and [-1,-1,2].
+Notice that the order of the output and the order of the triplets does not matter.
+Example 2:
+
+Input: nums = [0,1,1]
+Output: []
+Explanation: The only possible triplet does not sum up to 0.
+Example 3:
+
+Input: nums = [0,0,0]
+Output: [[0,0,0]]
+Explanation: The only possible triplet sums up to 0.
+
+
+To solve the "Three Integer Sum" problem, where you need to find all unique triplets in an integer array that sum to zero, you can use a combination of sorting and the two-pointer technique. This approach is both efficient and straightforward. Here’s a detailed explanation and the implementation:
+
+Approach
+Sort the Array:
+
+Sorting helps to use a two-pointer technique effectively and easily avoid duplicates.
+Iterate with One Pointer:
+
+Fix one element and then use the two-pointer technique to find two other elements that sum to zero with the fixed element.
+Two-Pointer Technique:
+
+For each fixed element, use two pointers to find pairs that sum to the negative of the fixed element. Adjust the pointers based on the sum comparison.
+Avoid Duplicates:
+
+Skip over duplicate elements to ensure that each triplet is unique.
+Steps
+Sort the Array: This allows us to easily handle duplicates and efficiently find pairs using the two-pointer approach.
+
+Iterate through the Array:
+
+For each element, treat it as a potential first element of the triplet.
+Use two pointers to find the other two elements that sum up to zero when added to the current element.
+Adjust Pointers:
+
+If the sum of the elements at the two pointers is too small, move the left pointer to the right.
+If the sum is too large, move the right pointer to the left.
+If a valid triplet is found, record it and adjust both pointers to skip over duplicates.
+Solution
+Here’s how you can implement this approach in JavaScript:
+
+javascript
+Copy code
+function threeSum(nums) {
+  const result = [];
+  nums.sort((a, b) => a - b); // Sort the array
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    // Skip duplicate elements for the first element
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+    let left = i + 1;
+    let right = nums.length - 1;
+
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right];
+
+      if (sum === 0) {
+        result.push([nums[i], nums[left], nums[right]]);
+        // Skip duplicate elements for the second element
+        while (left < right && nums[left] === nums[left + 1]) left++;
+        // Skip duplicate elements for the third element
+        while (left < right && nums[right] === nums[right - 1]) right--;
+        left++;
+        right--;
+      } else if (sum < 0) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+  }
+
+  return result;
+}
+
+// Example usage
+const nums = [-1, 0, 1, 2, -1, -4];
+console.log(threeSum(nums)); // Output: [[-1, -1, 2], [-1, 0, 1]]
+Explanation
+Sorting:
+
+nums.sort((a, b) => a - b) sorts the array, which helps in efficiently finding pairs and avoiding duplicates.
+Iterating and Fixing One Element:
+
+For each element nums[i], we treat it as a fixed element and use two pointers (left and right) to find pairs that sum to -nums[i].
+Two-Pointer Technique:
+
+Adjust left and right pointers based on the current sum compared to zero.
+Skip over duplicates to avoid recording the same triplet multiple times.
+Avoiding Duplicates:
+
+Ensure that the next element after i and the next element after left and right are not duplicates.
+Time Complexity
+Sorting: O(n log n)
+Two-Pointer Search: O(n^2), as we perform a linear scan for each element.
+Overall Time Complexity: O(n^2)
+
+Space Complexity
+Result Storage: O(k), where k is the number of unique triplets found.
+Auxiliary Space: O(1), not counting the space used for the output.
+Overall Space Complexity: O(k)
+
+This approach efficiently finds all unique triplets that sum to zero with optimal time and space complexity.
