@@ -43,5 +43,5 @@ const isAnagram = (s, t) => {
   return true;
 }
 
-0(n)
-O(n)
+Time: 0(n)
+Space: O(n)

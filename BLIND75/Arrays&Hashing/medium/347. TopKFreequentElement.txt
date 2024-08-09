@@ -63,3 +63,90 @@ var topKFrequent = function(nums, k) {
 
  Set - Frequency Counter | Using sort
  * Time O(NlogN) | Space O(N)
+
+
+min heap 
+var topKFrequent = function(nums, k) {
+  // Step 1: Build the frequency map
+  const frequencyMap = new Map();
+  
+  nums.forEach(num => {
+    frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
+  });
+  
+  // Step 2: Use a min-heap to find the top k frequent elements
+  const minHeap = new MinHeap((a, b) => frequencyMap.get(a) - frequencyMap.get(b));
+  
+  for (let [num, freq] of frequencyMap) {
+    minHeap.add(num);
+    if (minHeap.size() > k) {
+      minHeap.poll();
+    }
+  }
+  
+  // Step 3: Return the elements from the heap
+  return minHeap.toArray();
+};
+
+// MinHeap class
+class MinHeap {
+  constructor(compareFn) {
+    this.heap = [];
+    this.compareFn = compareFn;
+  }
+  
+  size() {
+    return this.heap.length;
+  }
+  
+  add(value) {
+    this.heap.push(value);
+    this._heapifyUp();
+  }
+  
+  poll() {
+    if (this.size() === 0) return null;
+    const top = this.heap[0];
+    const bottom = this.heap.pop();
+    if (this.size() > 0) {
+      this.heap[0] = bottom;
+      this._heapifyDown();
+    }
+    return top;
+  }
+  
+  toArray() {
+    return this.heap;
+  }
+  
+  _heapifyUp() {
+    let index = this.size() - 1;
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2);
+      if (this.compareFn(this.heap[index], this.heap[parentIndex]) >= 0) break;
+      [this.heap[index], this.heap[parentIndex]] = [this.heap[parentIndex], this.heap[index]];
+      index = parentIndex;
+    }
+  }
+  
+  _heapifyDown() {
+    let index = 0;
+    while (index * 2 + 1 < this.size()) {
+      let smallerChildIndex = index * 2 + 1;
+      if (index * 2 + 2 < this.size() && this.compareFn(this.heap[index * 2 + 2], this.heap[smallerChildIndex]) < 0) {
+        smallerChildIndex = index * 2 + 2;
+      }
+      if (this.compareFn(this.heap[index], this.heap[smallerChildIndex]) <= 0) break;
+      [this.heap[index], this.heap[smallerChildIndex]] = [this.heap[smallerChildIndex], this.heap[index]];
+      index = smallerChildIndex;
+    }
+  }
+}
+// Time: O(nlogk), Space: O(n)
+
+
+To solve the "Top K Frequent Elements" problem, you can follow these steps:
+
+Count Frequencies: Use a frequency map to count the occurrences of each element in the array.
+Use a Heap: Use a min-heap to keep track of the top k frequent elements.
+Extract the Top K: Extract the top k elements from the heap.
