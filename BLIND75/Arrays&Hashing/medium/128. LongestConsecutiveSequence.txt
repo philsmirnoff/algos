@@ -21,17 +21,16 @@ Constraints:
 -109 <= nums[i] <= 109
 
 Explanation
-Convert Array to Set:
-
+1.Convert Array to Set:
 numSet is a Set containing all unique elements from nums.
-Iterate Through Elements:
 
+2. Iterate Through Elements:
 For each element in numSet, check if it's the beginning of a sequence by ensuring the previous number (num - 1) is not in numSet.
-Count Consecutive Elements:
 
+3. Count Consecutive Elements:
 Start from the current element and keep checking the next consecutive numbers (currentNum + 1) while counting them.
-Track Maximum Length:
 
+4.Track Maximum Length:
 Compare the length of the current sequence with the maximum length found so far and update it if necessary.
 Time Complexity
 Insertion and Lookup in Set: O(1) on average.
