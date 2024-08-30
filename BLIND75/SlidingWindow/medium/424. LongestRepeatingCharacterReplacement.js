@@ -59,3 +59,8 @@ var characterReplacement = function(s, k) {
   return maxLength;
 
 };
+
+
+// time and space complexity
+// O(n)
+// O(n)
