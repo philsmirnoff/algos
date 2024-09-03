@@ -289,3 +289,81 @@ function topKFrequent(nums, k) {
 console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2)); // Output: [1, 2]
 console.log(topKFrequent([1], 1));               // Output: [1]
 console.log(topKFrequent([1, 2, 3, 4, 5], 3));   // Output: [3, 2, 1]
+
+
+// How This Code Works
+Frequency Counting: A hash map (frequencyMap) is used to count the occurrences of each number in the nums array.
+
+Maintaining a Min-Heap: The min-heap is used to store pairs of [frequency, num]. The heap is maintained to keep only the k most frequent elements:
+
+If the heap size exceeds k, the root (smallest frequency element) is removed, ensuring only the most frequent elements remain.
+Extracting Results: Once all elements have been processed, the heap contains the top k frequent elements. The result is extracted from the heap by taking the second element of each pair (the number).
+
+Pros of This Approach
+Efficiency: The heap ensures that insertion and extraction operations are efficient, with O(log k) complexity. The overall complexity of the algorithm is O(n log k), which is efficient for large inputs when k is much smaller than n.
+Simplicity: Using a heap provides a straightforward way to keep track of the top k elements.
+Cons of This Approach
+Space Complexity: The heap and frequency map require additional space, O(n) for the map and O(k) for the heap. This can be a consideration in memory-constrained environments.
+Heap Implementation: The custom heap implementation adds some complexity to the codebase. In environments where a heap is not provided by default, this is necessary but adds lines of code.
+Conclusion
+This implementation of a min-heap is a robust choice for solving the "Top K Frequent Elements" problem. It efficiently maintains the top k frequent elements as the input array is processed, making it suitable for large datasets. The code is clear and well-organized, adhering to the principles of heap operations, and effectively demonstrates the application of heaps in solving real-world problems.
+
+
+
+
+
+
+You said:
+What’s the time and space complexity of this solution
+ChatGPT said:
+ChatGPT
+Let's analyze the time and space complexity of the solution provided using a min-heap to solve the "Top K Frequent Elements" problem.
+
+Time Complexity
+Building the Frequency Map:
+
+We iterate through the entire input array nums to count the frequency of each element.
+This takes O(n) time, where n is the length of the input array.
+Inserting into the Min-Heap:
+
+We iterate through each unique element in the frequency map. Let's denote the number of unique elements as m.
+For each unique element, we perform an insertion operation into the min-heap.
+Each insertion operation in a heap takes O(log k) time, where k is the maximum size of the heap (the number of top frequent elements we want to find).
+Additionally, whenever the heap size exceeds k, we remove the smallest element using extractMin(), which also takes O(log k) time.
+In the worst case, every element in the nums array is unique, so m could be as large as n.
+Therefore, the time complexity for inserting all elements into the heap and maintaining its size is O(m log k). In the worst case, this is O(n log k).
+Extracting Elements from the Min-Heap:
+
+After processing all elements, we extract up to k elements from the heap.
+Each extraction operation takes O(log k) time, and we perform this operation k times.
+Thus, the extraction step has a time complexity of O(k log k).
+Overall Time Complexity
+Combining all the steps:
+
+Building the frequency map: O(n)
+Inserting into and maintaining the min-heap: O(n log k)
+Extracting elements from the heap: O(k log k)
+Since O(n log k) dominates both O(n) and O(k log k), the overall time complexity of the solution is O(n log k).
+
+Space Complexity
+Frequency Map:
+
+We use a hash map to store the frequency of each element.
+In the worst case, all elements in nums are unique, so the space required is O(n).
+Min-Heap:
+
+The heap stores up to k elements at any given time.
+Thus, the space required for the heap is O(k).
+Output Array:
+
+We store the result (top k frequent elements) in an array of size k.
+So the space required is O(k).
+Overall Space Complexity
+The space complexity is the sum of the space used by the frequency map and the min-heap.
+In the worst case: O(n) (frequency map) + O(k) (min-heap) + O(k) (output array).
+Since n could be much larger than k, the overall space complexity is dominated by O(n).
+
+Summary
+Time Complexity: O(n log k)
+Space Complexity: O(n)
+This solution is efficient and works well for cases where k is much smaller than n, making it a suitable choice for finding the top k frequent elements in large datasets.
