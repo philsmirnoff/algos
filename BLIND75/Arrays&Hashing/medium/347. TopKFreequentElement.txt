@@ -367,3 +367,52 @@ Summary
 Time Complexity: O(n log k)
 Space Complexity: O(n)
 This solution is efficient and works well for cases where k is much smaller than n, making it a suitable choice for finding the top k frequent elements in large datasets.
+
+
+Bucket sort
+ar topKFrequent = function(nums, k) {
+    // Initialize an object to count the frequency of each number
+    let hashmap = {};
+    // Initialize an array (bucket) to hold arrays of numbers by frequency
+    let bucket = [];
+    // Initialize an array to store the result of the top k frequent elements
+    let result = [];
+
+    // Loop through each number in the input array
+    for (let num of nums) {
+        // If the number is not already a key in hashmap, initialize it with a count of 1
+        if (!(num in hashmap)) {
+            hashmap[num] = 1;
+        } else {
+            // Increment the count for the current number
+            hashmap[num]++;
+        }
+    }
+
+    // Convert the hashmap into an array of entries (pairs of number and its frequency)
+    let entries = Object.entries(hashmap).map(([key, freq]) => [Number(key), freq]);
+
+    // Loop through each entry in the array of entries
+    for (let [num, freq] of entries) {
+        // If the bucket for this frequency does not exist, create it as a new array
+        if (!bucket[freq]) {
+            bucket[freq] = []; // Use an array instead of Set
+        }
+        // Add the current number to the bucket for its corresponding frequency
+        bucket[freq].push(num); // Add the number to the frequency bucket
+    }
+
+    // Iterate over the bucket array from the highest frequency down to the lowest
+    for (let i = bucket.length - 1; i >= 0; i--) {
+        // If there are numbers at this frequency bucket, spread them into the result array
+        if (bucket[i]) {
+            result.push(...bucket[i]);
+        }
+        // If we have collected k elements, exit the loop
+        if (result.length >= k) break; // Check if we have enough elements
+    }
+
+    // Return the array containing the top k frequent elements
+    return result.slice(0, k); // Ensure we return exactly k elements
+};
+Time Complexity: O(n) - Building the frequency map takes O(n) time, and iterating over the bucket array takes O(n) time.
