@@ -416,3 +416,114 @@ ar topKFrequent = function(nums, k) {
     return result.slice(0, k); // Ensure we return exactly k elements
 };
 Time Complexity: O(n) - Building the frequency map takes O(n) time, and iterating over the bucket array takes O(n) time.
+
+
+min heap implementation: 
+class MinHeap {
+  constructor() {
+    this.heap = []; // Initialize an empty array to represent the heap.
+  }
+
+  getParentIndex(index) {
+    return Math.floor((index - 1) / 2); // Calculate the parent's index.
+  }
+
+  getLeftChildIndex(index) {
+    return 2 * index + 1; // Calculate the left child's index.
+  }
+
+  getRightChildIndex(index) {
+    return 2 * index + 2; // Calculate the right child's index.
+  }
+
+  swap(index1, index2) {
+    // Swap the values at the two specified indices in the heap.
+    [this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
+  }
+
+  insert(pair) {
+    this.heap.push(pair); // Add the new pair (frequency, element) to the end of the heap.
+    this.heapifyUp(); // Restore the heap property by moving the new pair up.
+  }
+
+  heapifyUp() {
+    let index = this.heap.length - 1; // Start with the last index (newly inserted value).
+    while (this.getParentIndex(index) >= 0 && this.heap[this.getParentIndex(index)][0] > this.heap[index][0]) {
+      // Continue as long as there is a parent and the parent frequency is greater than the current frequency.
+      this.swap(this.getParentIndex(index), index); // Swap with the parent.
+      index = this.getParentIndex(index); // Move up to the parent's index for the next comparison.
+    }
+  }
+
+  remove() {
+    if (this.heap.length === 0) {
+      return null; // If the heap is empty, return null.
+    }
+    if (this.heap.length === 1) {
+      return this.heap.pop(); // If there's only one element, remove and return it.
+    }
+    const root = this.heap[0]; // Store the root pair (frequency, element).
+    this.heap[0] = this.heap.pop(); // Replace the root with the last element and remove the last element.
+    this.heapifyDown(); // Restore the heap property by moving the new root down.
+    return root; // Return the original root pair.
+  }
+
+  heapifyDown() {
+    let index = 0; // Start from the root index.
+    while (this.getLeftChildIndex(index) < this.heap.length) {
+      // Continue as long as there is a left child.
+      let smallerChildIndex = this.getLeftChildIndex(index); // Assume left child is the smallest.
+      // Check if the right child exists and is smaller than the current smallest.
+      if (this.getRightChildIndex(index) < this.heap.length && this.heap[this.getRightChildIndex(index)][0] < this.heap[smallerChildIndex][0]) {
+        smallerChildIndex = this.getRightChildIndex(index); // Update to the right child if it is smaller.
+      }
+      // If the current node's frequency is less than or equal to the smallest child, the heap property is satisfied.
+      if (this.heap[index][0] <= this.heap[smallerChildIndex][0]) {
+        break; // Exit the loop if the heap property is satisfied.
+      }
+      this.swap(index, smallerChildIndex); // Swap the current element with the smaller child.
+      index = smallerChildIndex; // Move down to the smaller child's index for the next comparison.
+    }
+  }
+
+  peek() {
+    return this.heap.length > 0 ? this.heap[0] : null; // Return the root pair (frequency, element) or null if the heap is empty.
+  }
+}
+
+// Function to find the top K frequent elements
+function topKFrequent(nums, k) {
+  const hashmap = {}; // Initialize an object to count frequencies.
+
+  // Count the frequency of each element
+  for (const num of nums) {
+    hashmap[num] = (hashmap[num] || 0) + 1; // Update the frequency in the hashmap.
+  }
+
+  const minHeap = new MinHeap(); // Initialize a new min heap.
+
+  // Iterate through the hashmap to build the heap
+  for (const num in hashmap) {
+    const freq = hashmap[num]; // Get the frequency for the current number.
+    minHeap.insert([freq, num]); // Insert the frequency and number as a pair into the min heap.
+
+    // If the size of the heap exceeds k, remove the least frequent element
+    if (minHeap.heap.length > k) {
+      minHeap.remove(); // Remove the root of the heap (least frequent element).
+    }
+  }
+
+  // Extract the top K frequent elements from the min heap
+  const topKElements = [];
+  while (minHeap.heap.length > 0) {
+    const [freq, num] = minHeap.remove(); // Remove from the heap.
+    topKElements.push(Number(num)); // Store the number in the result array.
+  }
+
+  return topKElements.reverse(); // Return the result array in reverse order to get the most frequent first.
+}
+
+// Example usage
+const nums = [1, 1, 1, 2, 2, 3];
+const k = 2;
+console.log(topKFrequent(nums, k)); // Output: [1, 2]
