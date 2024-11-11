@@ -82,3 +82,45 @@ const search = (nums, target) => {
 return -1;
 
 };
+
+
+var search = function(nums, target) {
+    // Step 1: Initialize the left and right pointers
+    let left = 0; // Left pointer starts at the beginning of the array
+    let right = nums.length - 1; // Right pointer starts at the end of the array
+
+    // Step 2: Begin a while loop that continues as long as the left pointer is less than or equal to the right pointer
+    while (left <= right) {
+        // Step 3: Calculate the middle index of the current range
+        let mid = Math.floor((left + right) / 2); // Integer division to find the middle index
+
+        // Step 4: Check if the middle element is equal to the target
+        if (nums[mid] === target) {
+            return mid; // If the target is found, return its index
+        }
+
+        // Step 5: Check if the left half of the array is sorted
+        if (nums[left] <= nums[mid]) {
+            // The left half is sorted, check if the target lies within this sorted half
+            if (target >= nums[left] && target < nums[mid]) {
+                // Target is within the sorted left half
+                right = mid - 1; // Narrow the search to the left half
+            } else {
+                // Target is not in the sorted left half, search the right half
+                left = mid + 1; // Narrow the search to the right half
+            }
+        } else {
+            // Step 6: If the left half is not sorted, then the right half must be sorted
+            if (target > nums[mid] && target <= nums[right]) {
+                // Target is within the sorted right half
+                left = mid + 1; // Narrow the search to the right half
+            } else {
+                // Target is not in the sorted right half, search the left half
+                right = mid - 1; // Narrow the search to the left half
+            }
+        }
+    }
+
+    // Step 7: If the target is not found after the while loop, return -1
+    return -1; // Target not found, return -1
+};
