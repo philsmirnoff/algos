@@ -74,3 +74,87 @@ var removeNthFromEnd = function(head, n) {
     slow.next = slow.next.next
     return dummyHead.next
 };
+
+
+Let’s walk through an example step by step for the removeNthFromEnd function.
+
+Example
+Input:
+Linked list: 1 -> 2 -> 3 -> 4 -> 5
+n = 2 (We need to remove the 2nd node from the end, which is 4.)
+Steps:
+1. Create a Dummy Node
+javascript
+Copy code
+let dummyHead = new ListNode(null);
+dummyHead.next = head;
+Dummy Node: dummyHead is created with value null, and its next points to the head of the list.
+Updated list: null -> 1 -> 2 -> 3 -> 4 -> 5
+2. Initialize Fast and Slow Pointers
+javascript
+Copy code
+let fast = dummyHead;
+let slow = dummyHead;
+Both fast and slow pointers are initialized at the dummyHead.
+3. Move the Fast Pointer n + 1 Steps Ahead
+javascript
+Copy code
+for (let i = 1; i < n + 1; i++) {
+    fast = fast.next;
+}
+n + 1 = 2 + 1 = 3, so the fast pointer moves 3 steps ahead.
+After each step:
+Step 1: fast -> 1
+Step 2: fast -> 2
+Step 3: fast -> 3
+Now, the fast pointer is at the node with value 3, and the gap between fast and slow is n nodes.
+4. Move Both Fast and Slow Pointers Until Fast Reaches the End
+javascript
+Copy code
+while (fast.next !== null) {
+    fast = fast.next;
+    slow = slow.next;
+}
+Both fast and slow move one step at a time until fast.next === null.
+
+After each step:
+
+Step 1:
+fast -> 4
+slow -> 1
+Step 2:
+fast -> 5
+slow -> 2
+Step 3:
+fast -> null (end of the list)
+slow -> 3
+At this point, the slow pointer is just before the node to be removed (4).
+
+5. Skip the Target Node
+javascript
+Copy code
+slow.next = slow.next.next;
+The slow.next pointer is updated to skip the node with value 4 and point to the node with value 5.
+Updated list: 1 -> 2 -> 3 -> 5
+6. Return the Modified List
+javascript
+Copy code
+return dummyHead.next;
+The modified list is returned, starting from the node after the dummyHead.
+Final result: 1 -> 2 -> 3 -> 5
+Visualization
+Initial list: null -> 1 -> 2 -> 3 -> 4 -> 5
+
+Fast pointer moves 3 steps ahead:
+
+dummyHead -> 1 -> 2 -> 3 (fast) -> 4 -> 5
+Both pointers move until fast reaches the end:
+
+dummyHead -> 1 (slow) -> 2 -> 3 (slow) -> 4 -> 5 (fast)
+Remove the 2nd node from the end:
+
+dummyHead -> 1 -> 2 -> 3 -> 5
+Key Points
+Two-pointer Technique: Creates a gap of n between fast and slow, allowing slow to stop just before the target node.
+Edge Case Handling: The dummyHead ensures that edge cases like removing the first node are handled seamlessly.
+Efficiency: The function runs in O(L) time, where L is the length of the list, with constant space usage (O(1)).
