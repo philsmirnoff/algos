@@ -27,3 +27,111 @@ Example 2:
 
 Input: heights = [[2,1],[1,2]]
 Output: [[0,0],[0,1],[1,0],[1,1]]
+
+explainantion:
+that the grit:
+ [ j->
+i [1,2,2,3,5],
+| [3,2,3,4,4],
+  [2,4,5,3,1],
+  [6,7,1,4,5],
+  [5,1,1,2,4]
+ ]
+ 5 can flow to 4, 4 can flow to 3, 3 can flow to 2, 2 can flow to 1, 1 can touch pacific. On the other side 5 can flow to 3, 3 can flow to 1, 1 can touch atlantic. So 5 can flow to both pacific and atlantic. So the answer is [0,4]
+ We can use BFS to solve this problem. We have to do two bfs, one from pacific and one from atlantic. Because we need to figure out whether the value can achieve pacific or atlantic ocean. Anf then we need to do addiditional logic to state whether it can achieve both pacific or atlnatic ocean.
+ So we have to queues: pacificQueue and altnaticQueue. We will push the values that boards with pacific ocean to pacificQueue and the values that boards with atlantic ocean to atlanticQueue.
+ For Pacific it ll be the first row and first column and for atlantic it will be the last row and last column.
+ For pacific it ll be [0,0], [0,1], [0,2], [0,3], [0,4], [1,0], [2,0], [3,0], [4,0]
+ For atlantic it ll be [5,5], [5,4], [5,3], [5,2], [5,1], [4,5], [3,5], [2,5], [1,5]
+
+ we will start from 1st row and 1st column, we will create isValid function (i < 0, j < 0, i > heights.length - 1, j > heights[0].-1).
+ Also to keep the track which cell we visited we need to create visted array filled with false, once we add cells in the queue and remove it from the queue, we can mark this cell as visited. and if we encounter this cell again we can continue.
+
+ We do the same thing for atlantic ocean. We will start from the last row and last column. we will check if tis cell can reach both cides of the ocean. If it can reach both sides, we will add it to the result array.
+ time complexity will be O(m*n) and space complexity will be O(m*n)
+
+ */
+
+const pacificAtlantic = function(heights) {
+    // Check if the input is empty or undefined, and return an empty array if true.
+    if (!heights || !heights.length) return [];
+
+    // Get the number of rows (m) and columns (n) from the heights matrix.
+    const m = heights.length;
+    const n = heights[0].length;
+
+    // Initialize two queues for BFS: one for the Pacific ocean and one for the Atlantic ocean.
+    const pacificQueue = [];
+    const atlanticQueue = [];
+
+    // Initialize the result array which will store the coordinates that can reach both oceans.
+    const result = [];
+
+    // Iterate through all cells to identify boundary cells for Pacific and Atlantic oceans.
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            // Add the top and left boundary cells to the Pacific queue.
+            if (i === 0 || j === 0) {
+                pacificQueue.push([i, j]);
+            }
+            // Add the bottom and right boundary cells to the Atlantic queue.
+            if (i === m - 1 || j === n - 1) {
+                atlanticQueue.push([i, j]);
+            }
+        }
+    }
+
+    // Helper function to perform BFS on a given queue and return the visited cells.
+    const bfs = (queue) => {
+        // Helper function to check if a cell (x, y) is within bounds.
+        const isValid = (x, y) => x >= 0 && y >= 0 && x < m && y < n;
+
+        // Directions for moving in 4 possible directions (right, left, down, up).
+        const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+
+        // Create a 2D array to keep track of visited cells.
+        const visited = Array(m).fill().map(() => Array(n).fill(false));
+
+        // Perform BFS by processing each cell in the queue.
+        while (queue.length) {
+            const [x, y] = queue.shift(); // Get the current cell from the queue.
+            visited[x][y] = true; // Mark the current cell as visited.
+
+            // Explore the four possible directions from the current cell.
+            for (let dir of directions) {
+                let nextX = x + dir[0];
+                let nextY = y + dir[1];
+
+                // Skip invalid cells or already visited cells.
+                if (!isValid(nextX, nextY) || visited[nextX][nextY]) {
+                    continue;
+                }
+
+                // If the next cell has a greater or equal height, add it to the queue.
+                if (heights[nextX][nextY] >= heights[x][y]) {
+                    queue.push([nextX, nextY]);
+                }
+            }
+        }
+
+        // Return the visited matrix indicating cells that can reach the ocean.
+        return visited;
+    };
+
+    // Perform BFS for both Pacific and Atlantic oceans.
+    const pacific = bfs(pacificQueue);
+    const atlantic = bfs(atlanticQueue);
+
+    // Check each cell in the grid to see if it can reach both oceans.
+    for (let x = 0; x < m; x++) {
+        for (let y = 0; y < n; y++) {
+            // If a cell can reach both oceans, add it to the result array.
+            if (pacific[x][y] && atlantic[x][y]) {
+                result.push([x, y]);
+            }
+        }
+    }
+
+    // Return the final result array with all the coordinates.
+    return result;
+};
