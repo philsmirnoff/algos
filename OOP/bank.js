@@ -11,6 +11,60 @@ class Transaction {
 
 }
 
+class MinHeap {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.heap = this.heap;
+  }
+
+  insert(transaction) {
+    if (this.heap.length < this.capacity) {
+      this.heap.push(transaction);
+      this.heapifyUp();
+    } else if (transaction.amount > this.heap[0].amount) {
+      this.heap[0] = transaction;
+      heapifyDown();
+    }
+  }
+
+  heapifyUp() {
+    let index = this.heap.length - 1;
+    while (index > 0) {
+      let parentIndex = Math.floor((index - 1) / 2);
+      if (this.heap[parentIndex].amount >= this.heap[index].amount) {
+        [this.heap[parentIndex].amount, this.heap[index].amount] = [this.heap[index].amount, this.heap[parentIndex].amount];
+        index = parentIndex;
+      }
+    }
+  }
+
+  heapifyDown() {
+    let index = 0;
+
+    while (index < this.heap.length) {
+      let leftChildIndex = 2 * index + 1;
+      let rightChildIndex = 2 * index + 2;
+      let smallestIndex = index;
+
+      if (leftChildIndex < this.heap.length && this.heap[leftChildIndex].amount < this.heap[smallestIndex].amount) {
+        smallestIndex = leftChildIndex
+      }
+
+      if (rightChildIndex < this.heap.length && this.heap[rightChildIndex].amount < this.heap[smallestIndex].amount) {
+        smallestIndex = rightChildIndex
+  }
+  if (smallestIndex === index) break;
+  [this.heap[index], this.heap[smallestIndex]] = [this.heap[smallestIndex], this.heap[index]]
+  index = smallestIndex
+}
+
+}
+
+getTopN() {
+  return this.heap
+}
+}
+
 // Account class to represent a user's bank account
 
 class Account {
@@ -46,6 +100,7 @@ class Account {
 
   }
 }
+
 
 
 // BankingSystem class to manage multiple accounts
