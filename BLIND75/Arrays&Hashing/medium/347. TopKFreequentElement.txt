@@ -418,7 +418,7 @@ ar topKFrequent = function(nums, k) {
 Time Complexity: O(n) - Building the frequency map takes O(n) time, and iterating over the bucket array takes O(n) time.
 
 
-min heap implementation: 
+min heap implementation:
 class MinHeap {
   constructor() {
     this.heap = []; // Initialize an empty array to represent the heap.
@@ -527,3 +527,90 @@ function topKFrequent(nums, k) {
 const nums = [1, 1, 1, 2, 2, 3];
 const k = 2;
 console.log(topKFrequent(nums, k)); // Output: [1, 2]
+
+
+/// Python solution
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+
+        # count the frequesncy of each character and store it in dictionary
+        # sort it in ascending order based on frequency
+        # and slice the result array from start to up to k elements and return the result
+
+        freq = {}
+
+        for num in nums:
+            freq[num] = 1 + freq.get(num, 0)
+
+        sorted_elements = sorted(freq, key=lambda x:freq[x], reverse=True)
+
+        return sorted_elements[:k]
+
+        Time Complexity:
+Building the Frequency Dictionary:
+
+The loop iterating over nums to count frequencies takes O(n) time, where n is the length of the input list nums.
+Sorting:
+
+Sorting the dictionary keys based on their frequency takes O(m log m) time, where m is the number of unique elements in the list nums. In the worst case, m can be equal to n (if all elements are unique).
+Sorting is done using sorted(), which has a time complexity of O(m log m) for m elements.
+Slicing the Sorted List:
+
+Slicing the sorted list to return the top k elements takes O(k) time, but in the worst case, k can be equal to m, which makes it O(m).
+Thus, the overall time complexity is:
+
+O(n) + O(m log m)
+Since m <= n, the time complexity simplifies to:
+
+O(n + m log m), which can be considered as O(n log n) in the worst case when m = n.
+Space Complexity:
+Frequency Dictionary:
+
+The space required to store the frequency dictionary is O(m), where m is the number of unique elements in nums. In the worst case, this can be O(n) (if all elements are unique).
+Sorted List:
+
+The sorted_elements list stores the keys of the dictionary (i.e., the unique elements). This takes O(m) space.
+Thus, the overall space complexity is:
+
+O(m) for the dictionary and the sorted list. In the worst case where m = n, this becomes O(n).
+Final Time and Space Complexity:
+Time Complexity: O(n + m log m) or O(n log n) in the worst case.
+Space Complexity: O(n) in the worst case, where all elements are unique.
+
+
+using minHeap
+import heapq
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        heap = []
+        freq = {}
+        result = []
+
+        for num in nums:
+            freq[num] = 1 + freq.get(num, 0)
+
+        for key, value in freq.items():
+            heapq.heappush(heap, (value, key))
+
+            if len(heap) > k:
+                heapq.heappop(heap)
+
+        # return [num for freq, num in heap]
+        for value, key in heap:
+            result.append(key)
+
+        return result
+
+        Thus, the overall time complexity is:
+
+O(n + m log k), where n is the number of elements in nums and m is the number of unique elements in nums.
+In the worst case where m = n, this simplifies to O(n log k).
+
+Space Complexity:
+Frequency Map: The space for the frequency map will be O(m), where m is the number of unique elements.
+Heap: The heap will store at most k elements, so it requires O(k) space.
+Final List: The result list will store k elements, so it also requires O(k) space.
+Thus, the overall space complexity is:
+
+O(m + k), where m is the numb
