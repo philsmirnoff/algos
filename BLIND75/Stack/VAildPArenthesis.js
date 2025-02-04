@@ -57,3 +57,27 @@ const isValid = (str) => {
   // If the stack is empty, it means all opening brackets were properly matched and closed
   return stack.length === 0;
 };
+
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if len(s) == 0:
+            return True
+
+        hashmap = {
+            "[":"]",
+            "{":"}",
+            "(":")"
+            }
+        stack = []
+
+        for char in s:
+            if char in hashmap:
+                stack.append(hashmap[char])
+            else:
+                if stack and stack[-1] == char:
+                    stack.pop()
+                else:
+                    return False
+
+        return len(stack) == 0

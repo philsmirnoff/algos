@@ -613,4 +613,4 @@ Heap: The heap will store at most k elements, so it requires O(k) space.
 Final List: The result list will store k elements, so it also requires O(k) space.
 Thus, the overall space complexity is:
 
-O(m + k), where m is the numb
+O(m + k), where m is the number of unique elements and k is the number of top frequent elements to return.
