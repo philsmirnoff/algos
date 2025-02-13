@@ -32,3 +32,50 @@ Input: grid = [
   ["0","0","0","1","1"]
 ]
 Output: 3
+
+
+def numIslands(grid):
+    # Helper function to perform DFS (Depth First Search)
+    def dfs(grid, i, j):
+        # Check if out of bounds or water ('0')
+        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == "0":
+            return
+        # Mark the current land cell as visited by changing it to '0'
+        grid[i][j] = "0"
+        # Recursively visit all adjacent land cells (up, down, left, right)
+        dfs(grid, i + 1, j)  # move down
+        dfs(grid, i - 1, j)  # move up
+        dfs(grid, i, j + 1)  # move right
+        dfs(grid, i, j - 1)  # move left
+
+    # Initialize the island count to 0
+    island_count = 0
+    # Iterate over all cells in the grid
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            # If the current cell is land ('1')
+            if grid[i][j] == "1":
+                # Perform DFS to mark all connected land cells as visited
+                dfs(grid, i, j)
+                # Increment the island count after a DFS traversal
+                island_count += 1
+    # Return the final count of islands
+    return island_count
+
+# Example usage:
+grid1 = [
+    ["1","1","1","1","0"],
+    ["1","1","0","1","0"],
+    ["1","1","0","0","0"],
+    ["0","0","0","0","0"]
+]
+
+grid2 = [
+    ["1","1","0","0","0"],
+    ["1","1","0","0","0"],
+    ["0","0","1","0","0"],
+    ["0","0","0","1","1"]
+]
+
+# Running the function with example inputs
+numIslands(grid1), numIslands(grid2)
