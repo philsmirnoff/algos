@@ -45,3 +45,21 @@ const isAnagram = (s, t) => {
 
 Time: 0(n)
 Space: O(n)
+
+
+def isAnagram(s, t):
+  if len(s) != len(t):
+    return False
+  count = {}
+  for char in s:
+    if char not in count:
+      count[char] = 0
+    count[char] += 1
+  for char in t:
+    if char not in count:
+      return False
+    count[char] -= 1
+  for char in count:
+    if count[char] != 0:
+      return False
+  return True

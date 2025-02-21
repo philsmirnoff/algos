@@ -1,15 +1,15 @@
-To solve the Cool String problem, you need to check two conditions:
+# To solve the Cool String problem, you need to check two conditions:
 
-All characters must have the same frequency.
-If there's one character with a frequency that differs by 1 from the rest, we can remove one character of that type to make the frequencies equal.
-Plan:
-Count the frequency of each character in the string.
-Count how many times each frequency occurs.
-If there is only one frequency, or if there's only one frequency that occurs exactly once and its count is one greater than the rest, return True.
-Otherwise, return False.
-Solution in Python:
-python
-Copy
+# All characters must have the same frequency.
+# If there's one character with a frequency that differs by 1 from the rest, we can remove one character of that type to make the frequencies equal.
+# Plan:
+# Count the frequency of each character in the string.
+# Count how many times each frequency occurs.
+# If there is only one frequency, or if there's only one frequency that occurs exactly once and its count is one greater than the rest, return True.
+# Otherwise, return False.
+# Solution in Python:
+# python
+# Copy
 from collections import Counter
 
 def is_cool_string(s: str) -> bool:
