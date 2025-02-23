@@ -107,3 +107,27 @@ var groupAnagrams = function(strs) {
 
     return Object.values(hashmap)
 };
+
+
+in python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        ## sort strs in lexical order
+        ## iterate over the original string and check:
+            ## if the that sorted word exist in hashmap:
+                ## if it is not it creates object entry with key as sorted string and value is corresponding word:
+                ## if it is it pushes the word from original string into hashmap as value
+
+            ## return values of hashmap
+        if len(strs) == 0:
+            return []
+        hashmap = {}
+
+        for s in strs:
+            sorted_str = ''.join(sorted(s))
+            if sorted_str in hashmap:
+                hashmap[sorted_str].append(s)
+            else:
+                hashmap[sorted_str] = [s]
+
+        return list(hashmap.values())
