@@ -131,3 +131,17 @@ class Solution:
                 hashmap[sorted_str] = [s]
 
         return list(hashmap.values())
+
+
+insert into restaurant_discovery_content(discovery_content_id, restaurant_id, title, description, is_hidden)
+values(12, 1, 'Delicious Burger and Fries', 'A description of the Burger Fries offered at the restaurant', false)
+
+insert into restaurant_discovery_content_media
+(discovery_content_id , media_id)
+values
+(12, 1)
+
+UPDATE restaurant_discovery_content_media
+SET media_id = 3
+WHERE discovery_content_id = 12;
+
