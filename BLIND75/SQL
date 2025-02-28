@@ -1,0 +1,26 @@
+insert into restaurant_discovery_content(discovery_content_id, restaurant_id, title, description, is_hidden)
+values(12, 1, 'Delicious Burger and Fries', 'A description of the Burger Fries offered at the restaurant', false)
+
+insert into restaurant_discovery_content_media
+(discovery_content_id , media_id)
+values
+(12, 1)
+
+UPDATE restaurant_discovery_content_media
+SET media_id = 3
+WHERE discovery_content_id = 12;
+
+insert into restaurant_discovery_content(discovery_content_id, restaurant_id, title, description, is_hidden)
+values(13, 1, 'Spicy Margarita', 'A description of the Spicy Margarita offered at the restaurant', false)
+
+insert into restaurant_discovery_content_media
+(discovery_content_id , media_id)
+values
+(13, 95)
+
+
+insert into restaurant_discovery_content(discovery_content_id, restaurant_id, title, description, is_hidden)
+values(14, 1, 'Strawberry Margarita', 'A description of the Strawberry Margarita offered at the restaurant', false)
+
+insert into restaurant_discovery_content(discovery_content_id, restaurant_id, title, description, is_hidden)
+values(15, 1, 'Mezcal Margarita', 'A description of the Mezcal Margarita offered at the restaurant', false)
