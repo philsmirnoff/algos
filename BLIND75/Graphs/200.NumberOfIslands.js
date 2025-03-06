@@ -127,3 +127,35 @@ Thus, the **total time complexity** is still:
 Thus, the **total space complexity** is:
 
 - **O(rows * cols)** due to both the recursion stack and the `Set` used to store visited cells.
+
+
+def numIslands(grid):
+    if not grid or len(grid) == 0:  # Handle edge case for empty grid
+        return 0
+
+    rows = len(grid)
+    cols = len(grid[0])
+    islands = 0
+
+    # Iterate through each cell in the grid
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == "1":  # If the cell is land
+                dfs(r, c, grid)      # Perform DFS to mark the island
+                islands += 1         # Increment the island count
+
+    return islands
+
+def dfs(r, c, grid):
+    # Base case: Check if the current cell is out of bounds or is water ("0")
+    if r < 0 or r >= len(grid) or c < 0 or c >= len(grid[0]) or grid[r][c] == "0":
+        return
+
+    # Mark the current cell as visited by setting it to water ("0")
+    grid[r][c] = "0"
+
+    # Explore the four directions (up, down, left, right)
+    dfs(r + 1, c, grid)  # Down
+    dfs(r - 1, c, grid)  # Up
+    dfs(r, c + 1, grid)  # Right
+    dfs(r, c - 1, grid)  # Left
