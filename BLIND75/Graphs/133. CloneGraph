@@ -76,3 +76,35 @@ Therefore, the space complexity is O(N) due to the map and the recursion stack.
 Conclusion:
 Time Complexity: O(N + E) — We visit each node and edge once during the DFS traversal.
 Space Complexity: O(N) — Space is used for storing the cloned nodes and the recursion stack.
+
+
+# Definition for a Node.
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+def cloneGraph(node: 'Node') -> 'Node':
+    if not node:
+        return None
+
+    # Using a dictionary to store the mapping of original node to the new node
+    visited = {}
+
+    # Define the dfs function
+    def dfs(node):
+        if node in visited:
+            return visited[node]
+
+        # Create a new node and add it to the visited map
+        new_node = Node(node.val)
+        visited[node] = new_node
+
+        # Recursively visit all the neighbors
+        for neighbor in node.neighbors:
+            new_node.neighbors.append(dfs(neighbor))
+
+        return new_node
+
+    # Call dfs on the starting node
+    return dfs(node)
