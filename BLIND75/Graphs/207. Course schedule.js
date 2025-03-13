@@ -187,3 +187,45 @@ const dfs = (course, adjacencyList, visited) => {
 // O(V + E), where V is the number of courses (vertices) and E is the number of prerequisites (edges). This is because we traverse all edges and nodes once while building the graph and processing the queue.
 // Space Complexity:
 // O(V + E), as we store the graph and in-degree array.
+
+
+
+var canFinish = function(numCourses, prerequisites) {
+    // Step 1: Create an adjacency list to represent the graph
+    const graph = new Array(numCourses).fill().map(() => []);
+    // Step 2: Create an array to track the in-degrees (number of prerequisites for each course)
+    const inDegree = new Array(numCourses).fill(0);
+
+    // Step 3: Fill the graph and in-degree array with the course dependencies
+    for (let [course, pre] of prerequisites) {
+        graph[pre].push(course); // Course depends on the prerequisite
+        inDegree[course]++; // Increment the in-degree of the course
+    }
+
+    // Step 4: Initialize a queue to store all courses with no prerequisites (in-degree 0)
+    const queue = [];
+    for (let i = 0; i < numCourses; i++) {
+        if (inDegree[i] === 0) {
+            queue.push(i);
+        }
+    }
+
+    // Step 5: Process the courses in the queue
+    let count = 0; // To track the number of courses we can finish
+
+    while (queue.length > 0) {
+        const course = queue.shift();
+        count++; // We can finish this course
+
+        // Decrease the in-degree of all the courses dependent on the current course
+        for (let nextCourse of graph[course]) {
+            inDegree[nextCourse]--;
+            if (inDegree[nextCourse] === 0) {
+                queue.push(nextCourse); // If a course has no remaining prerequisites, add it to the queue
+            }
+        }
+    }
+
+    // Step 6: If we've processed all courses, return true; otherwise, return false
+    return count === numCourses;
+};
