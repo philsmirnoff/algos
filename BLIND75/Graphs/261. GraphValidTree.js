@@ -33,6 +33,11 @@ function validTree(n, edges) {
   return visited.size === n; // Check if all nodes were visited
 }
 
+// Time Complexity:
+// Building the adjacency list → O(n)
+// BFS/DFS traversal → O(n + e), where e is the number of edges.
+// Overall, the complexity is O(n + e), which is efficient for n ≤ 2000.
+
 
 dfs:
 function validTree(n, edges) {
