@@ -36,14 +36,14 @@ const combinationSum = (candidates, target) => {
   let result = []
 
   const dfs(index, currentVal, arr) => {
-    if (currrentval < 0) return;
-    if (currentval === 0) {
+    if (currrentVal < 0) return;
+    if (currentVal === 0) {
       result.push([...arr])
     }
 
     for (let i = index; i < candidates.length; i++) {
       arr.push(candidates[i])
-      dfs(i, currentval - candidates[i], arr)
+      dfs(i, currentVal - candidates[i], arr)
       arr.pop()
     }
   }
@@ -56,3 +56,64 @@ space complexity is a T/M
 
 video solution from AlgoJS:
 https://www.youtube.com/watch?v=2u_l4GM6dKw
+
+
+The solution you've provided is a valid approach and is quite similar to the one I outlined earlier, but with a few differences in implementation. Let's break it down and analyze it:
+
+Key Differences:
+DFS (Depth-First Search): This approach uses DFS with the recursive function dfs(index, currentVal, arr) to explore all combinations.
+
+Base Case:
+
+If the currentVal is less than 0, it simply returns without doing anything (stopping the recursion when a combination exceeds the target).
+
+If the currentVal equals 0, it pushes the current combination arr to the result array (this is a valid combination that sums up to the target).
+
+Recursive Exploration: The for loop explores the numbers starting from the current index (index), allowing repeated elements from candidates (i.e., the same number can be used multiple times).
+
+Issues:
+There are a couple of issues in the code that will prevent it from working as expected:
+
+Typo in the if statement: The condition if (currrentVal < 0) contains a typo (currrentVal should be currentVal).
+
+Early Return for Negative Values: The condition if (currentVal < 0) prevents going further if the current sum exceeds the target, which is correct.
+
+Missing Return in Recursive Function: The DFS function doesn't handle the return value correctly when currentVal === 0. Although the result is correctly pushed, the function does not explicitly return after that, but this does not affect the correctness in this case because the recursion ends naturally.
+
+Corrected Version:
+javascript
+Copy
+const combinationSum = (candidates, target) => {
+  let result = [];
+
+  const dfs = (index, currentVal, arr) => {
+    // If the current value exceeds the target, return.
+    if (currentVal < 0) return;
+
+    // If we reach the target, push the current combination to the result.
+    if (currentVal === 0) {
+      result.push([...arr]);
+      return;
+    }
+
+    // Try each candidate from the current index onward.
+    for (let i = index; i < candidates.length; i++) {
+      arr.push(candidates[i]);  // Choose the candidate
+      dfs(i, currentVal - candidates[i], arr);  // Recurse with the reduced target
+      arr.pop();  // Backtrack and remove the last chosen number
+    }
+  }
+
+  // Start DFS from the first index with the target value.
+  dfs(0, target, []);
+  return result;
+}
+
+// Test examples
+console.log(combinationSum([2, 5, 6, 9], 9));  // Output: [[2, 2, 5], [9]]
+console.log(combinationSum([3, 4, 5], 16));  // Output: [[3, 3, 3, 3, 4], [3, 3, 5, 5], [4, 4, 4, 4], [3, 4, 4, 5]]
+console.log(combinationSum([3], 5));  // Output: []
+Explanation:
+DFS with Backtracking: The recursive dfs function explores every possible combination starting from each index. It allows repeated elements (by not incrementing index in the recursive call) and backtracks by popping the last added number from arr to try other combinations.
+
+Termination Condition: The recursion terminates when currentVal becomes less than 0 (i.e., sum exceeds the target) or exactly 0 (i.e., we found a valid combination).
