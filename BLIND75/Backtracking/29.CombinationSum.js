@@ -48,6 +48,7 @@ const combinationSum = (candidates, target) => {
     }
   }
   dfs(0, target, [])
+  return result
 }
 
 time complexity: O(N*T/M + 1) where T is tager value we looking for and m is minimum number within candidates.T/M + 1 is the depth of Tree
