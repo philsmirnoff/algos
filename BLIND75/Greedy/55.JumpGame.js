@@ -2,33 +2,26 @@
  * @param {number[]} nums
  * @return {boolean}
  */
-var canJump = function(nums) {
-  // This keeps track of the farthest index we can reach
-  let reachable = 0;
+canJump(nums) {
+  // Step 1: Initialize `goal` as the last index of the array
+  let goal = nums.length - 1;
 
-  // Loop through the array
-  for (let i = 0; i < nums.length; i++) {
-      // If the current index is beyond the farthest reachable point, we can't move forward
-      if (i > reachable) return false;
-
-      // Update the farthest reachable index from this point
-      reachable = Math.max(reachable, i + nums[i]);
-
-      // Optimization: If we can reach or go beyond the last index, return true early
-      if (reachable >= nums.length - 1) return true;
+  // Step 2: Iterate through the array backwards (from the last index to the first)
+  for (let i = nums.length - 1; i >= 0; i--) {
+      // Step 3: Check if we can jump from the current index to the `goal` (or further)
+      // We check if the current index plus the jump length (`nums[i]`) can reach or exceed the `goal`
+      if (i + nums[i] >= goal) {
+          // Step 4: If it can, update the `goal` to be the current index.
+          // This means that we can now "reach" the new goal, which is closer to the start.
+          goal = i;
+      }
   }
 
-  // If we finish the loop, we could reach the end
-  return true;
-};
+  // Step 5: After the loop, check if `goal` is 0. If it is, it means we can reach the first index.
+  // This is because we updated the `goal` every time we found a reachable index.
+  // If `goal` is 0, it means we can jump from the start to the end.
+  return goal === 0;
+}
 
-Time Complexity: O(n)
-We iterate through the array once.
-
-Each element is visited exactly once, and we perform a constant amount of work per iteration (Math.max, comparisons).
-
-Therefore, time complexity is linear in the size of the input.
-
-🧠 Space Complexity: O(1)
-We use only a single variable reachable to track the farthest reachable index.
-
+time complexity O(n)
+space complexity O(n)
