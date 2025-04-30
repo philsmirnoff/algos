@@ -160,3 +160,9 @@ Trie.prototype.startsWith = function(prefix) {
     }
     return true; // Prefix fully matched
 };
+
+Operation	Time Complexity	Space Complexity
+insert(word)	O(L)	O(L)
+search(word)	O(L)	O(1)
+startsWith(prefix)	O(L)	O(1)
+where L = length of the word or prefix being processed.
