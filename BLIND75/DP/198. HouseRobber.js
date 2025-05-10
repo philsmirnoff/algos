@@ -81,3 +81,157 @@ function rob(nums: number[]): number {
   return Math.max(robPrevious, robCurrent);
   Time complexity: O(n)
   Space complexity: O(1)
+
+
+  another great explaination:
+  Certainly! Below is the step-by-step conversion of the "House Robber" problem into JavaScript, following the same pattern you described:
+
+Step 1: Recursive Relation
+We need to find a recursive relation for the problem. As you described:
+
+A robber can either rob the current house or skip it.
+
+If they rob the current house, they can’t rob the previous one, but they can rob the house before that.
+
+If they skip the current house, they can rob the previous house.
+
+Thus, the relation is:
+
+javascript
+Copy
+rob(i) = Math.max(rob(i - 2) + currentHouseValue, rob(i - 1))
+Step 2: Recursive (Top-down)
+The recursive approach without memoization would look like this in JavaScript:
+
+javascript
+Copy
+const rob = (nums) => {
+    return robHelper(nums, nums.length - 1);
+};
+
+const robHelper = (nums, i) => {
+    if (i < 0) {
+        return 0;
+    }
+    return Math.max(robHelper(nums, i - 2) + nums[i], robHelper(nums, i - 1));
+};
+Step 3: Recursive + Memoization (Top-down)
+To avoid recalculating the same subproblems multiple times, we can use memoization. This stores the results of subproblems in an array to be reused.
+
+javascript
+Copy
+const rob = (nums) => {
+    const memo = new Array(nums.length).fill(-1);  // Initialize memoization array
+    return robHelper(nums, nums.length - 1, memo);
+};
+
+const robHelper = (nums, i, memo) => {
+    if (i < 0) {
+        return 0;
+    }
+    if (memo[i] !== -1) {
+        return memo[i];  // Return already computed result
+    }
+    memo[i] = Math.max(robHelper(nums, i - 2, memo) + nums[i], robHelper(nums, i - 1, memo));
+    return memo[i];
+};
+Step 4: Iterative + Memoization (Bottom-up)
+The next step is to use a bottom-up iterative approach with memoization to avoid recursion:
+
+javascript
+Copy
+const rob = (nums) => {
+    if (nums.length === 0) return 0;
+    const memo = new Array(nums.length + 1).fill(0);
+    memo[1] = nums[0];  // Base case: the first house can be robbed
+
+    for (let i = 1; i < nums.length; i++) {
+        memo[i + 1] = Math.max(memo[i], memo[i - 1] + nums[i]);
+    }
+
+    return memo[nums.length];
+};
+Step 5: Iterative + 2 Variables (Bottom-up)
+Finally, we can optimize the space complexity. We only need to keep track of the last two values in the memo array, as the solution for rob(i) depends only on rob(i-1) and rob(i-2). We can reduce the space complexity to
+𝑂
+(
+1
+)
+O(1) by using two variables instead.
+
+javascript
+Copy
+const rob = (nums) => {
+    if (nums.length === 0) return 0;
+
+    let prev1 = 0;  // Represents rob(i-1)
+    let prev2 = 0;  // Represents rob(i-2)
+
+    for (let num of nums) {
+        const temp = prev1;
+        prev1 = Math.max(prev2 + num, prev1);  // Rob current house or skip it
+        prev2 = temp;  // Update prev2 to the previous prev1
+    }
+
+    return prev1;  // The last calculated value is the answer
+};
+Summary of Steps:
+Recursive Relation: Defined the problem's recursive relation.
+
+Recursive (Top-down): Solved the problem recursively without memoization.
+
+Recursive + Memo (Top-down): Improved with memoization to avoid redundant calculations.
+
+Iterative + Memo (Bottom-up): Used a bottom-up approach with a memo array to store results.
+
+Iterative + 2 Variables (Bottom-up): Optimized space complexity by using just two variables.
+
+Time and Space Complexity:
+Time Complexity:
+𝑂
+(
+𝑛
+)
+O(n) for all steps, as we iterate through the list once.
+
+Space Complexity:
+
+Step 2:
+𝑂
+(
+𝑛
+)
+O(n) for recursion stack.
+
+Step 3:
+𝑂
+(
+𝑛
+)
+O(n) for memoization.
+
+Step 4:
+𝑂
+(
+𝑛
+)
+O(n) for the memo array.
+
+Step 5:
+𝑂
+(
+1
+)
+O(1) for just two variables.
+
+By optimizing to two variables, the space complexity is minimized to
+𝑂
+(
+1
+)
+O(1), making it the most efficient solution in terms of space while keeping the time complexity
+𝑂
+(
+𝑛
+)
+O(n).
