@@ -129,3 +129,51 @@ Time complexity: O(n) because we loop through the steps from 2 to n once, and ea
 
 Space complexity: O(n) because we use an array dp of size n + 1 to store the number of ways to reach each step.
 
+Yes! The solution you provided can be optimized further to use only
+𝑂
+(
+1
+)
+O(1) space. Since each step only relies on the previous two values, we don’t need to store the entire dp array. Instead, we can keep track of just the last two computed values.
+
+Here’s the optimized version of your climbStairs function:
+
+javascript
+Copy
+const climbStairs = (n) => {
+    if (n <= 1) return 1;
+
+    let prev1 = 1;  // Represents dp[i - 1]
+    let prev2 = 1;  // Represents dp[i - 2]
+
+    for (let i = 2; i <= n; i++) {
+        const current = prev1 + prev2;  // dp[i] = dp[i - 1] + dp[i - 2]
+        prev2 = prev1;  // Update prev2 to prev1 for next iteration
+        prev1 = current;  // Update prev1 to current for next iteration
+    }
+
+    return prev1;
+};
+Explanation:
+Space Optimization: Instead of storing all the values in an array, we only keep track of the last two values (prev1 and prev2). This reduces the space complexity from
+𝑂
+(
+𝑛
+)
+O(n) to
+𝑂
+(
+1
+)
+O(1).
+
+Time Complexity: The time complexity remains
+𝑂
+(
+𝑛
+)
+O(n) because we still need to iterate over the range from 2 to
+𝑛
+n.
+
+This version is more space-efficient while maintaining the same time complexity.
