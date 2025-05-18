@@ -235,3 +235,89 @@ O(1), making it the most efficient solution in terms of space while keeping the 
 𝑛
 )
 O(n).
+
+```jsx
+javascript
+Copy
+const rob = (nums) => {
+    if (nums.length === 0) return 0; // If there are no houses, return 0
+
+    let prev1 = 0; // Represents the maximum money we can rob up to the previous house (i-1)
+    let prev2 = 0; // Represents the maximum money we can rob up to the house before the previous house (i-2)
+
+    for (let num of nums) {
+        let temp = prev1; // Store the current prev1 value (maximum up to house i-1)
+
+        // For each house, we decide whether to rob it or not
+        // If we rob the current house, we add num (current house's value) to prev2 (the loot up to house i-2)
+        prev1 = Math.max(prev2 + num, prev1); // Rob current house or skip it
+
+        prev2 = temp; // Update prev2 to the old value of prev1 (which was before we considered the current house)
+    }
+
+    return prev1; // prev1 contains the result: the maximum loot we can get by robbing the last house
+}
+
+```
+
+### Key Concepts:
+
+1. **Base Case**:
+    - If there are no houses (`nums.length === 0`), we return `0` because there is nothing to rob.
+2. **Two Variables (`prev1` and `prev2`)**:
+    - `prev1` keeps track of the maximum loot we can rob **up to the previous house** (i.e., house `i-1`).
+    - `prev2` keeps track of the maximum loot we can rob **up to the house before the previous house** (i.e., house `i-2`).
+3. **The Iteration**:
+    - We loop through each house in the `nums` array. For each house:
+        - We store the current `prev1` value in `temp`. This is necessary because we'll update `prev1` in the next line and need to preserve its old value for `prev2`.
+        - We then calculate the maximum loot for the current house:
+            - **`prev2 + num`**: This represents robbing the current house (`num`) and adding it to the loot from the house before the previous one (`prev2`).
+            - **`prev1`**: This represents skipping the current house and taking the loot from the previous house (`prev1`).
+        - We set `prev1` to the maximum of these two options, i.e., either robbing the current house or skipping it.
+        - Finally, we update `prev2` to the old value of `prev1` (`temp`), so `prev2` always holds the maximum loot up to the house two steps before.
+4. **Final Result**:
+    - After the loop, `prev1` holds the maximum loot we can get by robbing up to the last house. We return `prev1`.
+
+### Example Walkthrough:
+
+Let's walk through an example with `nums = [2, 7, 9, 3, 1]`.
+
+1. **Initial Values**:
+    - `prev1 = 0`, `prev2 = 0`
+2. **First Iteration (num = 2)**:
+    - `temp = prev1 = 0`
+    - `prev1 = Math.max(prev2 + num, prev1) = Math.max(0 + 2, 0) = 2`
+    - `prev2 = temp = 0`
+3. **Second Iteration (num = 7)**:
+    - `temp = prev1 = 2`
+    - `prev1 = Math.max(prev2 + num, prev1) = Math.max(0 + 7, 2) = 7`
+    - `prev2 = temp = 2`
+4. **Third Iteration (num = 9)**:
+    - `temp = prev1 = 7`
+    - `prev1 = Math.max(prev2 + num, prev1) = Math.max(2 + 9, 7) = 11`
+    - `prev2 = temp = 7`
+5. **Fourth Iteration (num = 3)**:
+    - `temp = prev1 = 11`
+    - `prev1 = Math.max(prev2 + num, prev1) = Math.max(7 + 3, 11) = 11`
+    - `prev2 = temp = 11`
+6. **Fifth Iteration (num = 1)**:
+    - `temp = prev1 = 11`
+    - `prev1 = Math.max(prev2 + num, prev1) = Math.max(11 + 1, 11) = 12`
+    - `prev2 = temp = 11`
+
+### Final Answer:
+
+After iterating through all the houses, `prev1 = 12`, which is the maximum loot we can rob. So, the function returns `12`.
+
+### Why This Works:
+
+- By maintaining `prev1` and `prev2`, we are keeping track of the optimal loot we can rob while following the rule that you can't rob two adjacent houses.
+- **Space Optimization**: Instead of using an array to store the maximum loot for each house, this solution uses only two variables, `prev1` and `prev2`, to reduce the space complexity from O(n)O(n)O(n) to O(1)O(1)O(1).
+- **Time Complexity**: The time complexity is O(n)O(n)O(n) because we are iterating through the list of houses once.
+
+### Summary:
+
+- `prev1` represents the maximum loot up to the previous house (house `i - 1`).
+- `prev2` represents the maximum loot up to the house before the previous house (house `i - 2`).
+- At each step, we decide whether to rob the current house (adding its value to `prev2`) or skip it and take the loot from `prev1`.
+- The result after iterating through all houses is stored in `prev1`.
