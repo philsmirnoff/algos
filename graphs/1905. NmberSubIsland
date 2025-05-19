@@ -75,3 +75,136 @@ var countSubIslands = function(grid1, grid2) {
 
     return subIslandsCount; // Return the total count of sub islands
 };
+
+
+Bloomberg. I had one question:
+[[0,0,0,0,1,0,1,0],
+[0,0,1,1,1,1,1,0],
+[0,0,1,0,1,0,1,0],
+[0,0,1,1,1,1,1,0],
+[0,1,0,1,1,0,1,0]]
+You need to find a number of lakes, so 0 which are surrounded with 1, if it touches the border, than it is ocean water, it is similar to number of islands .
+
+
+ChatGPT said:
+This problem is similar to the "Number of Islands" problem, where we need to find the number of enclosed lakes (regions of 0s surrounded by 1s) in a 2D grid. However, in this case, the 0s on the border (connected to the boundary of the grid) are considered to be part of the "ocean" and not part of the lake. We need to count the number of lakes that are completely enclosed by 1s.
+
+Approach:
+Flood-fill Algorithm (DFS/BFS):
+This is a classic problem of connected components. We can use Depth-First Search (DFS) or Breadth-First Search (BFS) to explore the grid and mark connected components (the 0s that form lakes). We need to handle two cases:
+
+If a 0 is connected to the border, it’s part of the "ocean", and we should ignore it.
+
+If a 0 is not connected to the border, it’s part of an enclosed lake.
+
+Steps:
+
+Flood Fill Border:
+First, traverse the boundary of the grid and for every 0, mark all connected 0s as ocean (i.e., set them to 2). We perform this flood fill to identify and mark the "ocean" cells.
+
+Count Lakes:
+After marking all the ocean cells, the remaining 0s in the grid that are not connected to any border will be surrounded by 1s and form a lake. We perform DFS or BFS for each unvisited 0, marking the connected cells as visited, and count the number of separate lakes.
+
+Algorithm:
+Traverse the borders and mark all connected 0s as ocean (2).
+
+Iterate through the inner cells of the grid. For each unvisited 0, perform DFS/BFS to mark the entire connected lake and count it.
+
+Return the number of lakes.
+
+Solution Code (DFS):
+javascript
+Copy
+const numLakes = (grid) => {
+    if (!grid || grid.length === 0) return 0;
+
+    let rows = grid.length;
+    let cols = grid[0].length;
+
+    // Helper function for DFS to flood fill ocean (border-connected 0s)
+    const dfs = (i, j) => {
+        if (i < 0 || i >= rows || j < 0 || j >= cols || grid[i][j] !== 0) {
+            return;
+        }
+        grid[i][j] = 2;  // Mark the cell as ocean (2)
+        // Explore all 4 directions (up, down, left, right)
+        dfs(i - 1, j);  // Up
+        dfs(i + 1, j);  // Down
+        dfs(i, j - 1);  // Left
+        dfs(i, j + 1);  // Right
+    };
+
+    // First, mark all 0s connected to the borders as ocean (2)
+    // Top and Bottom borders
+    for (let i = 0; i < rows; i++) {
+        if (grid[i][0] === 0) dfs(i, 0);
+        if (grid[i][cols - 1] === 0) dfs(i, cols - 1);
+    }
+    // Left and Right borders
+    for (let j = 0; j < cols; j++) {
+        if (grid[0][j] === 0) dfs(0, j);
+        if (grid[rows - 1][j] === 0) dfs(rows - 1, j);
+    }
+
+    // Now, count the lakes (regions of 0s surrounded by 1s)
+    let lakeCount = 0;
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (grid[i][j] === 0) {  // Unvisited 0 that is part of a lake
+                lakeCount++;
+                dfs(i, j);  // Mark the entire lake as visited (flood fill)
+            }
+        }
+    }
+
+    return lakeCount;
+};
+
+// Example Test Case
+const grid = [
+  [0,0,0,0,1,0,1,0],
+  [0,0,1,1,1,1,1,0],
+  [0,0,1,0,1,0,1,0],
+  [0,0,1,1,1,1,1,0],
+  [0,1,0,1,1,0,1,0]
+];
+
+console.log(numLakes(grid));  // Output: 2 (There are 2 enclosed lakes)
+Explanation of the Code:
+Flood Fill (DFS):
+
+We define the helper function dfs(i, j) to recursively explore the grid and mark all the cells that are part of the ocean (border-connected 0s) as 2. This is done by checking all four directions (up, down, left, right).
+
+Marking the Borders:
+
+First, we check all the cells on the top and bottom borders, as well as the left and right borders. For every 0 that we find, we run the dfs function to mark all connected 0s as ocean (2).
+
+Counting Lakes:
+
+After marking all the ocean-connected cells, we iterate through the grid again. Every unvisited 0 cell represents an enclosed lake. We then run dfs from that cell to mark the entire connected region as visited (so we don’t count it multiple times). Each time we encounter a new unvisited 0, we increment the lake count.
+
+Final Answer:
+
+The final answer will be the total number of separate lakes (regions of 0s surrounded by 1s that are not connected to the border).
+
+Time and Space Complexity:
+Time Complexity:
+𝑂
+(
+𝑚
+×
+𝑛
+)
+O(m×n), where m is the number of rows and n is the number of columns in the grid. We are visiting each cell at most once during the flood fill and lake count operations.
+
+Space Complexity:
+𝑂
+(
+𝑚
+×
+𝑛
+)
+O(m×n), due to the recursion stack in the DFS and the grid storage (since we modify the grid in-place to mark the cells as ocean).
+
+Conclusion:
+This approach solves the problem efficiently by marking the ocean regions (border-connected 0s) first and then counting the remaining isolated lakes (0s surrounded by 1s). The use of DFS ensures we explore all the connected cells in a lake or ocean region.
