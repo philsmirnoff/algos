@@ -176,4 +176,4 @@ O(n) because we still need to iterate over the range from 2 to
 𝑛
 n.
 
-This version is more space-efficient while maintaining the same time complexity.
+This version is more space-efficient while maintaining the same time complexity
