@@ -59,3 +59,53 @@ Time complexity:
 O(N*2)
 Space Complexity:
 O(1)
+
+
+Solution umber 2:
+
+
+function longestPalindrome(s) {
+  // `start` will store the starting index of the longest palindrome found,
+  // `maxLength` is the length of that palindrome (at least 1, since any char is a palindrome).
+  let start = 0, maxLength = 1;
+
+  // Helper function: expand around the “center” defined by (left, right)
+  // and update `start` and `maxLength` whenever we find a longer palindrome.
+  function expandAroundCenter(left, right) {
+    // As long as we're in bounds and characters match, we have a palindrome.
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      // Compute length of current palindrome window [left..right]
+      const currLength = right - left + 1;
+
+      // If it's longer than anything we've seen, record its position and length.
+      if (currLength > maxLength) {
+        start = left;
+        maxLength = currLength;
+      }
+
+      // Move one step outward on both sides to try to expand further.
+      left--;
+      right++;
+    }
+    // When the loop exits, either bounds are exceeded or characters differ.
+  }
+
+  // Iterate over each index, treating it as the “middle” of a palindrome.
+  for (let i = 0; i < s.length; i++) {
+    expandAroundCenter(i, i);     // Odd-length palindromes (single-center)
+    expandAroundCenter(i, i + 1); // Even-length palindromes (double-center)
+  }
+
+  // Extract and return the longest palindromic substring found.
+  // `start` is its first index, and `maxLength` is how many chars long it is.
+  return s.slice(start, start + maxLength);
+}
+
+
+To find the longest palindromic substring in a given string, we can use a simple approach called "expand around center". Imagine you're reading the string from left to right, character by character. At each character, you can think of it as a potential center of a palindrome. To check if there's a palindrome centered around that character, you expand outward from the center and compare characters on both sides. If the characters match, you continue expanding until you find a mismatch or reach the boundaries of the string. By doing this for each character in the string, you can find the longest palindrome.
+
+The tricky part is handling palindromes with even lengths. In that case, the center of the palindrome is between two characters rather than a single character. So, we treat each character and the space between two characters as potential centers and expand around them. By trying different centers and expanding around them, we can find the longest palindromic substring in the given string.
+
+Time/Space Complexity Analysis
+Time Complexity: O(n²), as we have nested loops iterating through the string. The outer loop runs for each character in the string, and the inner loop expands around the center to find palindromes. In the worst case, we may need to expand on both sides for every character, resulting in a quadratic time complexity.
+Space Complexity: O(1), as we only use a constant amount of extra space to store variables and temporary values.
