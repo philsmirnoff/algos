@@ -58,3 +58,53 @@ const verifyBreak = (word, dic, start) => {
 
 // 🧠 Space: O(n) due to the recursive call stack.
 
+// memoization:
+const wordBreak = (word, wordDict) => {
+  // Memo object to store results for each start index
+  const memo = {};
+
+  // Start recursion from index 0
+  return verifyBreak(word, wordDict, 0, memo);
+}
+
+const verifyBreak = (word, dic, start, memo) => {
+  // If we've already computed the result for this start index, return it
+  if (start in memo) return memo[start];
+
+  // Base case: we've reached the end of the string
+  if (start === word.length) return true;
+
+  // Try every possible end index from start+1 to word.length
+  for (let end = start + 1; end <= word.length; end++) {
+    // Extract substring from start to end (non-inclusive)
+    let wildGuess = word.substring(start, end);
+
+    // If it's in the dictionary and the rest of the string is breakable
+    if (dic.includes(wildGuess) && verifyBreak(word, dic, end, memo)) {
+      memo[start] = true; // Cache result
+      return true;
+    }
+  }
+
+  // If no valid segmentation found, store and return false
+  memo[start] = false;
+  return false;
+}
+
+
+// ✅ Improvements
+// With memoization, you ensure that each value of start is only processed once. This reduces time complexity from exponential to:
+
+// ⏱ Time: O(n^2),
+// where n = word.length, since you might examine up to n end indices per start.
+
+// 🧠 Space: O(n),
+// for the memo object and recursion stack.
+
+// Let me know if you want a bottom-up DP version (iterative with table).
+
+
+
+
+
+
