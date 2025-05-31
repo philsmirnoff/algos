@@ -1,5 +1,6 @@
 
 // brute force solution
+
 // Main function that initiates the word break verification
 const wordBreak = (word, wordDict) => {
   // Call the helper function starting from index 0
