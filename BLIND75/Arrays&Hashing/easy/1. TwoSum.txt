@@ -46,3 +46,14 @@ const twoSum = (nums, target) => {
 }
 
 Time: O(n), Space: O(n)
+
+
+// brute force solution
+const twoSum = (nums, target) => {
+  for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+          if (nums[i] + nums[j] === target) return [i, j]
+      }
+  }
+}
+// Time: O(n^2), Space: O(1)
