@@ -44,4 +44,20 @@ var containsDuplicate = function (nums) {
   return false;
 };
 
+var containsDuplicate = function (nums) {
+  let map = {};
+  for (let char of nums) {
+    if (!(char in map)) {
+      map[char] = 0;
+    }
+    map[char]++;
+  }
+
+  for (let char in map) {
+    if (map[char] > 1) {
+      return true;
+    }
+  }
+  return false;
+};
 
