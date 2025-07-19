@@ -133,15 +133,23 @@ class Solution:
         return list(hashmap.values())
 
 
-insert into restaurant_discovery_content(discovery_content_id, restaurant_id, title, description, is_hidden)
-values(12, 1, 'Delicious Burger and Fries', 'A description of the Burger Fries offered at the restaurant', false)
+class Solution {
+    /**
+     * @param {string[]} strs
+     * @return {string[][]}
+     */
+    groupAnagrams(strs) {
+        const hashmap = {};
 
-insert into restaurant_discovery_content_media
-(discovery_content_id , media_id)
-values
-(12, 1)
+        for (let word of strs) {
+            const sorted = word.split('').sort().join('');
+            if (!(sorted in hashmap)) {
+                hashmap[sorted] = [word];
+            } else {
+                hashmap[sorted].push(word);
+            }
+        }
 
-UPDATE restaurant_discovery_content_media
-SET media_id = 3
-WHERE discovery_content_id = 12;
-
+        return Object.values(hashmap);
+    }
+}
