@@ -48,6 +48,8 @@ const twoSum = (nums, target) => {
 Time: O(n), Space: O(n)
 
 
+
+
 // brute force solution
 const twoSum = (nums, target) => {
   for (let i = 0; i < nums.length; i++) {
@@ -57,3 +59,26 @@ const twoSum = (nums, target) => {
   }
 }
 // Time: O(n^2), Space: O(1)
+
+
+class Solution {
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @return {number[]}
+     */
+    twoSum(nums, target) {
+
+       const hashmap = {}
+
+       for (let i = 0; i < nums.length; i++) {
+        const num = nums[i]
+        const complementPair = target - num
+
+        if (complementPair in hashmap) {
+            return [hashmap[complementPair], i]
+        }
+        hashmap[num] = i
+       }
+    }
+}
