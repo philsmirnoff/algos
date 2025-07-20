@@ -641,3 +641,71 @@ class Solution {
         return Object.keys(hashmap).sort((a, b) => hashmap[b] - hashmap[a]).map(Number).slice(0, k)
     }
 }
+
+
+class Solution {
+    /**
+     * @param {number[]} nums
+     * @param {number} k
+     * @return {number[]}
+     */
+    topKFrequent(nums, k) {
+
+        // initilise hashmap and after count how many accurances this number has in the given array.
+        // sort the hashmap by it values in descending order based of the most frequesnt element.
+        // return the top k elements by slice method
+
+        const hashmap = {}
+
+        for (let num of nums) {
+            if (!(num in hashmap)) {
+                hashmap[num] = 0
+            }
+            hashmap[num]++
+        }
+
+        const minHeap = new MinHeap()
+
+        // iterate through the hashmap to build the heap
+        for (let num in hashmap) {
+            const freq = hashmap[num]
+            minHeap.insert([freq, num])
+
+            if (minHeap.heap.length > k) {
+                minHeap.remove()
+          }
+
+        }
+
+        const topKElements = []
+          while (minHeap.heap.length > 0) {
+    const [freq, num] = minHeap.remove(); // Remove from the heap.
+    topKElements.push(Number(num)); // Store the number in the result array.
+  }
+
+  return topKElements.reverse(); // Return the result array in reverse order to get the most frequent first.
+
+
+
+    }
+}
+
+
+class MinHeap {
+    constructor() {
+        this.heap = []
+    }
+
+    // insert element into the heap - 0(logn)
+    insert() {
+
+    }
+    // return the top of the heap -  O(1)
+    peek() {
+
+    }
+    // remove the top of heap O(1)
+    remove() {
+
+    }
+}
