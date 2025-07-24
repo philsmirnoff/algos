@@ -709,3 +709,35 @@ class MinHeap {
 
     }
 }
+
+
+const topKFrequent = (nums, k) => {
+    let hashmap = {}
+
+    for (let num of nums) {
+        if (!(num in hashmap)) {
+            hashmap[num] = 0
+        }
+            hashmap[num]++
+    }
+
+    const bucket = []
+    for (let i = 0; i <= nums.length; i++) {
+        bucket.push([])
+    }
+
+    for (let key in hashmap) {
+        let freq = hashmap[key]
+        bucket[freq].push(Number(key))
+    }
+
+    let result = []
+    for (let i = bucket.length - 1; i >= 0; i--) {
+        if (bucket[i].length > 0) {
+            result.push(...bucket[i])
+        }
+
+        if (result.length === k) break;
+    }
+    return result
+}
