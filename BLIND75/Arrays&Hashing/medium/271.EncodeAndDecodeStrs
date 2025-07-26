@@ -1,0 +1,60 @@
+/**
+ * Encodes a list of strings to a single string.
+ *
+ * @param {string[]} strs
+ * @return {string}
+ */
+var encode = function(strs) {
+    // Initialize an empty string to build the final encoded result
+    let encodedStrs = '';
+
+    // Iterate through each string in the input array
+    for (let str of strs) {
+        // Append the length of the string + a delimiter '#' + the string itself
+        // For example, "hello" becomes "5#hello"
+        encodedStrs += str.length + '#' + str;
+    }
+
+    // Return the complete encoded string
+    return encodedStrs;
+};
+
+/**
+ * Decodes a single encoded string back to a list of original strings.
+ *
+ * @param {string} s - The encoded string
+ * @return {string[]} - The decoded array of strings
+ */
+var decode = function(s) {
+    // Array to hold decoded strings
+    let decodedStrs = [];
+
+    // Pointer to keep track of our position in the string
+    let i = 0;
+
+    // Continue until we reach the end of the encoded string
+    while (i < s.length) {
+        let j = i;
+
+        // Move j until we find the '#' which separates length from content
+        while (s[j] !== '#') {
+            j++;
+        }
+
+        // Slice from i to j to extract the length of the next string
+        let length = Number(s.slice(i, j));
+
+        // Slice the actual string using the parsed length
+        // Start right after '#' (j + 1), and read 'length' characters
+        let decodedStr = s.slice(j + 1, j + 1 + length);
+
+        // Push the decoded string into the result array
+        decodedStrs.push(decodedStr);
+
+        // Move i to the beginning of the next encoded string segment
+        i = j + 1 + length;
+    }
+
+    // Return the decoded array of strings
+    return decodedStrs;
+};
