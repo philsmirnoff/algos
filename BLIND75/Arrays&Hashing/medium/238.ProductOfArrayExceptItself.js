@@ -111,3 +111,51 @@ const productExceptSelf = (nums) => {
 
 Time complexity: O(n)
 Space complexity: O(1)
+
+
+const productExceptSelf = (nums) => {
+    // Create an output array of the same length as input, filled with 1s.
+    // This will eventually hold our final answer.
+    const output = Array(nums.length).fill(1);
+
+    // 'left' will hold the running product of elements to the LEFT of the current index.
+    // Initialize it to 1 because there are no elements to the left of index 0.
+    let left = 1;
+
+    // First pass: left-to-right
+    for (let i = 0; i < nums.length; i++) {
+        // At index i, set output[i] to the product of all elements to the left of i.
+        output[i] = left;
+
+        // Update 'left' to include nums[i] in the running product for the next index.
+        left *= nums[i];
+
+        // Example with nums = [1, 2, 3, 4]
+        // After loop:
+        // output = [1, 1, 2, 6]  ← same as leftProduct array from the other solution
+    }
+
+    // 'right' will hold the running product of elements to the RIGHT of the current index.
+    // Initialize it to 1 because there are no elements to the right of the last index.
+    let right = 1;
+
+    // Second pass: right-to-left
+    for (let i = nums.length - 1; i >= 0; i--) {
+        // Multiply the current value in output[i] by the product of all elements to the right.
+        output[i] *= right;
+
+        // Update 'right' to include nums[i] in the running product for the next index to the left.
+        right *= nums[i];
+
+        // Example with nums = [1, 2, 3, 4]
+        // After loop:
+        // output = [24, 12, 8, 6] ← final result
+    }
+
+    // Return the output array, which contains the product of all elements except self.
+    return output;
+};
+
+Time complexity: O(n)
+Space complexity: O(1)
+
