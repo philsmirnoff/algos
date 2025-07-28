@@ -1,0 +1,19 @@
+ValidSudoku.
+
+We will go through every single row and make sure that there is no dublicates
+
+we can use set, to mkae sure that there is no dublicates. we will have unique hashset for every single row for entire grid, so we can determine if any single raw has any particular dublicates filled in.
+
+Same thing fro number two. For every single column we will have a hashset to determine if there is any dublicates.
+
+For adding to hashset and checking if there is any dublicates is O(1) time complexity.
+
+For the thrid:
+
+We can use hashset again to create 3X3 grid determine if there is any dublicates. 0(9^2) we have to iterate through the grid of size 9 twice) and 3 hashets exatly of this size
+
+How we can differentiate the position of indices in the grid to determin which one is belong to 3X3 grid.
+
+we can create index 0 for the row index 012; index 1 for the row 345 and index 2 for the row 678 and check for example original index [4, 4] belongs to new [1,1] we can devide index 4 to 3 it will 1 give us 1 and that will be our new coordinate. so take the ofg indexes and devide them by 3. it will correctly id which grid it will belong.
+
+key of hashset will be a pair of values that represent row and coulmn not the actual ones but the one that we convert them 0,1,2.[row/3, col/3] and the values will be hashset where we can tell whetehr we have dublicates or not
