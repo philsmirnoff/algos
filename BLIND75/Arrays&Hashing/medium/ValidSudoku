@@ -17,3 +17,81 @@ How we can differentiate the position of indices in the grid to determin which o
 we can create index 0 for the row index 012; index 1 for the row 345 and index 2 for the row 678 and check for example original index [4, 4] belongs to new [1,1] we can devide index 4 to 3 it will 1 give us 1 and that will be our new coordinate. so take the ofg indexes and devide them by 3. it will correctly id which grid it will belong.
 
 key of hashset will be a pair of values that represent row and coulmn not the actual ones but the one that we convert them 0,1,2.[row/3, col/3] and the values will be hashset where we can tell whetehr we have dublicates or not
+
+
+var isValidSudoku = function (board) {
+    // Initialize 9 sets for rows, columns, and boxes respectively
+    let rows = new Array(9).fill(null).map(() => new Set());
+    let cols = new Array(9).fill(null).map(() => new Set());
+    let boxes = new Array(9).fill(null).map(() => new Set());
+
+    // Loop through each cell in the 9x9 board
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let num = board[i][j]; // Current cell value
+
+            if (num === '.') continue; // Skip empty cells
+
+            // Calculate which 3x3 box the cell belongs to
+            let boxIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+
+            // Check if the current number already exists in the row, column, or box
+            if (rows[i].has(num) || cols[j].has(num) || boxes[boxIndex].has(num)) {
+                return false; // Duplicate found — invalid Sudoku
+            }
+
+            // Mark the number as seen in the row, column, and box
+            rows[i].add(num);
+            cols[j].add(num);
+            boxes[boxIndex].add(num);
+        }
+    }
+
+    // If no duplicates found, the Sudoku board is valid
+    return true;
+};
+
+
+✅ Time Complexity: O(1) (Constant Time)
+Why?
+The board is always a 9×9 fixed grid, meaning:
+
+There are exactly 81 cells to process.
+
+The loops run at most 9 × 9 = 81 times.
+
+Operations inside the loops:
+
+Set.has() and Set.add() are O(1) on average.
+
+So each cell is processed in constant time.
+
+👉 Therefore, the overall time complexity is O(81) = O(1) — constant time.
+
+⚠️ This is not because the algorithm is inherently constant time, but because the input size is fixed and small (9×9). If the board were N×N, the complexity would be O(N²).
+
+✅ Space Complexity: O(1) (Constant Space)
+Why?
+You create 3 arrays:
+
+rows[9], cols[9], boxes[9]
+
+Each contains a Set which can hold at most 9 unique digits ('1' to '9').
+
+Max number of entries across all Sets:
+
+9 rows × 9 values = 81 max
+
+9 columns × 9 values = 81 max
+
+9 boxes × 9 values = 81 max
+
+👉 These are all bounded by a constant size, so total space is O(1).
+
+✅ Summary
+Metric	Complexity
+Time	O(1)
+Space	O(1)
+
+Because the board is always 9×9, both time and space are considered constant.
+
