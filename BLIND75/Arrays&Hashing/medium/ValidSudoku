@@ -95,3 +95,39 @@ Space	O(1)
 
 Because the board is always 9×9, both time and space are considered constant.
 
+class Solution {
+    /**
+     * @param {character[][]} board
+     * @return {boolean}
+     */
+    isValidSudoku(board) {
+        // create arrya of sets for each row, cols, squares
+        //  iterate over the rows and col from left to right
+        // check if the value in set => return false
+        // add values into set
+        // at the end return true
+
+        const cols = new Array(9).fill(null).map(() => new Set())
+        const rows = new Array(9).fill(null).map(() => new Set())
+        const squares = new Array(9).fill(null).map(() => new Set())
+
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                let num = board[i][j]
+                if (num == '.') continue
+
+                let boxIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3)
+
+                if (rows[i].has(num) || cols[j].has(num) || squares[boxIndex].has(num)) {
+                    return false
+                }
+
+                rows[i].add(num)
+                cols[j].add(num)
+                squares[boxIndex].add(num)
+            }
+
+        }
+        return true
+}
+}
