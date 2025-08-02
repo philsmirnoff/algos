@@ -154,3 +154,33 @@ var longestConsecutive = function(nums) {
   return maxLength;
 
 };
+
+
+var longestConsecutive = function(nums) {
+  if (nums.length === 0) return 0;
+
+  // Step 1: Store all numbers in a Set for O(1) lookups
+  const numSet = new Set(nums);
+  let maxLength = 0;
+
+  // Step 2: Iterate through each number
+  for (const num of numSet) {
+    // Step 3: Check if it's the start of a sequence
+    if (!numSet.has(num - 1)) {
+      let currentNum = num;
+      let currentLength = 1;
+
+      // Step 4: Count consecutive numbers
+      while (numSet.has(currentNum + 1)) {
+        currentNum += 1;
+        currentLength += 1;
+      }
+
+      // Step 5: Update maximum length
+      maxLength = Math.max(maxLength, currentLength);
+    }
+  }
+
+  return maxLength;
+
+};
