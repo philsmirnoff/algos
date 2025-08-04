@@ -108,3 +108,29 @@ def cloneGraph(node: 'Node') -> 'Node':
 
     # Call dfs on the starting node
     return dfs(node)
+
+
+class Solution {
+    /**
+     * @param {Node} node
+     * @return {Node}
+     */
+    cloneGraph(node) {
+        if (!node) return null
+        let hashmap = new Map()
+
+       const dfs = (node) => {
+        if (hashmap.has(node)) return hashmap.get(node)
+
+        let clone = new Node(node.val)
+        hashmap.set(node, clone)
+
+        for (let neighbor of node.neighbors) {
+            clone.neighbors.push(dfs(neighbor))
+        }
+        return clone
+       }
+       return dfs(node)
+    }
+
+}
