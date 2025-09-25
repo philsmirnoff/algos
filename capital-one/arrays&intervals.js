@@ -118,3 +118,30 @@ var subarraySum = function (nums, k) {
 // Example usage
 console.log(subarraySum([1, 1, 1], 2)); // 2
 console.log(subarraySum([1, 2, 3], 3)); // 2
+
+var subarraySum = function (nums, k) {
+  let sum = 0;
+  let count = 0;
+  const map = {};
+  map[0] = 1; // prefix sum 0 occurs once
+
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i];
+
+    if (sum - k in map) {
+      count += map[sum - k];
+    }
+
+    if (sum in map) {
+      map[sum]++;
+    } else {
+      map[sum] = 1;
+    }
+  }
+
+  return count;
+};
+
+// Example usage
+console.log(subarraySum([1, 1, 1], 2)); // 2
+console.log(subarraySum([1, 2, 3], 3)); // 2
