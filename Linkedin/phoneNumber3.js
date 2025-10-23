@@ -7,6 +7,9 @@
  *   phoneNumberWords("54653346", ["linkedin", "linkedgo", "careers"])
  *   → ["linkedin", "linkedgo"]
  */
+
+const cache = new Map();
+
 function phoneNumberWords(phoneNumber, KNOWN_WORDS) {
   // 🔹 1. Classic keypad mapping
   const keypad = {
