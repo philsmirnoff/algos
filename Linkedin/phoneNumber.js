@@ -1,7 +1,9 @@
 // write a program that outputs all words that can be formed from any n-digit phone number from the list of given KNOWN_WORDS considering the mapping mentioned above.KNOWN_WORDS= ['careers', 'linkedin', 'hiring', 'interview', 'linkedgo']phoneNumber: 2273377Output: ['careers']phoneNumber: 54653346Output: ['linkedin', 'linkedgo']
 
 // T9 keypad mapping: letter -> digit
-const T9 = {
+
+// Letter → digit mapping for classic phone keypad
+const keypad = {
   a: "2",
   b: "2",
   c: "2",
@@ -31,55 +33,52 @@ const T9 = {
 };
 
 /**
- * Convert a word to its T9 numeric signature (e.g., "careers" -> "2273377").
- * Returns null if the word contains unsupported chars (non [a-zA-Z]).
+ * Convert a word into its numeric phone number representation.
+ * Example: "linkedin" → "54653346"
  */
-function wordToDigits(word) {
-  let s = "";
+function wordToPhoneNumber(word) {
+  let phoneNumber = "";
   for (const ch of word.toLowerCase()) {
-    if (!(ch in T9)) return null; // reject digits/punct/etc.
-    s += T9[ch]; // build the signature as a string
+    if (!(ch in keypad)) return null; // skip invalid characters
+    phoneNumber += keypad[ch];
   }
-  return s;
+  return phoneNumber;
 }
 
 /**
- * Build a signature index: digits -> array of words with that signature.
- * Example: index.get("54653346") => ["linkedin", "linkedgo"]
+ * Build a phoneBook mapping phone numbers → list of matching words.
  */
-function buildSignatureIndex(knownWords) {
-  const index = new Map();
-  for (const w of knownWords) {
-    const sig = wordToDigits(w);
-    if (sig == null) continue; // skip words with non-letters
-    if (!index.has(sig)) index.set(sig, []);
-    index.get(sig).push(w);
+function buildPhoneBook(knownWords) {
+  const phoneBook = new Map();
+  for (const word of knownWords) {
+    const phoneNumber = wordToPhoneNumber(word);
+    if (!phoneNumber) continue;
+    if (!phoneBook.has(phoneNumber)) phoneBook.set(phoneNumber, []);
+    phoneBook.get(phoneNumber).push(word);
   }
-  return index;
+  return phoneBook;
 }
 
 /**
- * Return all KNOWN_WORDS that match the given phone number.
- * Notes: classic T9 has no letters for 0/1 → return [] if present.
+ * Check the phoneBook for words that correspond to a given phone number.
+ * (Returns [] if number includes 0 or 1, which have no letter mappings.)
  */
-function t9Matches(number, signatureIndex) {
-  if (/[01]/.test(number)) return []; // no letter mapping on 0/1
-  return signatureIndex.get(number) || [];
+function phoneBookChecker(phoneNumber, phoneBook) {
+  if (phoneNumber.includes("0") || phoneNumber.includes("1")) return [];
+  return phoneBook.get(phoneNumber) || [];
 }
 
 /* ===========================
-   Demo (from your examples)
+   Demo
    =========================== */
 const KNOWN_WORDS = ["careers", "linkedin", "hiring", "interview", "linkedgo"];
-const INDEX = buildSignatureIndex(KNOWN_WORDS);
+const phoneBook = buildPhoneBook(KNOWN_WORDS);
 
-console.log(t9Matches("2273377", INDEX)); // ['careers']
-console.log(t9Matches("54653346", INDEX)); // ['linkedin', 'linkedgo']
-
-// Extra checks:
-console.log(t9Matches("447464", INDEX)); // ['hiring']
-console.log(t9Matches("468378439", INDEX)); // ['interview']
-console.log(t9Matches("101", INDEX)); // [] (contains 0/1 → no mapping)
+console.log(phoneBookChecker("2273377", phoneBook)); // ['careers']
+console.log(phoneBookChecker("54653346", phoneBook)); // ['linkedin', 'linkedgo']
+console.log(phoneBookChecker("447464", phoneBook)); // ['hiring']
+console.log(phoneBookChecker("468378439", phoneBook)); // ['interview']
+console.log(phoneBookChecker("101", phoneBook)); // [] (contains 0/1)
 
 // For building the signature index, I iterate through every known word once and map each letter to its corresponding digit.
 
