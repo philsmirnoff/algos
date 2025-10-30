@@ -29,8 +29,8 @@ function maxDepth(root) {
 // Space: O(h) for recursion stack (h = tree height; worst O(n) for skewed tree, O(log n) for balanced).
 
 
- * Max depth via BFS (queue): number of levels.
- */
+//  * Max depth via BFS (queue): number of levels.
+//  */
 function maxDepthBFS(root) {
   if (root === null) return 0;
 
@@ -59,3 +59,24 @@ function maxDepthBFS(root) {
 // Time: O(n) — each node enqueued/dequeued once.
 
 // Space: O(w) — max queue size equals tree’s max width (worst O(n)).
+
+
+/**
+ * Max depth via explicit stack: store node with its depth.
+ */
+function maxDepthIterative(root) {
+  if (root === null) return 0;
+
+  const stack = [[root, 1]];
+  let maxD = 0;
+
+  while (stack.length) {
+    const [node, depth] = stack.pop();
+    if (!node) continue;
+    maxD = Math.max(maxD, depth);
+    if (node.left) stack.push([node.left, depth + 1]);
+    if (node.right) stack.push([node.right, depth + 1]);
+  }
+
+  return maxD;
+}
