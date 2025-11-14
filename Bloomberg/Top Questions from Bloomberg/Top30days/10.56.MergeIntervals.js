@@ -5,19 +5,23 @@
 // 5. return merged
 
 const merge = (intervals) => {
-  intervals.sort((a, b) => a[0] - b[0]);
+  // define function 'merge' that accepts an array of intervals (each interval is [start, end])
+  intervals.sort((a, b) => a[0] - b[0]); // sort intervals in-place by start time ascending
 
-  let merged = [intervals[0]];
+  let merged = [intervals[0]]; // initialize merged list with the first (earliest) interval
 
   for (let i = 1; i < intervals.length; i++) {
-    let lastMerged = merged[merged.length - 1];
-    let current = intervals[i];
+    // iterate through remaining intervals
+    let lastMerged = merged[merged.length - 1]; // get the most recently merged interval
+    let current = intervals[i]; // current interval being processed
 
     if (current[0] > lastMerged[1]) {
-      merged.push(current);
+      // if current starts after lastMerged ends => no overlap
+      merged.push(current); // push current as a new non-overlapping interval
     } else {
+      // overlap exists: extend the end of lastMerged to the later end between the two
       lastMerged[1] = Math.max(current[1], lastMerged[1]);
     }
   }
-  return merged;
+  return merged; // return the array of merged intervals
 };
